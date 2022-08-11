@@ -227,7 +227,7 @@ class proceso_tareas extends CI_Model
                 case 'Cotización de trabajo':
 
     
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_cotizacion_trabajo', $data, true);
 
                     log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
         
@@ -238,7 +238,7 @@ class proceso_tareas extends CI_Model
                 case 'Evalua cotización':
 
     
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_cotizacion_trabajo', $data, true);
 
                     log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
         
@@ -353,21 +353,20 @@ public function guardarForms($data)
 
             $unidad_medida_tiempo = $form['uni_tiempo'];
 
+            // un dia en milisegundos
+            $un_dia = 86400000; 
+
             $resultado_str = str_replace(empresa()."-unidades_tiempo", "", $unidad_medida_tiempo);	
 
             return;
 
             switch ($resultado_str) {
+                // valor de 1 dia en milisegundos 86400000
 
                 case '1':
-                   $variable_tiempo = is_int($plazo_presupuesto) *  is_int($resultado_str);
+                   $variable_tiempo = is_int($plazo_presupuesto) *  is_int($un_dia);
                    
-                   $value = "00:10";
-
-                    $time = explode(':',$value);
-
-                    $ms = $time[0]*60000 + $time[1]*1000;
-                    
+                   log_message('DEBUG', 'SEIN -notificacion de plazo en milisegundos ->' . json_encode($variable_tiempo));              
                     break;
 
                 case 'value':
@@ -385,7 +384,7 @@ public function guardarForms($data)
 
             $contrato["trabajoViable"]  = $form['result'];
 
-            $contrato["duracionTimer"]  = $ms;
+            $contrato["duracionTimer"]  = $variable_tiempo;
 
               return $contrato;
          
