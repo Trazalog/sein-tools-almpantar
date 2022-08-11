@@ -2,7 +2,7 @@
     exit('No direct script access allowed');
 }
 
-class proceso_tareas extends CI_Model
+class Proceso_tareas extends CI_Model
 {
     public function __construct()
     {
@@ -337,16 +337,16 @@ public function guardarForms($data)
     
        
 
-        // $rsp = $this->proceso_tareas->guardarForms($data);
+        $rsp = $this->Proceso_tareas->guardarForms($data);
+     
+        if (!$rsp) {
     
-        // if (!$rsp) {
+            log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Evalua si trabajo es viable');
     
-        //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Evalua si trabajo es viable');
+        } else {
+            log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Evalua si trabajo es viable');
     
-        // } else {
-        //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Evalua si trabajo es viable');
-    
-        // } 
+        }
        
                    
             $plazo_presupuesto = $form['plazo'];
@@ -408,7 +408,7 @@ public function guardarForms($data)
         );
     
     
-        $rsp = $this->proceso_tareas->guardarForms($data);
+        $rsp = $this->Proceso_tareas->guardarForms($data);
     
         if (!$rsp) {
     
