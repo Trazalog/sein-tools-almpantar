@@ -30,8 +30,8 @@ input[type=radio]{
     </div>
     <hr>
 
-    <input id="plazo" type="text" name="plazo">
-    <input id="uni_tiempo" type="text" name="uni_tiempo">
+    <input id="plazo" type="hidden" name="plazo">
+    <input id="uni_tiempo" type="hidden" name="uni_tiempo">
     <br>
  
 </form>
@@ -66,8 +66,8 @@ if($aux){
 
 ?>
 
-
-<button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion" onclick="modalCodigos()">Impresion</button>
+<!-- 
+<button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion" onclick="modalCodigos()">Impresion</button> -->
 
 
 
@@ -212,7 +212,7 @@ $('#uni_tiempo').val(uni_medida);
     if ( $("#rechazo").is(":checked")) {
 	
     var bandera = true ;
-
+    
 
     if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
         Swal.fire(
@@ -266,27 +266,60 @@ $('#uni_tiempo').val(uni_medida);
     }
 }
 
-  function cerrarTarea() {
-debugger;
+function cerrarTarea() {
+ debugger;
      
-      if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-        Swal.fire(
-                'Error!',
-                'Por favor complete el campo Motivo de Rechazo...',
-                'error'
+      if ($('#motivo_rechazo_interno .form-control').val() == null ) {
+       Swal.fire(
+                        'Error!',
+               'Por favor complete el campo Motivo de rechazo interno',
+                 'error'
             )
           return;
       }
 
-      if ( $("#rechazo").is(":checked")) {
-		debugger;
+      if ($('#motivo_rechazo_cliente .form-control').val() == null) {
+       Swal.fire(
+                        'Error!',
+               'Por favor complete el campo Motivo de rechazo al cliente',
+                 'error'
+            )
+          return;
+      }
 
- var guardado = cerrarTareaform();
+       if ( $("#rechazo").is(":checked")) {
+        return;
+ 		debugger;
 
-    if(!guardado){
-     return;
-    }
-    console.log('tarea cerrada');
+
+         const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+
+        title: 'Estas Seguro que desea rechazar el pedido de trabajo?',
+       
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        reverseButtons: true
+    }).then((result) => {
+        debugger;
+        console.log(result);
+        if (result.value) {
+            console.log('El usuario decidio rechazar el pedido de trabajo');
+           var guardado = cerrarTareaform();
+
+    if(!guardado){     
+         return;
+        }
+     console.log('tarea cerrada');
       var id = $('#taskId').val();
       console.log(id);
 
@@ -304,7 +337,7 @@ debugger;
           cache: false,
           contentType: false,
           processData: false,
-          url: '<?php base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
+          url: '<?php  base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
           success: function(data) {
               //wc();
           //   back();
@@ -324,6 +357,19 @@ debugger;
               alert("Error");
           }
       });
+
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            console.log('El usuario decidio NO rechazar el pedido de trabajo');
+            swalWithBootstrapButtons.fire(
+                'Cancelado',
+                '',
+                'error'
+            )
+        }
+    })
+
+
 
 
       } else{
@@ -348,19 +394,13 @@ if(!guardado){
 
       dataForm.append('frm_info_id', frm_info_id);
 
-      
-
-      // dataForm.append('plazo_presupuesto', frm_info_id);
-
-      // dataForm.append('uni_tiempo', frm_info_id);
-
       $.ajax({
           type: 'POST',
           data: dataForm,
           cache: false,
           contentType: false,
           processData: false,
-          url: '<?php  base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
+          url: '<?php // base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
           success: function(data) {
               //wc();
           //   back();
@@ -385,6 +425,10 @@ if(!guardado){
 
     
   }
+
+
+
+ 
 </script>
 
 <script>  // #HGallardo

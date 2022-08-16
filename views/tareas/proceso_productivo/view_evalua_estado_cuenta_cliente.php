@@ -357,7 +357,7 @@ function cerrarTarea() {
 
     // } else {
 
-        var guardado = cerrarTareaform();
+        // var guardado = cerrarTareaform();
 
         if (!guardado) {
             return;

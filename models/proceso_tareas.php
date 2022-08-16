@@ -358,8 +358,7 @@ public function guardarForms($data)
 
             $resultado_str = str_replace(empresa()."-unidades_tiempo", "", $unidad_medida_tiempo);	
 
-            return;
-
+         
             switch ($resultado_str) {
                 // valor de 1 dia en milisegundos 86400000
 

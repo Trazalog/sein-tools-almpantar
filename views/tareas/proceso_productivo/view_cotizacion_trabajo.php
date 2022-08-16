@@ -285,6 +285,7 @@
 </div> -->
 
 <script>
+
 DataTable($('#tabla_detalle'));
 
  // habilita botones, selects e inputs de modal
@@ -932,6 +933,12 @@ if (confirm('¿Desea borrar el registro?')) {
 
   function cerrarTarea() {
  debugger;
+
+
+
+
+
+
  var id = $('#taskId').val();
  var dataForm = new FormData($('#generic_form')[0]);
 
@@ -963,37 +970,37 @@ if (confirm('¿Desea borrar el registro?')) {
       });
 
 
-// ver esta parte
+
 //  ------------------------------
      
-//       if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-//         Swal.fire(
-//                 'Error!',
-//                 'Por favor complete el campo Motivo de Rechazo...',
-//                 'error'
-//             )
-//           return;
-//       }
+      if ($('#rechazo').prop('checked') && $('#motivo_rechazo_interno .form-control').val() == '' && $('#motivo_rechazo_cliente .form-control').val() == '') {
+       Swal.fire(
+                        'Error!',
+               'Por favor complete el campo Motivo de Rechazo...',
+                 'error'
+            )
+          return;
+      }
 
-//       if ( $("#rechazo").is(":checked")) {
-// 		debugger;
+       if ( $("#rechazo").is(":checked")) {
+ 		debugger;
 
-//  var guardado = cerrarTareaform();
+ var guardado = cerrarTareaform();
 
-//     if(!guardado){
-//      return;
-//     }
-//     console.log('tarea cerrada');
-//       var id = $('#taskId').val();
-//       console.log(id);
+    if(!guardado){     
+         return;
+        }
+     console.log('tarea cerrada');
+      var id = $('#taskId').val();
+      console.log(id);
 
-//       var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+      var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
 
-//      var dataForm = new FormData($('#generic_form')[0]);
+     var dataForm = new FormData($('#generic_form')[0]);
 
-//       dataForm.append('taskId', $('#taskId').val());
+      dataForm.append('taskId', $('#taskId').val());
 
-//       dataForm.append('frm_info_id', frm_info_id_rechazo);
+      dataForm.append('frm_info_id', frm_info_id_rechazo);
 
 //       $.ajax({
 //           type: 'POST',
@@ -1077,6 +1084,7 @@ if (confirm('¿Desea borrar el registro?')) {
     
   }
 
+}
 
 
 
