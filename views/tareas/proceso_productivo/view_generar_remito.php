@@ -9,7 +9,7 @@
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
-<h3>Cotización de trabajo<small></small></h3>
+<h3>Generar remito<small></small></h3>
 <form class="form-inline" id="frm-Cotizacion">
                 <fieldset>
            <div class="row">
@@ -45,9 +45,9 @@
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
                             
-                                <select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false">
+                                <select name="unidad_medida_plazo" id="unidad_medida_plazo" class="form-control" style="width: auto" data-bv-notempty="false">
                                     <option value="" disabled selected> -Seleccionar- </option>
-                                    <option value="dias" disabled selected>diás</option>
+                                    <option value="dias" selected>diás</option>
                                 </select>
                             
                             </div>
@@ -100,10 +100,11 @@
                     <div class="col-md-3">
                     <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
                     <div class="input-group" style="display:inline-flex;">
-                                <input id="objetivo" name="objetivo" type="number" placeholder="" class="form-control input-md" min="1" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
-                            
-                                <select name="unidad_medida_tiempo" id="unidad_medida_tiempo" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled selected> -Seleccionar- </option>
+                  <select name="forma_pago" id="forma_pago" class="form-control" style="width: auto" data-bv-notempty="false">
+                                    <option value="" disabled="" selected=""> -Seleccionar- </option>
+                                    <option value="" >Contado Efectivo</option>
+                                    <option value="">Debito</option>
+                                    <option value="">Credito</option>
                                 </select>
                             
                             </div>
@@ -112,11 +113,17 @@
               <!-- forma de pago -->
               <div class="col-md-3">
               <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">
+                    <div class="form-group">
                         <select name="divisa" id="divisa" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled="" selected=""> -Seleccionar- </option>
-                                </select>
-                        </div>
+                                    <option value="" disabled selected> -Seleccionar- </option>
+                                    <option value="USD">ARS - your money devalued </option>
+                                    <option value="USD">USD - Dólar estadounidense </option>
+                                    <option value="GBP">GBP - Libra esterlina </option>
+                                    <option value="CAD">CAD - Dólar canadiense </option>
+                                    <option value="USD">USD - Dólar estadounidense </option>
+                                    <option value="USD"> AUD - Dólar australiano </option>
+                        </select>
+                    </div>
                     </div>  
 					  <!-- ***************** --> 
             <!--Cantidad-->
@@ -181,7 +188,7 @@
                     <!-- ***************** --> 
                     <div class="col-md-1 espaciado">
                       <div class="form-group">
-                      <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='editarCotizacion(this)'></i> 
+                      <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='habilitarEdicion()'></i> 
                        </div>
                     </div>
           
@@ -222,36 +229,12 @@
 <br><br>
               <!--_________________ >Guardar-->
               <div class="col-md-12 col-sm-12 col-xs-12 centrar form-group text-right">
-                    <button type="button" class="btn btn-sucess" title="Guardar Cotización" >Guardar</button>
+                    <button type="button" class="btn btn-sucess" title="Guardar Cotización" onclick="guardarDetalle()">Guardar</button>
                 </div>                
                 <!--__________________________________-->
 
                 </fieldset>
             </form>                           
-
-<br> <br><br>
-<hr>        
-<form id="generic_form">
-    <div class="form-group">
-        <center>
-            <h3 class="text-danger"> ¿Aprobar cotización? </h3>
-            <label class="radio-inline">
-                <input id="aprobar" type="radio" name="result" value="true"> Si
-            </label>
-            <label class="radio-inline">
-                <input id="rechazo" type="radio" name="result" value="false"> No
-            </label>
-        </center>
-    </div>
-
-
-    <input id="plazo" type="hidden" name="plazo">
-    <input id="uni_tiempo" type="hidden" name="uni_tiempo">
-    <br>
- 
-</form>
-
-
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -302,7 +285,13 @@
 </div> -->
 
 <script>
+
 DataTable($('#tabla_detalle'));
+
+ // habilita botones, selects e inputs de modal
+ function habilitarEdicion(){
+      $('.habilitar').removeAttr("disabled");
+    }
 
   function getFormData(){
 debugger;
@@ -343,14 +332,26 @@ wo();
 
 
 function tomarDatos(){
-    
+   
+
     $('#cod_proyecto').val($('#codigo_proyecto').val());
+    
+  
+  
     
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
+  
+
+
     $('#email_cliente').val($('#email').val());
 
+
+
     $('#nomb_cliente').val($('#cliente').val());
+
+   
+
 
     $('#objetivo_proyecto').val($('#objetivo').val());
 
@@ -384,7 +385,7 @@ if ( valor_cantidad !='' && valor_precio_unitario ==''){
 if (valor_precio_unitario !=''){
      
      wo();
-    alertify.success("Calculando importe!");
+    // alertify.success("Calculando importe!");
      wc();   
 
    }
@@ -394,7 +395,7 @@ if (valor_precio_unitario !=''){
       setTimeout(function() {
         wo();
         
-        alertify.success("Importe calculado!");  
+        // alertify.success("Importe calculado!");  
         
         $("#importe").val(calcular_importe);
 
@@ -408,7 +409,7 @@ setTimeout(function() {
 
         $("#total").val(calcular_total_iva);
 
-        alertify.success("Echo.. total calculado!");
+        alertify.success("Echo.. subtotal calculado!");
 
         wc(); 
     }, 5000);
@@ -523,12 +524,12 @@ function agregarTabla(){
 debugger;
   //  var reporte = validarCampos();
                                 
-    // if($('#frm-PedidoTrabajo')[0]){
+    // if($('#frm-Cotizacion')[0]){
         //Pantalla cargando
         wo();
 
         //Tomo los datos
-        form = $('#frm-PedidoTrabajo')[0];
+        form = $('#frm-Cotizacion')[0];
         datos = new FormData(form);
         data = formToObject(datos);
         //Si la operacion es agregar en la edicion, el service responde con el dedo_id
@@ -559,7 +560,7 @@ debugger;
             
         // }
         fila = "<tr data-json= '"+ JSON.stringify(data) +"'>" +
-                '<td><button  type="button" title="Editar"  class="fa fa-fw fa-edit text-light-blue btnEditar" data-toggle="modal" data-target="#modaleditar"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp<button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
+                '<td><button  type="button" title="Editar"  class="btn btn-primary btn-circle btnEditar" data-toggle="modal" data-target="#modaleditar"><span class="fa fa-fw fa-edit text-light-blue" aria-hidden="true"></span></button>&nbsp<button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
                 '<td>' + data.cantidad + '</td>' +
                 '<td>' + data.descripcion + '</td>' +
                 '<td>' + data.precio_unitario + '</td>' +
@@ -732,11 +733,13 @@ function validarCampos(){
     }
 
 
+
+
     function guardarDetalle(){
     wo();
     //VALIDACIONES
     //valido el formulario
-    if(!frm_validar('#frm-PedidoTrabajo')){
+    if(!frm_validar('#frm-Cotizacion')){
         wc();
         Swal.fire(
             'Error..',
@@ -745,16 +748,7 @@ function validarCampos(){
         );
         return;
     }
-    //Valido seleccion de foto
-    if(!$('.fotos').hasClass("selected")){
-        wc();
-        Swal.fire(
-            'Error..',
-            'Debe seleccionar una foto!',
-            'error'
-        );
-        return;
-    }
+  
     //valído tabla no vacia
     tabla = $('#tabla_detalle').DataTable(); 
     if ( ! tabla.data().any() ) {
@@ -768,34 +762,36 @@ function validarCampos(){
     }
     //Luego de validar, guardo los formularios
     //Accion discrimina si guarda todo junto o solo edita detalles
-    if(accion == "nuevo"){
+
+    // if(accion == "nuevo"){
+    // if ( ! tabla.data().any() ) {
         agregarDetalle().then((result) => {
             wc();
             alertify.success(result);
-            cerrarDetalle();
+            // cerrarDetalle();
 
         }).catch((err) => {
             wc();
             console.log(err);
         });
-    }else{
-        editarDocumento().then((result) => {
-            wc();
-            alertify.success(result);
-            cerrarDetalle();
+    // }else{
+    //     editarDetalle().then((result) => {
+    //         wc();
+    //         alertify.success(result);
+    //         cerrarDetalle();
 
-        }).catch((err) => {
-            wc();
-            alertify.error(err);
-            console.log(err);
-        });
-    }
+    //     }).catch((err) => {
+    //         wc();
+    //         alertify.error(err);
+    //         console.log(err);
+    //     });
+    // }
     //Luego de guardar cierro el detalle del documento
     //Vuelvo a la pantalla principal de la tarea
     
 }
 //
-// Guardo la documentacion cargada y su respectivo detalle
+// Guardo la cotizacion cargada y su respectivo detalle
 async function agregarDetalle () {
 
     
@@ -804,8 +800,22 @@ async function agregarDetalle () {
 debugger;
 
     //tomo el formulario
-    datos = new FormData($('#frm-PedidoTrabajo')[0]);
+    datos = new FormData($('#frm-Cotizacion')[0]);
     datos.append('case_id', $("#caseId").val());
+
+    datos.append('codigo_pedido', $("#cod_proyecto").val());
+    datos.append('cliente', $("#nomb_cliente").val());
+    datos.append('dir_entrega', $("#dir_entrega_cliente").val());
+    datos.append('email_cliente', $("#email_cliente").val());
+    datos.append('email_alternativo', $("#email_alternativo").val());
+    datos.append('forma_pago', $("#forma_pago").val());
+    
+    var datos_json = formToJson(datos);
+
+   
+console.log(datos_json);
+
+    
 
     let detalle = new Promise( function(resolve,reject){
         
@@ -815,17 +825,13 @@ debugger;
             cache: false,
             contentType: false,
             processData: false,
-            url: "<?php echo SICP; ?>inspeccion/agregarDetalle",
+            url: "<?php echo SEIN; ?>Cotizacion/agregarCotizacion",
             success: function(data) { 
                 
                 rsp = JSON.parse(data);
-                //Si es correcto, guardo los detalles de los documentos
+                //Si es correcto, guardo los detalles de la cotizacion
                 if(rsp.status){
 
-                    // Uso el valor que dejo en Numero y Tipo para evitar fallo en la FK, en caso de que cambie antes de guardar detalle
-                
-                    // num_documento = $("#numero").val();
-                    // tipo_factura = $("#tipo_documento").select2('data')[0].id;
                     
                     //Loopeo sobre las filas de la tabla
                     //Formateo precio_unitario y descuento porque tiene los prefijos
@@ -845,6 +851,10 @@ debugger;
                         // precio_unitario = json.precio_unitario.split(" ");
                         // precio_unitario = precio_unitario.pop();
 
+                        json.cantidad = cantidad;
+
+                        json.descripcion = descripcion;
+
                         json.precio_unitario = precio_unitario;
 
                         // json.descuento = descuento;
@@ -856,7 +866,7 @@ debugger;
                         type: 'POST',
                         data: {detalles},
                         dataType: "json",
-                        url: "<?php echo SICP; ?>inspeccion/guardarDetallesCotizacion",
+                        url: "<?php echo SEIN; ?>Cotizacion/guardarDetallesCotizacion",
                         success: function(resp) {
                             if(resp.status){
                                 resolve("Se agrego cotizacion y su detalle correctamente");
@@ -889,17 +899,48 @@ debugger;
 
 
 
+//Eliminar registro tabla intermedia
+//
+$(document).on('click','.btnEliminar', function () {
 
+if (confirm('¿Desea borrar el registro?')) {
 
+    tabla = $('#tabla_detalle').DataTable();
 
+    if(accion == "editar"){
+        
+        datos = JSON.parse($(this).parents('tr').attr('data-json'));
+        filaEliminar = this;
+        dedo_id = {"dedo_id" : datos.dedo_id};
+        
+        $.ajax({
+                type: 'POST',
+                data: {dedo_id},
+                dataType: "json",
+                url: "<?php echo SICP; ?>inspeccion/eliminarDetalleDocumento",
+                success: function(resp) {
 
+                    if(resp.status){
 
+                        tabla.row( $(filaEliminar).parents('tr') ).remove().draw(); 
+                        alertify.success("Registro eliminado correctamente!");
 
+                    }else{
+                        alertify.error("Error al eliminar detalle");
+                    }
+                
+                },
+                error: function(data) {
+                    alertify.error("Error al eliminar detalle");
+                }
+            });
+    }else{
 
-
-
-
-
+        tabla.row( $(this).parents('tr') ).remove().draw(); 
+        alertify.success("Registro eliminado correctamente!");
+    }
+}
+});
 
 
 
@@ -918,6 +959,12 @@ debugger;
 
   function cerrarTarea() {
  debugger;
+
+
+
+
+
+
  var id = $('#taskId').val();
  var dataForm = new FormData($('#generic_form')[0]);
 
@@ -949,37 +996,37 @@ debugger;
       });
 
 
-// ver esta parte
+
 //  ------------------------------
      
-//       if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-//         Swal.fire(
-//                 'Error!',
-//                 'Por favor complete el campo Motivo de Rechazo...',
-//                 'error'
-//             )
-//           return;
-//       }
+      if ($('#rechazo').prop('checked') && $('#motivo_rechazo_interno .form-control').val() == '' && $('#motivo_rechazo_cliente .form-control').val() == '') {
+       Swal.fire(
+                        'Error!',
+               'Por favor complete el campo Motivo de Rechazo...',
+                 'error'
+            )
+          return;
+      }
 
-//       if ( $("#rechazo").is(":checked")) {
-// 		debugger;
+       if ( $("#rechazo").is(":checked")) {
+ 		debugger;
 
-//  var guardado = cerrarTareaform();
+ var guardado = cerrarTareaform();
 
-//     if(!guardado){
-//      return;
-//     }
-//     console.log('tarea cerrada');
-//       var id = $('#taskId').val();
-//       console.log(id);
+    if(!guardado){     
+         return;
+        }
+     console.log('tarea cerrada');
+      var id = $('#taskId').val();
+      console.log(id);
 
-//       var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+      var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
 
-//      var dataForm = new FormData($('#generic_form')[0]);
+     var dataForm = new FormData($('#generic_form')[0]);
 
-//       dataForm.append('taskId', $('#taskId').val());
+      dataForm.append('taskId', $('#taskId').val());
 
-//       dataForm.append('frm_info_id', frm_info_id_rechazo);
+      dataForm.append('frm_info_id', frm_info_id_rechazo);
 
 //       $.ajax({
 //           type: 'POST',
@@ -1063,6 +1110,7 @@ debugger;
     
   }
 
+}
 
 
 

@@ -24,22 +24,15 @@ class Cotizacion extends CI_Controller
 	*/
     public function agregarCotizacion(){
 		log_message('DEBUG', "#TRAZA | #SEIN | Cotizacion | agregarCotizacion()");
+
+		$data['plazo_entrega'] = $this->input->post('plazo_entrega');
+		$data['email_alternativo'] = $this->input->post('email_alternativo');
+		$data['unme_id'] = "1-unidades_medidadia";
+		$data['usuario_app'] = userNick();
+		$data['petr_id'] = $this->input->post('petr_id');
+		$data['fopa_id'] = "1-forma_pagocontado";
+		$data['divi_id'] = "1-divisaARS";
 		
-		$data['codigo_pedido'] = $this->input->post('cod_proyecto');
-		$data['objetivo'] =  $this->input->post('objetivo_proyecto');
-        $data['uni_medida'] = $this->input->post('unidad_medida_tiempo');
-        $data['plazo_entrega'] =  $this->input->post('plazo_entrega');
-        $data['uni_medida_plazo'] =  $this->input->post('unidad_medida_plazo');
-        $data['cliente'] =  $this->input->post('nomb_cliente');
-        $data['dir_entrega'] =  $this->input->post('dir_entrega_cliente');
-        $data['email_cliente'] =  $this->input->post('email_cliente');
-        $data['email_alternativo'] =  $this->input->post('email_alternativo');
-        $data['forma_pago'] =  $this->input->post('forma_pago');
-        $data['divisa'] =  $this->input->post('divisa');
-        $data['usuario'] =  userNick();
-        $data['usuario_app'] = userNick();
-        $data['fecha_emision'] = date('Y-m-d');
-        $data['case_id'] = $this->input->post('case_id');
 
 		$resp = $this->Cotizaciones->agregarCotizacion($data);
         
@@ -57,10 +50,10 @@ class Cotizacion extends CI_Controller
 	* @return bool true o false segun resultado de servicio
 	*/
     public function guardarDetalleCotizacion(){
-		log_message('DEBUG', "#TRAZA | #SEIN | Cotizacion | agregarDetalleCotizacion()");
+		log_message('DEBUG', "#TRAZA | #SEIN | Cotizacion | guardarDetallesCotizacion()");
 		$detalle = $this->input->post('data');
 
-		$resp = $this->Cotizaciones->agregarDetalleCotizacion($detalle);
+		$resp = $this->Cotizaciones->guardarDetallesCotizacion($detalle);
 
 		if ($resp['status']) {
 			echo json_encode($resp);

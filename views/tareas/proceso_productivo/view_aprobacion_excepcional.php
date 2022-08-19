@@ -12,7 +12,7 @@ input[type=radio] {
 
 <?php // #HGallardo
     // carga el modal de impresion de QR
-    $this->load->view( COD.'componentes/modalYudica');
+    $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
 <h3>Reevaluar pedido de cotización<small></small></h3>

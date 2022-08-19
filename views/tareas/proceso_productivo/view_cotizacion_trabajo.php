@@ -332,14 +332,26 @@ wo();
 
 
 function tomarDatos(){
-    
+   
+
     $('#cod_proyecto').val($('#codigo_proyecto').val());
+    
+  
+  
     
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
+  
+
+
     $('#email_cliente').val($('#email').val());
 
+
+
     $('#nomb_cliente').val($('#cliente').val());
+
+   
+
 
     $('#objetivo_proyecto').val($('#objetivo').val());
 
@@ -397,7 +409,7 @@ setTimeout(function() {
 
         $("#total").val(calcular_total_iva);
 
-        alertify.success("Echo.. total calculado!");
+        alertify.success("Echo.. subtotal calculado!");
 
         wc(); 
     }, 5000);
@@ -756,7 +768,7 @@ function validarCampos(){
         agregarDetalle().then((result) => {
             wc();
             alertify.success(result);
-            cerrarDetalle();
+            // cerrarDetalle();
 
         }).catch((err) => {
             wc();
@@ -779,8 +791,10 @@ function validarCampos(){
     
 }
 //
+
+
 // Guardo la cotizacion cargada y su respectivo detalle
-async function agregarDetalle () {
+async function agregarDetalle() {
 
     
     tabla = $('#tabla_detalle').DataTable();
@@ -789,9 +803,17 @@ debugger;
 
     //tomo el formulario
     datos = new FormData($('#frm-Cotizacion')[0]);
-    datos.append('case_id', $("#caseId").val());
+    datos.append('petr_id', $("#petr_id").val());
+   
+    
+    var datos_json = formToJson(datos);
 
-    let detalle = new Promise( function(resolve,reject){
+   
+console.log(datos_json);
+
+    
+
+    let cotizacion = new Promise( function(resolve,reject){
         
         $.ajax({
             type: 'POST',
@@ -801,29 +823,33 @@ debugger;
             processData: false,
             url: "<?php echo SEIN; ?>Cotizacion/agregarCotizacion",
             success: function(data) { 
-                
+                debugger;
                 rsp = JSON.parse(data);
+                respuesta=  JSON.parse(rsp.data);
+                 rspA = JSON.parse(JSON.stringify(respuesta.respuesta));
+
+                 coti_id = rspA['coti_id'];
+     
                 //Si es correcto, guardo los detalles de la cotizacion
                 if(rsp.status){
 
-                    
+                    debugger;
                     //Loopeo sobre las filas de la tabla
                     //Formateo precio_unitario y descuento porque tiene los prefijos
                     detalles = [];
+
+                   
+
+
+
                     tabla.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-                        var datos = this.data();
-                        nodo = this.node();
+                       
+                        var detalle = this.data();
                         
-                        var json = JSON.parse($(nodo).attr('data-json'));
+                         let json = [];
 
-                        // json.num_documento = num_documento;
-                        // json.tido_id = tipo_factura;
 
-                        // descuento = json.descuento.split(" ");
-                        // descuento = descuento[0] / 100 ;
-
-                        // precio_unitario = json.precio_unitario.split(" ");
-                        // precio_unitario = precio_unitario.pop();
+                        json.coti_id = coti_id;
 
                         json.cantidad = cantidad;
 
@@ -831,7 +857,7 @@ debugger;
 
                         json.precio_unitario = precio_unitario;
 
-                        // json.descuento = descuento;
+                        json.importe = total;
 
                         detalles[rowIdx] = json;
                     });
@@ -839,8 +865,8 @@ debugger;
                     $.ajax({
                         type: 'POST',
                         data: {detalles},
-                        dataType: "json",
-                        url: "<?php echo SEIN; ?>Cotizacion/guardarDetallesCotizacion",
+                        dataType: "json",                   
+                        url: "<?php echo SEIN; ?>Cotizacion/guardarDetalleCotizacion ",
                         success: function(resp) {
                             if(resp.status){
                                 resolve("Se agrego cotizacion y su detalle correctamente");
@@ -867,7 +893,7 @@ debugger;
         });
     });
 
-    return await detalle;
+    return await cotizacion;
 }
 
 

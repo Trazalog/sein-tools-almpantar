@@ -12,7 +12,7 @@ input[type=radio] {
 
 <?php
     // carga el modal de impresion de QR
-    $this->load->view( COD.'componentes/modalYudica');
+    $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
 <h3>Evaluacion de estado de cuenta del cliente <small></small></h3>
