@@ -13,31 +13,31 @@ input[type=radio]{
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
-<h3>Evaluacion de viabilidad <small></small></h3>
+<h3>Confirmacion de envio de cotizaciíon <small></small></h3>
+<br>   <br>   <br>
 <form id="generic_form">
     <div class="form-group">
         <center>
-            <h3 class="text-danger"> ¿Se aprueba trabajo? </h3>
+            <h3 class="text-danger"> ¿Vendedor realiza envio de cotizacíon? </h3>
             <label class="radio-inline">
-                <input id="aprobar" type="radio" name="result" value="true"
-                    onclick="mostrarForm();"> Aprobar
+                <input id="aprobar" type="radio" name="result" value="true"> Si
             </label>
             <label class="radio-inline">
-                <input id="rechazo" type="radio" name="result" value="false"
-                    onclick="ocultarForm()"> Rechazar
+                <input id="rechazo" type="radio" name="result" value="false"> No
             </label>
         </center>
     </div>
-    <hr>
+   
 
-    <input id="plazo" type="hidden" name="plazo">
-    <input id="uni_tiempo" type="hidden" name="uni_tiempo">
-    <br>
+    <br>   <br>   <br>
  
 </form>
 <?php
-// funcion que desplega formulario asociado a la vista
+
+
+// flata funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
+
 $aux =json_decode($data);
 
 $formularios = $aux->formularios;
@@ -138,132 +138,66 @@ debugger;
 
   getFormData();
 
-  function mostrarForm(){
 
-      detectarForm();
-      initForm();
+//   function cerrarTareaform(){
+//     debugger;
 
-      $('#form-dinamico').show();
-      $('#titulo').show();
-      $('#form-dinamico-rechazo').hide();
-      $('#comprobante').hide();
-      // oculta btn para imprimir
-      $('#btnImpresion').hide();
-  }
-
-  function ocultarForm(){
-
-    detectarForm();
-    initForm();
-
-     // $('#motivo').show();
-      $('#form-dinamico-rechazo').show();
-    
-      $('#comprobante').show();
-      $('#hecho').prop('disabled',false);
-      $('#form-dinamico').hide();
-      $('#titulo').hide();
-      // muestra btn para imprimir
-      $('#btnImpresion').show();
-
-  }
-
-  $('#form-dinamico').hide();
-  $('#titulo').hide();
-  $('#comprobante').hide();
-   // $('#motivo').show();
-   $('#form-dinamico-rechazo').show();
-
-  $('#btnImpresion').hide();
-
-
- 
-  $('#view').ready(function() {
-wo();
-    alertify.success("Cargando datos en la vista aguarde...");
-    
-    setTimeout(function() {
-        wc();    
-        tomarDatos();
-}, 9000);
-   
-    
-});
-
-
-function tomarDatos(){
-    debugger;
-
-$('#plazo').val($('#plazo_presupuesto').val());
-    
-
-var uni_medida = $('select[name="unidad_medida_tiempo').val();
-
-console.log('uni_medida :' + uni_medida);
-
-$('#uni_tiempo').val(uni_medida);
-}  
-
-
-  function cerrarTareaform(){
-    debugger;
-
-    if ( $("#rechazo").is(":checked")) {
+//     if ( $("#rechazo").is(":checked")) {
 	
-    var bandera = true ;
+//     var bandera = true ;
     
 
-    if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-        Swal.fire(
-					'Oops...',
-					'Debes completar los campos Obligatorios (*)',
-					'error'
-				)
-                bandera = false;
-       return bandera;
-	 		}
+//     if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
+//         Swal.fire(
+// 					'Oops...',
+// 					'Debes completar los campos Obligatorios (*)',
+// 					'error'
+// 				)
+//                 bandera = false;
+//        return bandera;
+// 	 		}
 
-    else{
-     $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
+//     else{
+//      $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
 
-    frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
+//     frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
 
-        var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+//         var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
 
-        console.log('info_id:' + info_id);
-         console.log('Formulario Guardado con exito -function cerrarTareaform');
-        }
+//         console.log('info_id:' + info_id);
+//          console.log('Formulario Guardado con exito -function cerrarTareaform');
+//         }
 
-        return bandera; 
-  }
-  else if ( $("#aprobar").is(":checked")) {
-    debugger;
-    var bandera = true ;
+//         return bandera; 
+//   }
+//   else if ( $("#aprobar").is(":checked")) {
+//     debugger;
+//     var bandera = true ;
 
-      if (!frm_validar('#form-dinamico')) {
+//       if (!frm_validar('#form-dinamico')) {
 
-        console.log("Error al guardar Formulario");
-          Swal.fire(
-            'Oops...',
-            'Debes completar los campos Obligatorios (*)',
-            'error'
-          )
-      bandera = false;
-        return bandera;
+//         console.log("Error al guardar Formulario");
+//           Swal.fire(
+//             'Oops...',
+//             'Debes completar los campos Obligatorios (*)',
+//             'error'
+//           )
+//       bandera = false;
+//         return bandera;
 
-      }
-      else{
-      frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
-          var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
+//       }
+//       else{
+//       frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
+//           var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
 
-          console.log('info_id:' + info_id);
-          console.log('Formulario Guardado con exito -function cerrarTareaform');
-          }
+//           console.log('info_id:' + info_id);
+//           console.log('Formulario Guardado con exito -function cerrarTareaform');
+//           }
 
-          return bandera; 
+//           return bandera; 
 
-    }
-}
+//     }
+// }
 
 function cerrarTarea() {
  debugger;
@@ -371,14 +305,14 @@ function cerrarTarea() {
 
 
 
-
+//else (si el usuario indica si)
       } else{
 
-        var guardado = cerrarTareaform();
+//         var guardado = cerrarTareaform();
 
-if(!guardado){
- return;
-}
+// if(!guardado){
+//  return;
+// }
 
         debugger;
 

@@ -13,57 +13,61 @@ input[type=radio]{
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
-<h3>Evaluacion de viabilidad <small></small></h3>
+<h3>Control final del trabajo<small></small></h3>
+
+<div id="form-dinamico" class="frm-new" data-form="62"></div>
+<br> <br>
+
 <form id="generic_form">
     <div class="form-group">
         <center>
-            <h3 class="text-danger"> ¿Se aprueba trabajo? </h3>
+            <h3 class="text-danger"> ¿Aprobar trabajo? </h3>
             <label class="radio-inline">
-                <input id="aprobar" type="radio" name="result" value="true"
-                    onclick="mostrarForm();"> Aprobar
+                <input id="aprobar" type="radio" name="result" value="true"> Si
             </label>
             <label class="radio-inline">
-                <input id="rechazo" type="radio" name="result" value="false"
-                    onclick="ocultarForm()"> Rechazar
+                <input id="rechazo" type="radio" name="result" value="false" onclick="ocultarForm()"> No
             </label>
         </center>
     </div>
-    <hr>
-
-    <input id="plazo" type="hidden" name="plazo">
-    <input id="uni_tiempo" type="hidden" name="uni_tiempo">
-    <br>
- 
-</form>
+   
+    </form>
+    <br><br>  
 <?php
+
+
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
-$aux =json_decode($data);
 
-$formularios = $aux->formularios;
+// $aux =json_decode($data);
 
-if($aux){
+// $formularios = $aux->formularios;
+
+// if($aux){
                                 
 
-  foreach ($formularios as $clave => $valor) {
+//   foreach ($formularios as $clave => $valor) {
 
-    foreach ($valor as $v2) {
-      if($v2->orden == '1'){
-        echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-      }
-      else if($v2->orden == '2'){
-        echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-      }
-    else{
-      echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-    }
-  }
+//     foreach ($valor as $v2) {
+//       if($v2->orden == '1'){
+//         echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+//       }
+//       else if($v2->orden == '2'){
+//         echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+//       }
+//     else{
+//       echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+//     }
+//   }
  
-          }
-                     }
+//           }
+//                      }
   
 
 ?>
+<div id="form-dinamico-rechazo" class="frm-new" data-form="59"></div>
+
+
 
 <!-- 
 <button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion" onclick="modalCodigos()">Impresion</button> -->
@@ -119,9 +123,45 @@ if($aux){
 </div>
 <!--END Modal -->
 <script>
+////////////////////////////////
+
+$('#view').ready(function() {
+wo();
+    alertify.success("Cargando datos en la vista aguarde...");
+    
+    setTimeout(function() {
+        wc();    
+        tomarDatos();
+}, 9000);
+   
+    
+});
+
+function tomarDatos(){
+    debugger;
+
+    $('#cliente').val($('#cliente').val());
+
+    
+    $('#form-dinamico').find(':input').each(function() {
+										var elemento= this;
+										console.log("elemento.id="+ elemento.id); 
+   
+      if (elemento.id == 'tipo_trajo') {
+          $(elemento).attr('readonly', true); 
+          $(elemento).attr('disabled',true);
+        }
+
+        if (elemento.id == 'descripcion') {
+          $(elemento).attr('readonly', true); 
+          $(elemento).attr('disabled',true);
+        }
+									
+												});
+}  
 
   function getFormData(){
-debugger;
+
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
       array_form[this.name] = this.value;
@@ -138,158 +178,130 @@ debugger;
 
   getFormData();
 
+
+  detectarForm();
+  initForm();
+ 
+  // $('#form-dinamico').show();
+  $('#form-dinamico-rechazo').hide();
+
   function mostrarForm(){
 
-      detectarForm();
-      initForm();
+detectarForm();
+initForm();
 
-      $('#form-dinamico').show();
-      $('#titulo').show();
-      $('#form-dinamico-rechazo').hide();
-      $('#comprobante').hide();
-      // oculta btn para imprimir
-      $('#btnImpresion').hide();
-  }
+$('#form-dinamico').show();
+$('#titulo').show();
+$('#form-dinamico-rechazo').hide();
+$('#comprobante').hide();
+// oculta btn para imprimir
+$('#btnImpresion').hide();
+ }
 
-  function ocultarForm(){
+function ocultarForm(){
 
-    detectarForm();
-    initForm();
-
-     // $('#motivo').show();
-      $('#form-dinamico-rechazo').show();
-    
-      $('#comprobante').show();
-      $('#hecho').prop('disabled',false);
-      $('#form-dinamico').hide();
-      $('#titulo').hide();
-      // muestra btn para imprimir
-      $('#btnImpresion').show();
-
-  }
-
-  $('#form-dinamico').hide();
-  $('#titulo').hide();
-  $('#comprobante').hide();
-   // $('#motivo').show();
-   $('#form-dinamico-rechazo').show();
-
-  $('#btnImpresion').hide();
+detectarForm();
+initForm();
 
 
- 
-  $('#view').ready(function() {
-wo();
-    alertify.success("Cargando datos en la vista aguarde...");
-    
-    setTimeout(function() {
-        wc();    
-        tomarDatos();
-}, 9000);
-   
-    
-});
+$('#form-dinamico-rechazo').show();
 
 
-function tomarDatos(){
-    debugger;
-
-$('#plazo').val($('#plazo_presupuesto').val());
-    
-
-var uni_medida = $('select[name="unidad_medida_tiempo').val();
-
-console.log('uni_medida :' + uni_medida);
-
-$('#uni_tiempo').val(uni_medida);
-}  
+$('#hecho').prop('disabled',false);
 
 
-  function cerrarTareaform(){
-    debugger;
 
-    if ( $("#rechazo").is(":checked")) {
-	
-    var bandera = true ;
-    
-
-    if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-        Swal.fire(
-					'Oops...',
-					'Debes completar los campos Obligatorios (*)',
-					'error'
-				)
-                bandera = false;
-       return bandera;
-	 		}
-
-    else{
-     $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
-
-    frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
-
-        var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-
-        console.log('info_id:' + info_id);
-         console.log('Formulario Guardado con exito -function cerrarTareaform');
-        }
-
-        return bandera; 
-  }
-  else if ( $("#aprobar").is(":checked")) {
-    debugger;
-    var bandera = true ;
-
-      if (!frm_validar('#form-dinamico')) {
-
-        console.log("Error al guardar Formulario");
-          Swal.fire(
-            'Oops...',
-            'Debes completar los campos Obligatorios (*)',
-            'error'
-          )
-      bandera = false;
-        return bandera;
-
-      }
-      else{
-      frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
-          var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-
-          console.log('info_id:' + info_id);
-          console.log('Formulario Guardado con exito -function cerrarTareaform');
-          }
-
-          return bandera; 
-
-    }
 }
+
+$('#form-dinamico').sohw();
+
+
+
+$('#btnImpresion').hide();
+
+
+//   function cerrarTareaform(){
+//     debugger;
+
+//     if ( $("#rechazo").is(":checked")) {
+	
+//     var bandera = true ;
+    
+
+//     if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
+//         Swal.fire(
+// 					'Oops...',
+// 					'Debes completar los campos Obligatorios (*)',
+// 					'error'
+// 				)
+//                 bandera = false;
+//        return bandera;
+// 	 		}
+
+//     else{
+//      $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
+
+//     frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
+
+//         var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+
+//         console.log('info_id:' + info_id);
+//          console.log('Formulario Guardado con exito -function cerrarTareaform');
+//         }
+
+//         return bandera; 
+//   }
+//   else if ( $("#aprobar").is(":checked")) {
+//     debugger;
+//     var bandera = true ;
+
+//       if (!frm_validar('#form-dinamico')) {
+
+//         console.log("Error al guardar Formulario");
+//           Swal.fire(
+//             'Oops...',
+//             'Debes completar los campos Obligatorios (*)',
+//             'error'
+//           )
+//       bandera = false;
+//         return bandera;
+
+//       }
+//       else{
+//       frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
+//           var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
+
+//           console.log('info_id:' + info_id);
+//           console.log('Formulario Guardado con exito -function cerrarTareaform');
+//           }
+
+//           return bandera; 
+
+//     }
+// }
 
 function cerrarTarea() {
  debugger;
      
     
-       if ( $("#rechazo").is(":checked")) {
+      //  if ( $("#rechazo").is(":checked")) {
        
 
-        if ($('#motivo_rechazo_interno .form-control').val() == null ) {
-       Swal.fire(
-                        'Error!',
-               'Por favor complete el campo Motivo de rechazo interno',
-                 'error'
-            )
-          return;
-      }
+      //   if ($('#justificacion .form-control').val() == null ) {
+      //  Swal.fire(
+      //                   'Error!',
+      //          'Por favor complete el campo justificacion',
+      //            'error'
+      //       )
+      //     return;
+      // }
 
-      if ($('#motivo_rechazo_cliente .form-control').val() == null) {
-       Swal.fire(
-                        'Error!',
-               'Por favor complete el campo Motivo de rechazo al cliente',
-                 'error'
-            )
-          return;
-      }
-
+      if ($('#rechazo').prop('checked') && $('#justificacion .form-control').val() == '') {
+        Swal.fire(
+					'Oops...',
+					'Debes completar los campos Obligatorios (*)',
+					'error'
+				)
 
 
          const swalWithBootstrapButtons = Swal.mixin({
@@ -371,14 +383,14 @@ function cerrarTarea() {
 
 
 
-
+//else (si el usuario indica si)
       } else{
 
-        var guardado = cerrarTareaform();
+//         var guardado = cerrarTareaform();
 
-if(!guardado){
- return;
-}
+// if(!guardado){
+//  return;
+// }
 
         debugger;
 

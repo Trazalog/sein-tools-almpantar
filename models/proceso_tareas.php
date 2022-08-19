@@ -2,7 +2,7 @@
     exit('No direct script access allowed');
 }
 
-class proceso_tareas extends CI_Model
+class Proceso_tareas extends CI_Model
 {
     public function __construct()
     {
@@ -177,7 +177,14 @@ class proceso_tareas extends CI_Model
        
         // llamo al servicio para traer los formularios asociados a la vista del proceso
       $data = $ci->rest->callAPI('GET',REST_PRO.$resource."/".$empr_id);
+      
+      log_message('DEBUG', 'SEIN -traer los formularios asociados a la vista del proceso ->' . $tarea->nombreTarea);
     
+        
+      log_message('DEBUG', 'SEIN - Formularios asociados a la vista ->' . json_encode($data));      
+     
+
+     
 
         switch ($tarea->nombreTarea) {
             
@@ -227,7 +234,7 @@ class proceso_tareas extends CI_Model
                 case 'Cotización de trabajo':
 
     
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_cotizacion_trabajo', $data, true);
 
                     log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
         
@@ -238,7 +245,7 @@ class proceso_tareas extends CI_Model
                 case 'Evalua cotización':
 
     
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_cotizacion_trabajo', $data, true);
 
                     log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
         
@@ -249,20 +256,20 @@ class proceso_tareas extends CI_Model
                 case 'Enviar Cotización':
 
     
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_enviar_cotizacion', $data, true);
 
-                    log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
+                    log_message('DEBUG', 'SEIN view -> Enviar Cotización' . $tarea->nombreTarea);
         
         
                     break;
 
-            //paso 8 Espera respuesta de cliente          
-                case 'Despacho':
-
+           
+             //paso 8 Espera respuesta del cliente         
+                case 'Espera respuesta de cliente':
     
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_espera_respuesta_cliente', $data, true);
 
-                    log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
+                    log_message('DEBUG', 'SEIN view -> Espera respuesta de cliente' . $tarea->nombreTarea);
         
         
                     break;
@@ -272,20 +279,127 @@ class proceso_tareas extends CI_Model
                 case 'Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado':
         
             
-                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_viabilidad', $data, true);
+                    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_analisis_vigencia', $data, true);
 
-                    log_message('DEBUG', 'SEIN view -> Evalua si trabajo es viable' . $tarea->nombreTarea);
+                    log_message('DEBUG', 'SEIN view -> Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado' . $tarea->nombreTarea);
                 
                 
                     break;
-                         
-            default:
-                                                 
-            log_message('DEBUG', 'SEIN view -> default' . $tarea->nombreTarea);
 
-                break;
+            //paso 10     Recepción de OC y archivo        
+            case 'Recepción de OC y archivo':
+                    
+                        
+                return $this->load->view(SEIN . 'tareas/proceso_productivo/view_revision_oc_archivo', $data, true);
+
+                log_message('DEBUG', 'SEIN view -> Revision de OC. Condiciones y Cantidades del presupuesto' . $tarea->nombreTarea);
+
+                
+                break;  
+
+    //paso 11 Solicita pago anticipo       
+    case 'Solicita pago anticipo':
+                    
+                        
+        return $this->load->view(SEIN . 'tareas/proceso_productivo/view_solicita_pago_anticipo', $data, true);
+
+        log_message('DEBUG', 'SEIN view -> Solicita pago anticipo' . $tarea->nombreTarea);
+
+           
+        break;  
+
+  //paso 12 Recibe pago anticipo       
+  case 'Recibe pago anticipo':
+                    
+                        
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_recibo_pago_anticipo', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Recibe pago anticipo' . $tarea->nombreTarea);
+
+       
+    break;          
+
+ //paso 13 Ejecuta el Trabajo - Tools Tareas      
+ case 'Ejecuta el Trabajo - Tools Tareas':
+                    
+                        
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_ejecuta_trabajo', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Ejecuta el Trabajo - Tools Tareas' . $tarea->nombreTarea);
+
+    
+    break;    
+ 
+ //paso 14 Realiza Control final del Trabajo     
+ case 'Realiza Control final del Trabajo':
+                    
+                        
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_realiza_control_final', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Realiza Control final del Trabajo' . $tarea->nombreTarea);
+
+    
+    break; 
+    
+ //paso 15 Revision de la No Confirmidad    
+ case 'Revision de la No Confirmidad':
+                    
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_revision_no_conformidad', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Revision de la No Confirmidad' . $tarea->nombreTarea);
+   
+    break;
+
+//paso 16 Generar remito
+case 'Generar remito y factura':
+                    
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_generar_remito', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Generar remito y factura' . $tarea->nombreTarea);
+    
+    break;    
+ 
+//paso 17 Coordinar entrega con el cliente
+case 'Coordinar entrega con el cliente':
+                    
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_coordinar_entrega', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Coordinar entrega con el cliente' . $tarea->nombreTarea);
+    
+    break;  
+ 
+//paso 18 Cerrar servicio y archivar legajo
+case 'Cerrar servicio y archivar legajo':
+                    
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_coordinar_entrega', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Cerrar servicio y archivar legajo' . $tarea->nombreTarea);
+    
+    break;     
+
+//paso 19  Paletizar y Despachar
+case 'Paletizar y Despachar':
+                    
+    return $this->load->view(SEIN . 'tareas/proceso_productivo/view_paletizar_despachar', $data, true);
+
+    log_message('DEBUG', 'SEIN view -> Paletizar y Despachar' . $tarea->nombreTarea);
+   
+    break;     
+default:
+                                                 
+    log_message('DEBUG', 'SEIN view -> default' . $tarea->nombreTarea);
+
+     break;
+
+
+     
         }
     }
+
+
+
+
+
 
 // Guardar Pedido de Trabajo
 public function guardarForms($data)
@@ -322,7 +436,9 @@ public function guardarForms($data)
 
 
         switch ($tarea->nombreTarea) {
- //paso 1
+
+ //paso 1 Evalua si trabajo es viable
+
     case 'Evalua si trabajo es viable':       
 
     $data['_post_pedidotrabajo_tarea_form'] = array(
@@ -337,37 +453,35 @@ public function guardarForms($data)
     
        
 
-        // $rsp = $this->proceso_tareas->guardarForms($data);
+        $rsp = $this->Proceso_tareas->guardarForms($data);
+     
+        if (!$rsp) {
     
-        // if (!$rsp) {
+            log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Evalua si trabajo es viable');
     
-        //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Evalua si trabajo es viable');
+        } else {
+            log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Evalua si trabajo es viable');
     
-        // } else {
-        //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Evalua si trabajo es viable');
-    
-        // } 
+        }
        
                    
             $plazo_presupuesto = $form['plazo'];
 
             $unidad_medida_tiempo = $form['uni_tiempo'];
 
+            // un dia en milisegundos
+            $un_dia = 86400000; 
+
             $resultado_str = str_replace(empresa()."-unidades_tiempo", "", $unidad_medida_tiempo);	
 
-            return;
-
+         
             switch ($resultado_str) {
+                // valor de 1 dia en milisegundos 86400000
 
                 case '1':
-                   $variable_tiempo = is_int($plazo_presupuesto) *  is_int($resultado_str);
+                   $variable_tiempo = is_int($plazo_presupuesto) *  is_int($un_dia);
                    
-                   $value = "00:10";
-
-                    $time = explode(':',$value);
-
-                    $ms = $time[0]*60000 + $time[1]*1000;
-                    
+                   log_message('DEBUG', 'SEIN -notificacion de plazo en milisegundos ->' . json_encode($variable_tiempo));              
                     break;
 
                 case 'value':
@@ -385,13 +499,13 @@ public function guardarForms($data)
 
             $contrato["trabajoViable"]  = $form['result'];
 
-            $contrato["duracionTimer"]  = $ms;
+            $contrato["duracionTimer"]  = $variable_tiempo;
 
               return $contrato;
          
         break;
     
-    //paso 2
+    //paso 2 Evaluación del estado de cuenta del cliente
         case 'Evaluación del estado de cuenta del cliente':
      
             
@@ -409,7 +523,7 @@ public function guardarForms($data)
         );
     
     
-        $rsp = $this->proceso_tareas->guardarForms($data);
+        $rsp = $this->Proceso_tareas->guardarForms($data);
     
         if (!$rsp) {
     
@@ -442,7 +556,7 @@ public function guardarForms($data)
             break;
 
           
-    //paso 5
+    //paso 5 Reevaluar pedido de cotización
             case 'Reevaluar pedido de cotización':
  
                 log_message('DEBUG', 'SEIN -Evaluación del estado de cuenta del cliente ->' . $tarea->nombreTarea);
@@ -455,99 +569,255 @@ public function guardarForms($data)
         
                 break;
 
-        //paso 6
-                case 'Pintado y acabado final':
+    //paso 6  Evalua cotización
+            case 'Evalua cotización':
  
-                    log_message('DEBUG', 'YUDI Reparacion view-Pintado y acabado final->' . $tarea->nombreTarea);
-            
-                    if ($form['result'] == 'ok') {
-
-                        log_message('DEBUG', 'YUDI Reparacion -Pintado y acabado final contrato', json_encode($form['result'],true) );
-     
-                        $contrato["retornaAPaso"]  = $form['result'];
-                            
-                                  
-                             return $contrato;
-                
-                        break;
-
-
-                    }else {
-
-                       
-                        $data['_post_pedidotrabajo_tarea_form'] = array(
-            
-                            "nom_tarea" => "$nom_tarea",
-                            "task_id" => $task_id,
-                            "usuario_app" => $user_app,
-                            "case_id" => $case_id,
-                            "info_id" => $form['frm_info_id']
-                           
-                    
-                        );
-                    
-                    
-                        $rsp = $this->Yudiproctareas->guardarForms($data);
-                    
-                        if (!$rsp) {
-                    
-                            log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Pintado y acabado final');
-                    
-                        } else {
-                            log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Pintado y acabado final');
-                    
-                        }
-
-                        log_message('DEBUG', 'YUDI Reparacion -Pintado y acabado final contrato', json_encode($form['result'],true) );
-     
-                        $contrato["retornaAPaso"]  = $form['result'];
-                            
-                                  
-                             return $contrato;
-                
-                        break;
-                    }
-
-                   
-
-case 'Despacho':
-   
-
-         log_message('DEBUG', 'YUDI Reparacion view- Reparacion -Despacho->' . $tarea->nombreTarea);
+                log_message('DEBUG', 'SEIN -Evalua cotización ->'  . $tarea->nombreTarea);
         
-         $data['_post_pedidotrabajo_tarea_form'] = array(
- 
-             "nom_tarea" => "$nom_tarea",
-             "task_id" => $task_id,
-             "usuario_app" => $user_app,
-             "case_id" => $case_id,
-             "info_id" => $form['frm_info_id']
-            
-     
-         );
-     
-     
-         $rsp = $this->Yudiproctareas->guardarForms($data);
-     
-         if (!$rsp) {
-     
-             log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
-     
-         } else {
-             log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
-     
-         }
-     
-            $contrato["controlTrabajoTerminado"]  = $form['result'];
-        
-              
-         return $contrato;
- 
-         break;
+                log_message('DEBUG', 'SEIN -Evalua cotización ->' , json_encode($form['result'],true) );
 
-            default:
-                # code...
+
+                if ($form['result'] == true) {
+
+                    $contrato["apruebaCotizacion"]  = "true";
+
+                    $contrato["enviaVendedor"]  =  "true";
+
+                } else {
+
+                    $contrato["apruebaCotizacion"]  = "false";
+
+                    $contrato["enviaVendedor"]  = "false";
+
+                }
+        
+                return $contrato;
+            
                 break;
+
+
+
+    //paso 7 Enviar Cotización           
+    case 'Enviar Cotización':
+    
+
+            log_message('DEBUG', 'Enviar Cotización->' . $tarea->nombreTarea);
+            
+            // $data['_post_pedidotrabajo_tarea_form'] = array(
+    
+            //     "nom_tarea" => "$nom_tarea",
+            //     "task_id" => $task_id,
+            //     "usuario_app" => $user_app,
+            //     "case_id" => $case_id,
+            //     "info_id" => $form['frm_info_id']
+                
+        
+            // );
+        
+        
+            // $rsp = $this->Yudiproctareas->guardarForms($data);
+        
+            // if (!$rsp) {
+        
+            //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
+        
+            // } else {
+            //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
+        
+            // }
+        
+                $contrato["controlTrabajoTerminado"]  = $form['result'];
+            
+                
+            return $contrato;
+    
+            break;
+
+
+    //paso 8 Espera respuesta del cliente         
+    case 'Espera respuesta de cliente':
+    
+
+        log_message('DEBUG', 'Espera respuesta de cliente->' . $tarea->nombreTarea);
+        
+        // $data['_post_pedidotrabajo_tarea_form'] = array(
+
+        //     "nom_tarea" => "$nom_tarea",
+        //     "task_id" => $task_id,
+        //     "usuario_app" => $user_app,
+        //     "case_id" => $case_id,
+        //     "info_id" => $form['frm_info_id']
+            
+    
+        // );
+    
+    
+        // $rsp = $this->Yudiproctareas->guardarForms($data);
+    
+        // if (!$rsp) {
+    
+        //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
+    
+        // } else {
+        //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
+    
+        // }
+    
+            $contrato["clienteAceptaPresupuesto"]  = $form['result'];
+        
+            
+        return $contrato;
+
+        break;
+
+
+    //paso 9 Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado         
+    case 'Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado':
+    
+
+                log_message('DEBUG', 'Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado->' . $tarea->nombreTarea);
+                
+                // $data['_post_pedidotrabajo_tarea_form'] = array(
+        
+                //     "nom_tarea" => "$nom_tarea",
+                //     "task_id" => $task_id,
+                //     "usuario_app" => $user_app,
+                //     "case_id" => $case_id,
+                //     "info_id" => $form['frm_info_id']
+                    
+            
+                // );
+            
+            
+                // $rsp = $this->Yudiproctareas->guardarForms($data);
+            
+                // if (!$rsp) {
+            
+                //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
+            
+                // } else {
+                //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
+            
+                // }
+            
+                    $contrato["presupuestoVigente"]  = $form['result'];
+                
+                    
+                return $contrato;
+        
+                break;
+ 
+   //paso 10     Recepción de OC y archivo        
+   case 'Recepción de OC y archivo':
+
+    log_message('DEBUG', 'Recepción de OC y archivo->' . $tarea->nombreTarea);
+    
+    // $data['_post_pedidotrabajo_tarea_form'] = array(
+
+    //     "nom_tarea" => "$nom_tarea",
+    //     "task_id" => $task_id,
+    //     "usuario_app" => $user_app,
+    //     "case_id" => $case_id,
+    //     "info_id" => $form['frm_info_id']
+        
+
+    // );
+
+
+    // $rsp = $this->Yudiproctareas->guardarForms($data);
+
+    // if (!$rsp) {
+
+    //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
+
+    // } else {
+    //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
+
+    // }
+    
+        $contrato["precisaAnticipo"]  = $form['result'];
+    
+        
+    return $contrato;
+
+    break;                
+
+  //paso 14 Realiza Control final del Trabajo     
+  case 'Realiza Control final del Trabajo':
+                    
+    log_message('DEBUG', 'SEIN view -> Realiza Control final del Trabajo' . $tarea->nombreTarea);
+
+ 
+    // $data['_post_pedidotrabajo_tarea_form'] = array(
+
+    //     "nom_tarea" => "$nom_tarea",
+    //     "task_id" => $task_id,
+    //     "usuario_app" => $user_app,
+    //     "case_id" => $case_id,
+    //     "info_id" => $form['frm_info_id']
+        
+
+    // );
+
+
+    // $rsp = $this->Yudiproctareas->guardarForms($data);
+
+    // if (!$rsp) {
+
+    //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
+
+    // } else {
+    //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
+
+    // }
+
+        $contrato["apruebaControlFinal"]  = $form['result'];
+    
+        
+    return $contrato;
+
+    break;     
+
+ //paso 15 Revision de la No Confirmidad    
+ case 'Revision de la No Confirmidad':
+                    
+    log_message('DEBUG', 'SEIN view -> Revision de la No Confirmidad' . $tarea->nombreTarea);
+
+ 
+    // $data['_post_pedidotrabajo_tarea_form'] = array(
+
+    //     "nom_tarea" => "$nom_tarea",
+    //     "task_id" => $task_id,
+    //     "usuario_app" => $user_app,
+    //     "case_id" => $case_id,
+    //     "info_id" => $form['frm_info_id']
+        
+
+    // );
+
+
+    // $rsp = $this->Yudiproctareas->guardarForms($data);
+
+    // if (!$rsp) {
+
+    //     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - YUDI -Despacho');
+
+    // } else {
+    //     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - YUDI -Despacho');
+
+    // }
+
+        $contrato["resultadoRevision"]  = $form['result'];
+    
+            
+    return $contrato;
+
+    break;     
+
+                default:
+                    # code...
+                    
+                    break;
         }
     }
 

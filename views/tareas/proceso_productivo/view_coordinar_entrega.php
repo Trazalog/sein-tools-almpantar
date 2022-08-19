@@ -7,39 +7,67 @@ input[type=radio]{
 }
 </style>
 <hr>
-<!-- <input type="number" class="hidden" value="<?php // echo $pema_id ?>" id="pemaId"> -->
 
-<?php // #HGallardo
+<?php 
     // carga el modal de impresion de QR
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
-<h3>Viabilidad de Cotización<small></small></h3>
+<h3>Coordinar entrega con cliente<small></small></h3>
 <form id="generic_form">
     <div class="form-group">
         <center>
-            <h3 class="text-danger"> ¿Es viable cotizar? </h3>
+            <h3 class="text-danger"> ¿Iniciar coordinar entrega con cliente? </h3>
             <label class="radio-inline">
-                <input id="aprobar" type="radio" name="result" value="true"> Si
+                <input id="aprobar" type="radio" name="result" value="true"
+                    onclick="mostrarForm();"> Si
             </label>
             <label class="radio-inline">
-                <input id="rechazo" type="radio" name="result" value="false"> No
+                <input id="rechazo" type="radio" name="result" value="false"
+                    onclick="ocultarForm()"> No
             </label>
         </center>
     </div>
     <hr>
 
+    <!-- <input id="plazo" type="hidden" name="plazo">
+    <input id="uni_tiempo" type="hidden" name="uni_tiempo"> -->
     <br>
  
 </form>
+<?php
+// funcion que desplega formulario asociado a la vista
+// los formularios dinamicos se cargar de la tabla pro.procesos_forms
 
-<!-- ver esta parte -->
+// $aux =json_decode($data);
+
+// $formularios = $aux->formularios;
+
+// if($aux){
+                                
+
+//   foreach ($formularios as $clave => $valor) {
+
+//     foreach ($valor as $v2) {
+//       if($v2->orden == '1'){
+//         echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+//       }
+//       else if($v2->orden == '2'){
+//         echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+//       }
+//     else{
+//       echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+//     }
+//   }
+ 
+//           }
+//                      }
+  
+
+?>
+<div id="form-dinamico" class="frm-new" data-form="65"></div>
 <!-- 
-<div id="form-dinamico" class="frm-new" data-form="53"></div>
-
-<div id="form-dinamico-rechazo" class="frm-new" data-form="51"></div> -->
-
-<button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion" onclick="modalCodigos()">Impresion</button>
+<button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion" onclick="modalCodigos()">Impresion</button> -->
 
 
 
@@ -90,7 +118,7 @@ input[type=radio]{
     </div>
   </div>
 </div>
-
+<!--END Modal -->
 <script>
 
   function getFormData(){
@@ -150,13 +178,41 @@ debugger;
   $('#btnImpresion').hide();
 
 
+ 
+  $('#view').ready(function() {
+wo();
+    alertify.success("Cargando datos en la vista aguarde...");
+    
+    setTimeout(function() {
+        wc();    
+        tomarDatos();
+}, 9000);
+   
+    
+});
+
+
+function tomarDatos(){
+    debugger;
+
+$('#plazo').val($('#plazo_presupuesto').val());
+    
+
+var uni_medida = $('select[name="unidad_medida_tiempo').val();
+
+console.log('uni_medida :' + uni_medida);
+
+$('#uni_tiempo').val(uni_medida);
+}  
+
+
   function cerrarTareaform(){
     debugger;
 
     if ( $("#rechazo").is(":checked")) {
 	
     var bandera = true ;
-
+    
 
     if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
         Swal.fire(
@@ -170,8 +226,11 @@ debugger;
 
     else{
      $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
+
     frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
+
         var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+
         console.log('info_id:' + info_id);
          console.log('Formulario Guardado con exito -function cerrarTareaform');
         }
@@ -197,6 +256,7 @@ debugger;
       else{
       frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
           var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
+
           console.log('info_id:' + info_id);
           console.log('Formulario Guardado con exito -function cerrarTareaform');
           }
@@ -206,18 +266,142 @@ debugger;
     }
 }
 
-  function cerrarTarea() {
+function cerrarTarea() {
  debugger;
- var id = $('#taskId').val();
- var dataForm = new FormData($('#generic_form')[0]);
+     
+    
+       if ( $("#rechazo").is(":checked")) {
+       
 
- $.ajax({
+        if ($('#motivo_rechazo_interno .form-control').val() == null ) {
+       Swal.fire(
+                        'Error!',
+               'Por favor complete el campo Motivo de rechazo interno',
+                 'error'
+            )
+          return;
+      }
+
+      if ($('#motivo_rechazo_cliente .form-control').val() == null) {
+       Swal.fire(
+                        'Error!',
+               'Por favor complete el campo Motivo de rechazo al cliente',
+                 'error'
+            )
+          return;
+      }
+
+
+
+         const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+
+        title: 'Estas Seguro que desea rechazar el pedido de trabajo?',
+       
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        reverseButtons: true
+    }).then((result) => {
+        debugger;
+        console.log(result);
+        if (result.value) {
+            console.log('El usuario decidio rechazar el pedido de trabajo');
+           var guardado = cerrarTareaform();
+
+    if(!guardado){     
+         return;
+        }
+     console.log('tarea cerrada');
+      var id = $('#taskId').val();
+      console.log(id);
+
+      var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+
+     var dataForm = new FormData($('#generic_form')[0]);
+
+      dataForm.append('taskId', $('#taskId').val());
+
+      dataForm.append('frm_info_id', frm_info_id_rechazo);
+
+      $.ajax({
           type: 'POST',
           data: dataForm,
           cache: false,
           contentType: false,
           processData: false,
-          url: '<?php  base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
+          url: '<?php  base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
+          success: function(data) {
+              //wc();
+          //   back();
+          linkTo('<?php echo BPM ?>Proceso/');
+
+          setTimeout(() => {
+              Swal.fire(
+                  
+                      'Perfecto!',
+                      'Se Finalizó la Tarea Correctamente!',
+                      'success'
+                  )
+      }, 6000);
+      
+          },
+          error: function(data) {
+              alert("Error");
+          }
+      });
+
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            console.log('El usuario decidio NO rechazar el pedido de trabajo');
+            swalWithBootstrapButtons.fire(
+                'Cancelado',
+                '',
+                'error'
+            )
+        }
+    })
+
+
+
+
+      } else{
+
+        var guardado = cerrarTareaform();
+
+if(!guardado){
+ return;
+}
+
+        debugger;
+
+      var frm_info_id = $('#form-dinamico .frm').attr('data-ninfoid');
+     
+      
+      var id = $('#taskId').val();
+      console.log(id);
+
+      var dataForm = new FormData($('#generic_form')[0]);
+
+      dataForm.append('taskId', $('#taskId').val());
+
+      dataForm.append('frm_info_id', frm_info_id);
+
+      $.ajax({
+          type: 'POST',
+          data: dataForm,
+          cache: false,
+          contentType: false,
+          processData: false,
+          url: '<?php // base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
           success: function(data) {
               //wc();
           //   back();
@@ -238,128 +422,20 @@ debugger;
           }
       });
 
-
-// ver esta parte
-//  ------------------------------
-     
-//       if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-//         Swal.fire(
-//                 'Error!',
-//                 'Por favor complete el campo Motivo de Rechazo...',
-//                 'error'
-//             )
-//           return;
-//       }
-
-//       if ( $("#rechazo").is(":checked")) {
-// 		debugger;
-
-//  var guardado = cerrarTareaform();
-
-//     if(!guardado){
-//      return;
-//     }
-//     console.log('tarea cerrada');
-//       var id = $('#taskId').val();
-//       console.log(id);
-
-//       var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-
-//      var dataForm = new FormData($('#generic_form')[0]);
-
-//       dataForm.append('taskId', $('#taskId').val());
-
-//       dataForm.append('frm_info_id', frm_info_id_rechazo);
-
-//       $.ajax({
-//           type: 'POST',
-//           data: dataForm,
-//           cache: false,
-//           contentType: false,
-//           processData: false,
-//           url: '<?php // base_url() ?>index.php/<?php //echo BPM ?>Proceso/cerrarTarea/' + id,
-//           success: function(data) {
-//               //wc();
-//           //   back();
-//           linkTo('<?php //echo BPM ?>Proceso/');
-
-//           setTimeout(() => {
-//               Swal.fire(
-                  
-//                       'Perfecto!',
-//                       'Se Finalizó la Tarea Correctamente!',
-//                       'success'
-//                   )
-//       }, 6000);
-      
-//           },
-//           error: function(data) {
-//               alert("Error");
-//           }
-//       });
-
-
-//       } else{
-
-//         var guardado = cerrarTareaform();
-
-// if(!guardado){
-//  return;
-// }
-
-//         debugger;
-
-//       var frm_info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-     
-      
-//       var id = $('#taskId').val();
-//       console.log(id);
-
-//       var dataForm = new FormData($('#generic_form')[0]);
-
-//       dataForm.append('taskId', $('#taskId').val());
-
-//       dataForm.append('frm_info_id', frm_info_id);
-
-//       $.ajax({
-//           type: 'POST',
-//           data: dataForm,
-//           cache: false,
-//           contentType: false,
-//           processData: false,
-//           url: '<?php // base_url() ?>index.php/<?php // echo BPM ?>Proceso/cerrarTarea/' + id,
-//           success: function(data) {
-//               //wc();
-//           //   back();
-//           linkTo('<?php // echo BPM ?>Proceso/');
-
-//           setTimeout(() => {
-//               Swal.fire(
-                  
-//                       'Perfecto!',
-//                       'Se Finalizó la Tarea Correctamente!',
-//                       'success'
-//                   )
-//       }, 6000);
-      
-//           },
-//           error: function(data) {
-//               alert("Error");
-//           }
-//       });
-
-//       }
+      }
 
     
   }
+
+
+
+ 
 </script>
 
-<script> 
+<script>  
   var band = 0;
-
-  // Se pueden hacer dos cosas: o un ajax buscando datos o directamente
+  // Se peden hacer dos cosas: o un ajax buscando datos o directamente
   // armar con los datos de la pantalla
-
   function modalCodigos(){
 
       // si es rechazado el pedido debe llenar el input motivo
@@ -382,7 +458,7 @@ debugger;
               config.pixel = "2";
               config.level = "S";
               config.framSize = "2";
-          // info para immprimir  
+          // info para immprimir  medidas_yudica
           var arraydatos = {};
               arraydatos.N_orden = $('#petr_id').val();
               arraydatos.Cliente = $('#cliente').val();
