@@ -4,7 +4,7 @@
 }
 </style>
 <hr>
-<?php 
+<?php
     // carga el modal de impresion de QR
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
@@ -17,16 +17,16 @@
                     <div class="col-md-3">
                     <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                           
+
                             <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido"  minlength="4" maxlength="10" size="12" class="form-control input-md" readonly>
                         </div>
                     </div>
-                    <!-- ***************** -->  
+                    <!-- ***************** -->
                     <!-- Objetivo -->
                     <div class="col-md-3">
                     <label class="control-label" for="objetivo">Objetivo<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                          
+
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="objetivo_proyecto" name="objetivo_proyecto" type="text" class="form-control input-md" data-bv-notempty readonly>
                             </div>
@@ -36,29 +36,29 @@
 
                         </div>
                     </div>
-                     <!-- ***************** -->  
+                     <!-- ***************** -->
                      <!-- plazo de entrega -->
                     <div class="col-md-3" >
                     <label class="control-label" for="plazo_entrega">plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                       
+
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
-                            
+
                                 <select name="unidad_medida_plazo" id="unidad_medida_plazo" class="form-control" style="width: auto" data-bv-notempty="false">
                                     <option value="" disabled selected> -Seleccionar- </option>
                                     <option value="dias" selected>diás</option>
                                 </select>
-                            
+
                             </div>
                         </div>
                     </div>
-                    <!-- ***************** -->           
+                    <!-- ***************** -->
                     <!-- Cliente-->
                     <div class="col-md-3">
                     <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex;">
-                        <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
+                        <input type="text" class="form-control habilitar" id="nomb_cliente" name="nomb_cliente" value="" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->
@@ -68,48 +68,48 @@
             <div class="row">
                     <!-- Direccion Entrega -->
                     <div class="col-md-4 espaciado">
-                    <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
+                    <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>
                         <div class="form-group">
-                           
-                            <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value="" readonly>
+
+                            <input type="text" class="form-control habilitar" id="dir_entrega_cliente" name="dir_entrega_cliente" value="" readonly>
                         </div>
                     </div>
-                    <!-- ***************** --> 
+                    <!-- ***************** -->
 					 <!-- email -->
-					 <div class="col-md-3">            
-           <label class=" control-label" for="email" name="">Email:</label>                                
+					 <div class="col-md-3">
+           <label class=" control-label" for="email" name="">Email:</label>
                         <div class="form-group" style="display:inline-flex;">
-                            
-                            <input type="text" class="form-control habilitar" id="email_cliente" readonly>
+
+                            <input type="text" class="form-control habilitar" id="email_cliente" name="email_cliente" readonly>
                         </div>
                     </div>
-                    <!-- ***************** --> 
+                    <!-- ***************** -->
 					 <!-- email alternativo -->
-					 <div class="col-md-4">                
-           <label class=" control-label" for="email_alternativo" name="">Email alternativo:</label>                            
+			          <div class="col-md-4">
+            <label class="control-label" for="email_alternativo">email alternativo:</label>
                         <div class="form-group" style="display:inline-flex;">
-                          
-                            <input type="text" class="form-control habilitar" id="email_alternativo" value="">
+
+                            <input type="text" id="email_alternativo" name="email_alternativo"  class="form-control input-md" >
                         </div>
                     </div>
-                    <!-- ***************** --> 
-            </div> <!-- end row -->  
+
+            </div> <!-- end row -->
         <br>
-            <div class="row">   
+            <div class="row">
                     <!-- forma de pago -->
                     <div class="col-md-3">
                     <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
                     <div class="input-group" style="display:inline-flex;">
-                  <select name="forma_pago" id="forma_pago" class="form-control" style="width: auto" data-bv-notempty="false">
+                  <select id="forma_pago"  name="forma_pago" class="form-control" style="width: auto" data-bv-notempty="false">
                                     <option value="" disabled="" selected=""> -Seleccionar- </option>
-                                    <option value="" >Contado Efectivo</option>
-                                    <option value="">Debito</option>
-                                    <option value="">Credito</option>
+                                    <option value="Contado">Contado Efectivo</option>
+                                    <option value="Debito">Debito</option>
+                                    <option value="Credito">Credito</option>
                                 </select>
-                            
+
                             </div>
-                    </div>  
-					  <!-- ***************** --> 
+                    </div>
+					  <!-- ***************** -->
               <!-- forma de pago -->
               <div class="col-md-3">
               <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>
@@ -124,31 +124,31 @@
                                     <option value="USD"> AUD - Dólar australiano </option>
                         </select>
                     </div>
-                    </div>  
-					  <!-- ***************** --> 
+                    </div>
+					  <!-- ***************** -->
             <!--Cantidad-->
             <div class="col-md-3">
             <label class="control-label" for="cantidad">Cantidad<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group">
-                          
-                            <input id="cantidad" name="cantidad"  class="form-control input-md" onchange="calcularTotal(this)" required>
+
+                            <input type="text" id="cantidad" name="cantidad"  class="form-control input-md" onchange="calcularTotal(this)" required>
                         </div>
                     </div>
                     <!-- ***************** -->
-                    <!-- precio_unitario -->                                            
+                    <!-- precio_unitario -->
                     <div class="col-md-3">
                     <label class="control-label" for="precio_unitario">Precio Unitario<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">                                                
-                          
+                        <div class="form-group">
+
                             <input id="precio_unitario" name="precio_unitario" type="text" class="form-control input-md" onchange="calcularTotal(this)" required>
                         </div>
                     </div>
-            </div> <!-- end row -->  
+            </div> <!-- end row -->
            <br>
-            <div class="row">                                                      
+            <div class="row">
                     <!-- ***************** -->
 					 <div class="col-md-12">
-                        <div class="form-group" style="width: 100%">                                       
+                        <div class="form-group" style="width: 100%">
                             <label class="control-label" for="descripcion">Descripción <strong style="color: #dd4b39">*</strong>:</label>
                             <div class="input-group" style="width:100%">
                                 <textarea class="form-control" id="descripcion" name="descripcion" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required></textarea>
@@ -158,54 +158,54 @@
                     <!-- ***************** -->
              </div> <!-- end row -->
             <br>
-             <div class="row">       
-                    <!-- importe -->                                            
+             <div class="row">
+                    <!-- importe -->
                 <div class="col-md-3">
                     <label class="control-label" for="importe">Importe<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">                                                
-                          
+                        <div class="form-group">
+
                             <input id="importe" name="importe" placeholder="" class="form-control input-md" onchange="calcularTotal(this)" required readonly>
                         </div>
                     </div>
                     <!-- ***************** -->
-                     <!-- iva -->                                            
+                     <!-- iva -->
                      <div class="col-md-3">
                     <label class="control-label" for="iva">IVA<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">                                                
-                          
+                        <div class="form-group">
+
                             <input id="iva" name="iva" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- ***************** -->
-                     <!-- total -->                                            
+                     <!-- total -->
                      <div class="col-md-3">
                     <label class="control-label" for="total">Subtotal:</label>
-                        <div class="form-group">                                                
-                          
+                        <div class="form-group">
+
                             <input id="total" name="total" type="text" placeholder="" class="form-control input-md" readonly>
                         </div>
                     </div>
-                    <!-- ***************** --> 
+                    <!-- ***************** -->
                     <div class="col-md-1 espaciado">
                       <div class="form-group">
-                      <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='habilitarEdicion()'></i> 
+                      <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='habilitarEdicion()'></i>
                        </div>
                     </div>
-          
+
                     <div class="col-md-2">
                           <!--_________________ Agregar_________________-->
                 <div class="form-group text-right">
                     <button type="button" class="btn btn-sucess" title="Agregar a la tabla de detalles" onclick="agregarTabla()" >Agregar</button>
-                </div>                
+                </div>
                 <!--__________________________________-->
                     </div>
-                  
-              </div> <!-- end row -->          
+
+              </div> <!-- end row -->
                     <br>
 
                     <!-- Button -->
 
-         
+
 
             <div class="col-md-12 col-sm-12 col-xs-12 centrar">
                 <h5>Detalles de cotización:</h5>
@@ -220,7 +220,7 @@
                             <th>Importe</th>
                         </thead>
                         <tbody >
-                        
+
                         </tbody>
                     </table>
                     <!--_______ FIN TABLA PRODUCTOS ______-->
@@ -230,11 +230,11 @@
               <!--_________________ >Guardar-->
               <div class="col-md-12 col-sm-12 col-xs-12 centrar form-group text-right">
                     <button type="button" class="btn btn-sucess" title="Guardar Cotización" onclick="guardarDetalle()">Guardar</button>
-                </div>                
+                </div>
                 <!--__________________________________-->
 
                 </fieldset>
-            </form>                           
+            </form>
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -268,7 +268,7 @@
               <td><input id="num_serie" name="num_serie" type="text" value="" class="form-control input-md"></td>
               <td><input id="banda_yudica" name="banda_yudica" type="text" value="" class="form-control input-md"></td>
             </tr>
-        
+
           </tbody>
         </table>
         <br><br><br>
@@ -303,7 +303,7 @@ debugger;
 
     $.each(array_form, function( index, value ) {
         console.log( index + ": " + value );
- 
+
     });
   }
 
@@ -321,27 +321,27 @@ debugger;
   $('#view').ready(function() {
 wo();
     alertify.success("Cargando datos en la vista aguarde...");
-    
+
     setTimeout(function() {
-        wc();    
+        wc();
         tomarDatos();
 }, 9000);
-   
-    
+
+
 });
 
 
 function tomarDatos(){
-   
+
 
     $('#cod_proyecto').val($('#codigo_proyecto').val());
-    
-  
-  
-    
+
+
+
+
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
-  
+
 
 
     $('#email_cliente').val($('#email').val());
@@ -350,7 +350,7 @@ function tomarDatos(){
 
     $('#nomb_cliente').val($('#cliente').val());
 
-   
+
 
 
     $('#objetivo_proyecto').val($('#objetivo').val());
@@ -377,33 +377,33 @@ var calcular_total = calcular_importe * valor_iva;
 var calcular_total_iva = calcular_total + calcular_importe;
 
 if ( valor_cantidad !='' && valor_precio_unitario ==''){
-   
+
     alertify.warning("Indique precio unitario!");
-   
+
   }
 
 if (valor_precio_unitario !=''){
-     
+
      wo();
     // alertify.success("Calculando importe!");
-     wc();   
+     wc();
 
    }
 
     if ($("#cantidad").val()!='' && $("#precio_unitario").val()!='' ) {
-        
+
       setTimeout(function() {
         wo();
-        
-        // alertify.success("Importe calculado!");  
-        
+
+        // alertify.success("Importe calculado!");
+
         $("#importe").val(calcular_importe);
 
 
-        wc(); 
+        wc();
     }, 3000);
 
-      
+
 setTimeout(function() {
         wo();
 
@@ -411,7 +411,7 @@ setTimeout(function() {
 
         alertify.success("Echo.. subtotal calculado!");
 
-        wc(); 
+        wc();
     }, 5000);
 
 
@@ -439,7 +439,7 @@ setTimeout(function() {
 
      // $('#motivo').show();
       $('#form-dinamico-rechazo').show();
-    
+
       $('#comprobante').show();
       $('#hecho').prop('disabled',false);
       $('#form-dinamico').hide();
@@ -462,7 +462,7 @@ setTimeout(function() {
     debugger;
 
     if ( $("#rechazo").is(":checked")) {
-	
+
     var bandera = true ;
 
 
@@ -477,14 +477,14 @@ setTimeout(function() {
 	 		}
 
     else{
-     $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
+     $('#form-dinamico-rechazo .frm').attr('id','rechazo-form');
     frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
         var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
         console.log('info_id:' + info_id);
          console.log('Formulario Guardado con exito -function cerrarTareaform');
         }
 
-        return bandera; 
+        return bandera;
   }
   else if ( $("#aprobar").is(":checked")) {
     debugger;
@@ -509,7 +509,7 @@ setTimeout(function() {
           console.log('Formulario Guardado con exito -function cerrarTareaform');
           }
 
-          return bandera; 
+          return bandera;
 
     }
 }
@@ -520,10 +520,10 @@ setTimeout(function() {
 //
 //Agregar la informacion a la tabla
 function agregarTabla(){
-   //Informamos el campo vacio 
+   //Informamos el campo vacio
 debugger;
   //  var reporte = validarCampos();
-                                
+
     // if($('#frm-Cotizacion')[0]){
         //Pantalla cargando
         wo();
@@ -534,7 +534,7 @@ debugger;
         data = formToObject(datos);
         //Si la operacion es agregar en la edicion, el service responde con el dedo_id
         //se lo agrego al json que se asigna al data-json en la tabla
-       
+
         // dedo_id = "";
 
         //Armo JSON para la fila
@@ -549,15 +549,15 @@ debugger;
 
         //     precio_unitario = data.precio_unitario.split(" ");
         //     precio_total = precio_unitario[1] * data.cantidad;
-            
+
         //     //Puede poseer o no descuento
         //     if(data.descuento){
         //         aux = data.descuento.split(" ");
         //         descuento =  parseFloat(precio_total * (aux[0] / 100)).toFixed(2);
         //         precio_total = parseFloat(precio_total - descuento).toFixed(2);
-        //     }   
+        //     }
         // }else{
-            
+
         // }
         fila = "<tr data-json= '"+ JSON.stringify(data) +"'>" +
                 '<td><button  type="button" title="Editar"  class="btn btn-primary btn-circle btnEditar" data-toggle="modal" data-target="#modaleditar"><span class="fa fa-fw fa-edit text-light-blue" aria-hidden="true"></span></button>&nbsp<button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
@@ -685,7 +685,7 @@ debugger;
 //             reporte,
 //             'error'
 //         );
-//     }             
+//     }
 // }
 
 
@@ -748,9 +748,9 @@ function validarCampos(){
         );
         return;
     }
-  
+
     //valído tabla no vacia
-    tabla = $('#tabla_detalle').DataTable(); 
+    tabla = $('#tabla_detalle').DataTable();
     if ( ! tabla.data().any() ) {
         wc();
         Swal.fire(
@@ -788,7 +788,7 @@ function validarCampos(){
     // }
     //Luego de guardar cierro el detalle del documento
     //Vuelvo a la pantalla principal de la tarea
-    
+
 }
 //
 
@@ -796,7 +796,7 @@ function validarCampos(){
 // Guardo la cotizacion cargada y su respectivo detalle
 async function agregarDetalle() {
 
-    
+
     tabla = $('#tabla_detalle').DataTable();
 
 debugger;
@@ -804,17 +804,17 @@ debugger;
     //tomo el formulario
     datos = new FormData($('#frm-Cotizacion')[0]);
     datos.append('petr_id', $("#petr_id").val());
-   
-    
+
+
     var datos_json = formToJson(datos);
 
-   
+
 console.log(datos_json);
 
-    
+
 
     let cotizacion = new Promise( function(resolve,reject){
-        
+
         $.ajax({
             type: 'POST',
             data: datos,
@@ -822,50 +822,50 @@ console.log(datos_json);
             contentType: false,
             processData: false,
             url: "<?php echo SEIN; ?>Cotizacion/agregarCotizacion",
-            success: function(data) { 
+            success: function(data) {
                 debugger;
                 rsp = JSON.parse(data);
                 respuesta=  JSON.parse(rsp.data);
                  rspA = JSON.parse(JSON.stringify(respuesta.respuesta));
 
+                 //si se guarda bien guardo el id de cotizacion
                  coti_id = rspA['coti_id'];
-     
+
                 //Si es correcto, guardo los detalles de la cotizacion
                 if(rsp.status){
 
                     debugger;
                     //Loopeo sobre las filas de la tabla
                     //Formateo precio_unitario y descuento porque tiene los prefijos
+              
                     detalles = [];
-
-                   
-
-
-
                     tabla.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-                       
-                        var detalle = this.data();
+                        var datos = this.data();
+                        nodo = this.node();
                         
-                         let json = [];
-
+                        var json = JSON.parse($(nodo).attr('data-json'));
+                    
+        
 
                         json.coti_id = coti_id;
 
-                        json.cantidad = cantidad;
+                        json.cantidad = datos[1];
 
-                        json.descripcion = descripcion;
+                        json.descripcion = datos[2];
 
-                        json.precio_unitario = precio_unitario;
+                        json.precio_unitario = datos[3];
 
-                        json.importe = total;
+                        json.importe = datos[4];
+
 
                         detalles[rowIdx] = json;
                     });
 
+
                     $.ajax({
                         type: 'POST',
                         data: {detalles},
-                        dataType: "json",                   
+                        dataType: "json",
                         url: "<?php echo SEIN; ?>Cotizacion/guardarDetalleCotizacion ",
                         success: function(resp) {
                             if(resp.status){
@@ -873,7 +873,7 @@ console.log(datos_json);
                             }else{
                                 reject("Se agrego correctamente la cotizacion, pero fallo al agregar el detalle");
                             }
-                        
+
                         },
                         error: function(data) {
                             alert("Error al agregar los detalles de la cotizacion");
@@ -885,7 +885,7 @@ console.log(datos_json);
                     console.log(rsp.message);
                     reject("Error al agregar la cotizacion");
                 }
-                 
+
             },
             error: function(data) {
                 reject("Error al agregar la cotizacion");
@@ -908,11 +908,11 @@ if (confirm('¿Desea borrar el registro?')) {
     tabla = $('#tabla_detalle').DataTable();
 
     if(accion == "editar"){
-        
+
         datos = JSON.parse($(this).parents('tr').attr('data-json'));
         filaEliminar = this;
         dedo_id = {"dedo_id" : datos.dedo_id};
-        
+
         $.ajax({
                 type: 'POST',
                 data: {dedo_id},
@@ -922,13 +922,13 @@ if (confirm('¿Desea borrar el registro?')) {
 
                     if(resp.status){
 
-                        tabla.row( $(filaEliminar).parents('tr') ).remove().draw(); 
+                        tabla.row( $(filaEliminar).parents('tr') ).remove().draw();
                         alertify.success("Registro eliminado correctamente!");
 
                     }else{
                         alertify.error("Error al eliminar detalle");
                     }
-                
+
                 },
                 error: function(data) {
                     alertify.error("Error al eliminar detalle");
@@ -936,7 +936,7 @@ if (confirm('¿Desea borrar el registro?')) {
             });
     }else{
 
-        tabla.row( $(this).parents('tr') ).remove().draw(); 
+        tabla.row( $(this).parents('tr') ).remove().draw();
         alertify.success("Registro eliminado correctamente!");
     }
 }
@@ -982,13 +982,13 @@ if (confirm('¿Desea borrar el registro?')) {
 
           setTimeout(() => {
               Swal.fire(
-                  
+
                       'Perfecto!',
                       'Se Finalizó la Tarea Correctamente!',
                       'success'
                   )
       }, 6000);
-      
+
           },
           error: function(data) {
               alert("Error");
@@ -998,7 +998,7 @@ if (confirm('¿Desea borrar el registro?')) {
 
 
 //  ------------------------------
-     
+
       if ($('#rechazo').prop('checked') && $('#motivo_rechazo_interno .form-control').val() == '' && $('#motivo_rechazo_cliente .form-control').val() == '') {
        Swal.fire(
                         'Error!',
@@ -1013,7 +1013,7 @@ if (confirm('¿Desea borrar el registro?')) {
 
  var guardado = cerrarTareaform();
 
-    if(!guardado){     
+    if(!guardado){
          return;
         }
      console.log('tarea cerrada');
@@ -1042,13 +1042,13 @@ if (confirm('¿Desea borrar el registro?')) {
 
 //           setTimeout(() => {
 //               Swal.fire(
-                  
+
 //                       'Perfecto!',
 //                       'Se Finalizó la Tarea Correctamente!',
 //                       'success'
 //                   )
 //       }, 6000);
-      
+
 //           },
 //           error: function(data) {
 //               alert("Error");
@@ -1067,8 +1067,8 @@ if (confirm('¿Desea borrar el registro?')) {
 //         debugger;
 
 //       var frm_info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-     
-      
+
+
 //       var id = $('#taskId').val();
 //       console.log(id);
 
@@ -1092,13 +1092,13 @@ if (confirm('¿Desea borrar el registro?')) {
 
 //           setTimeout(() => {
 //               Swal.fire(
-                  
+
 //                       'Perfecto!',
 //                       'Se Finalizó la Tarea Correctamente!',
 //                       'success'
 //                   )
 //       }, 6000);
-      
+
 //           },
 //           error: function(data) {
 //               alert("Error");
@@ -1107,7 +1107,7 @@ if (confirm('¿Desea borrar el registro?')) {
 
 //       }
 
-    
+
   }
 
 }
@@ -1132,7 +1132,7 @@ if (confirm('¿Desea borrar el registro?')) {
                 'Por favor complete el campo Motivo de Rechazo...',
                 'error'
             )
-      
+
         return;
       }
 
@@ -1144,7 +1144,7 @@ if (confirm('¿Desea borrar el registro?')) {
               config.pixel = "2";
               config.level = "S";
               config.framSize = "2";
-          // info para immprimir  
+          // info para immprimir
           var arraydatos = {};
               arraydatos.N_orden = $('#petr_id').val();
               arraydatos.Cliente = $('#cliente').val();

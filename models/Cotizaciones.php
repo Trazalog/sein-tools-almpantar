@@ -41,7 +41,7 @@ class Cotizaciones extends CI_Model
     public function guardarDetallesCotizacion($data){
         
         $url = REST_SEIN."/setDetalleCotizacion";
-        // $batch_req = [];
+         $batch_req = [];
 
     
 

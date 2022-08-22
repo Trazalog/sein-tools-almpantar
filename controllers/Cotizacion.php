@@ -51,7 +51,7 @@ class Cotizacion extends CI_Controller
 	*/
     public function guardarDetalleCotizacion(){
 		log_message('DEBUG', "#TRAZA | #SEIN | Cotizacion | guardarDetallesCotizacion()");
-		$detalle = $this->input->post('data');
+		$detalle = $this->input->post('detalles');
 
 		$resp = $this->Cotizaciones->guardarDetallesCotizacion($detalle);
 
