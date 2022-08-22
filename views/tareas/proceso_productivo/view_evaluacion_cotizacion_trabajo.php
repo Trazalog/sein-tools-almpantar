@@ -690,8 +690,6 @@ debugger;
 
 
 
-
-
 function validarCampos(){
         var valida = '';
         //Producto
