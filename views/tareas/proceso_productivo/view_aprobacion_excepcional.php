@@ -19,7 +19,7 @@ input[type=radio] {
 <form id="generic_form">
     <div class="form-group">
         <center>
-            <h3 class="text-danger"> ¿Realizr aprobación excepcional? </h3>
+            <h3 class="text-danger"> ¿Realizar aprobación excepcional? </h3>
             <label class="radio-inline">
                 <input id="aprobar" type="radio" name="result" value="true"> Si
             </label>

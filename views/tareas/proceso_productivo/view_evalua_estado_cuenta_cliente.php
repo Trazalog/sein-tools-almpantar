@@ -10,7 +10,7 @@ input[type=radio] {
 <hr>
 
 
-<?php
+<?php #kMarchan
     // carga el modal de impresion de QR
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
@@ -191,11 +191,14 @@ wo();
 
 function tomarDatos(){
     
+    //tomo los datos del formulario dinamico de cabecera
+    //completo los campos del formulario. los imput pueden o no ser readonly.
+    
 $('#codigo_cliente').val($('#codigo_proyecto').val());
     
 $('#email_cliente').val($('#email').val());
 
-$('#email_alternativo_cliente').val($('#cliente').val());
+$('#email_alternativo_cliente').val($('#email_alternativo').val());
 
 
 }
@@ -243,170 +246,74 @@ $('#form-dinamico-rechazo').show();
 $('#btnImpresion').hide();
 
 
-function cerrarTareaform() {
-    debugger;
 
-    // if ($("#rechazo").is(":checked")) {
+async function cerrarTareaform(){
+    resp = {};
+    if (!frm_validar('#form-dinamico')) {
+  
+        Swal.fire('Oops...','Debes completar los campos obligatorios (*)','error');
+        resp.confirma = false;
 
-    //     var bandera = true;
+        return new Promise(reject => {reject(resp)});
+    }else{
+        resp.confirma = true;
+        resp.info_id = await frmGuardarConPromesa($('#form-dinamico').find('form'));
+        console.log('Formulario guardado con éxito. Info ID: '+ resp.info_id);
 
-
-    //     if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-    //         Swal.fire(
-    //             'Oops...',
-    //             'Debes completar los campos Obligatorios (*)',
-    //             'error'
-    //         )
-    //         bandera = false;
-    //         return bandera;
-    //     } else {
-    //         $('#form-dinamico-rechazo .frm').attr('id', 'rechazo-form');
-    //         frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'), false, false);
-    //         var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-    //         console.log('info_id:' + info_id);
-    //         console.log('Formulario Guardado con exito -function cerrarTareaform');
-    //     }
-
-    //     return bandera;
-    // } else if ($("#aprobar").is(":checked")) {
-    //     debugger;
-        var bandera = true;
-
-        if (!frm_validar('#form-dinamico')) {
-
-            console.log("Error al guardar Formulario");
-            Swal.fire(
-                'Oops...',
-                'Debes completar los campos Obligatorios (*)',
-                'error'
-            )
-            bandera = false;
-            return bandera;
-
-        } else {
-            frmGuardar($('#form-dinamico.frm-new').find('form'), false, false);
-            var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-            console.log('info_id:' + info_id);
-            console.log('Formulario Guardado con exito -function cerrarTareaform');
-        }
-
-        return bandera;
-
-    
-}
-
-function cerrarTarea() {
-    debugger;
-
-    // if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-    //     Swal.fire(
-    //         'Error!',
-    //         'Por favor complete el campo Motivo de Rechazo...',
-    //         'error'
-    //     )
-    //     return;
-    // }
-
-    // if ($("#rechazo").is(":checked")) {
-    //     debugger;
-
-        var guardado = cerrarTareaform();
-
-        // if (!guardado) {
-        //     return;
-        // }
-        // console.log('tarea cerrada');
-        // var id = $('#taskId').val();
-        // console.log(id);
-
-        // var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-
-        // var dataForm = new FormData($('#generic_form')[0]);
-
-        // dataForm.append('taskId', $('#taskId').val());
-
-        // dataForm.append('frm_info_id', frm_info_id_rechazo);
-
-        // $.ajax({
-        //     type: 'POST',
-        //     data: dataForm,
-        //     cache: false,
-        //     contentType: false,
-        //     processData: false,
-        //     url: '<?php //base_url() ?>index.php/<?php //echo BPM ?>Proceso/cerrarTarea/' + id,
-        //     success: function(data) {
-        //         //wc();
-        //         //   back();
-        //         linkTo('<?php //echo BPM ?>Proceso/');
-
-        //         setTimeout(() => {
-        //             Swal.fire(
-
-        //                 'Perfecto!',
-        //                 'Se Finalizó la Tarea Correctamente!',
-        //                 'success'
-        //             )
-        //         }, 6000);
-
-        //     },
-        //     error: function(data) {
-        //         alert("Error");
-        //     }
-        // });
-
-
-    // } else {
-
-        // var guardado = cerrarTareaform();
-
-        if (!guardado) {
-            return;
-        }
-
-        debugger;
-
-        var frm_info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-
-
-        var id = $('#taskId').val();
-        console.log(id);
-
-        var dataForm = new FormData($('#generic_form')[0]);
-
-        dataForm.append('taskId', $('#taskId').val());
-
-        dataForm.append('frm_info_id', frm_info_id);
-
-        $.ajax({
-            type: 'POST',
-            data: dataForm,
-            cache: false,
-            contentType: false,
-            processData: false,
-            url: '<?php  base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
-            success: function(data) {
-                //wc();
-                //   back();
-                linkTo('<?php  echo BPM ?>Proceso/');
-
-                setTimeout(() => {
-                    Swal.fire(
-
-                        'Perfecto!',
-                        'Se Finalizó la Tarea Correctamente!',
-                        'success'
-                    )
-                }, 6000);
-
-            },
-            error: function(data) {
-                alert("Error");
-            }
-        });
-
+        return new Promise(resolve => {resolve(resp)}); 
     }
+}
+  
+async function cerrarTarea() {
+    wo();
+    debugger;
+   var confirma = await cerrarTareaform();
 
+    if(!resp.confirma){
+        wc();
+        return;
+    }
+ 
+    var id = $('#taskId').val();
+    var dataForm = new FormData();
+   
+    dataForm.append('frm_info_id', resp.info_id);
 
+    $.ajax({
+        type: 'POST',
+        data: dataForm,
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: '<?php base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
+        success: function(data) {
+            wc();
+            const confirm = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+
+            confirm.fire({
+                title: 'Perfecto!',
+                text: "Se finalizó la tarea correctamente!",
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Hecho'
+            }).then((result) => {
+                
+                linkTo('<?php echo BPM ?>Proceso/');
+                
+            });
+    
+        },
+        error: function(data) {
+            wc();
+            error('',"Se produjo un error al cerrar la tarea");
+        }
+    });
+}
 
 </script>
 

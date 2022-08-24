@@ -451,7 +451,7 @@ public function guardarForms($data)
     
         );
     
-       
+   
 
         $rsp = $this->Proceso_tareas->guardarForms($data);
      
@@ -574,20 +574,24 @@ public function guardarForms($data)
  
                 log_message('DEBUG', 'SEIN -Evalua cotización ->'  . $tarea->nombreTarea);
         
-                log_message('DEBUG', 'SEIN -Evalua cotización ->' , json_encode($form['result'],true) );
-
-
+             
                 if ($form['result'] == true) {
 
                     $contrato["apruebaCotizacion"]  = "true";
 
                     $contrato["enviaVendedor"]  =  "true";
 
+                    log_message('DEBUG', 'SEIN -Evalua cotización - valor del contrato  apruebaCotizacion ->' , json_encode($contrato["apruebaCotizacion"]) );
+                    log_message('DEBUG', 'SEIN -Evalua cotización - valor del contrato  enviaVendedor ->' , json_encode($contrato["enviaVendedor"]) );
+
                 } else {
 
                     $contrato["apruebaCotizacion"]  = "false";
 
                     $contrato["enviaVendedor"]  = "false";
+
+                    log_message('DEBUG', 'SEIN -Evalua cotización - valor del contrato  apruebaCotizacion ->' , json_encode($contrato["apruebaCotizacion"]) );
+                    log_message('DEBUG', 'SEIN -Evalua cotización - valor del contrato  enviaVendedor ->' , json_encode($contrato["enviaVendedor"]) );
 
                 }
         
