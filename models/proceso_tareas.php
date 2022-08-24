@@ -116,6 +116,13 @@ class Proceso_tareas extends CI_Model
     {
         $ci =& get_instance();
 
+
+        // $case_id = $tarea->caseId;
+        // $aux_pedido = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
+        // $data_generico =json_decode($aux_pedido["data"]);
+        // $data =json_decode($aux_pedido["data"]);
+        // $aux_pedido = $data_generico->pedidoTrabajo;
+
         $nombre_tarea = $tarea->nombreTarea;
 
         //funcion para eliminar acentos del nombre de la tarea si es que los trae.
@@ -184,7 +191,17 @@ class Proceso_tareas extends CI_Model
       log_message('DEBUG', 'SEIN - Formularios asociados a la vista ->' . json_encode($data));      
      
 
+       // llamo al servicio para traer los formularios asociados a la vista del proceso
+       $data = $ci->rest->callAPI('GET',REST_PRO.$resource."/".$empr_id);
+      
+
      
+
+   // llamo al servicio para traer datos de la cotizacion
+//    $resource2 = "/getCotizacion"; 
+   
+//    $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+//    log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
 
         switch ($tarea->nombreTarea) {
             
@@ -451,26 +468,14 @@ public function guardarForms($data)
     
         );
     
-   
-
-        $rsp = $this->Proceso_tareas->guardarForms($data);
-     
-        if (!$rsp) {
-    
-            log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Evalua si trabajo es viable');
-    
-        } else {
-            log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Evalua si trabajo es viable');
-    
-        }
-       
                    
-            $plazo_presupuesto = $form['plazo'];
+           
+            $plazo_presupuesto= intval($form['plazo']);
 
             $unidad_medida_tiempo = $form['uni_tiempo'];
 
             // un dia en milisegundos
-            $un_dia = 86400000; 
+            $un_dia = intval(86400000); 
 
             $resultado_str = str_replace(empresa()."-unidades_tiempo", "", $unidad_medida_tiempo);	
 
@@ -479,23 +484,30 @@ public function guardarForms($data)
                 // valor de 1 dia en milisegundos 86400000
 
                 case '1':
-                   $variable_tiempo = is_int($plazo_presupuesto) *  is_int($un_dia);
+                   $variable_tiempo = $plazo_presupuesto *  $un_dia;
                    
                    log_message('DEBUG', 'SEIN -notificacion de plazo en milisegundos ->' . json_encode($variable_tiempo));              
                     break;
 
-                case 'value':
-                    # code...
-                    break;
-
-                case 'value':
-                    # code...
-                    break;
-                
                 default:
-                    # code...
+                $variable_tiempo = is_int($plazo_presupuesto) *  is_int($un_dia);
+                   
+                log_message('DEBUG', 'SEIN -notificacion de plazo en milisegundos ->' . json_encode($variable_tiempo));    
                     break;
             }
+
+            $rsp = $this->Proceso_tareas->guardarForms($data);
+     
+            if (!$rsp) {
+        
+                log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Evalua si trabajo es viable');
+        
+            } else {
+                log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Evalua si trabajo es viable');
+        
+            }
+
+
 
             $contrato["trabajoViable"]  = $form['result'];
 

@@ -46,7 +46,9 @@ input[type=radio] {
 // ver
 // flata funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
-$aux =json_decode($data);
+
+ $aux =json_decode($data);
+
 
 $formularios = $aux->formularios;
 

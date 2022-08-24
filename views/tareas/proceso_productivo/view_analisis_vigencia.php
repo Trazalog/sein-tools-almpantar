@@ -228,7 +228,7 @@ wo();
 function tomarDatos(){
     //tomo los datos del formulario dinamico de cabecera
     //completo los campos del formulario. los imput pueden o no ser readonly.
-    
+    debugger;
     $('#cod_proyecto').val($('#codigo_proyecto').val());
     
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
@@ -246,6 +246,17 @@ function tomarDatos(){
     $('#unidad_medida_tiempo').val($('#unidad_medida').val());
 
     $('#iva').val('0.21');
+
+    $('#frm-Cotizacion').find(':input').each(function() {
+		var elemento= this;
+	console.log("elemento.id="+ elemento.id); 
+   
+    $(elemento).attr('readonly', false); 
+          
+          $(elemento).attr('disabled',true);
+          $(elemento).attr('readonly', true); 
+												});
+   
 
     }
 
@@ -307,45 +318,7 @@ setTimeout(function() {
 
   }
 
-  function mostrarForm(){
-
-      detectarForm();
-      initForm();
-
-      $('#form-dinamico').show();
-      $('#titulo').show();
-      $('#form-dinamico-rechazo').hide();
-      $('#comprobante').hide();
-      // oculta btn para imprimir
-      $('#btnImpresion').hide();
-  }
-
-  function ocultarForm(){
-
-    detectarForm();
-    initForm();
-
-     // $('#motivo').show();
-      $('#form-dinamico-rechazo').show();
-    
-      $('#comprobante').show();
-      $('#hecho').prop('disabled',false);
-      $('#form-dinamico').hide();
-      $('#titulo').hide();
-      // muestra btn para imprimir
-      $('#btnImpresion').show();
-
-  }
-
-  $('#form-dinamico').hide();
-  $('#titulo').hide();
-  $('#comprobante').hide();
-   // $('#motivo').show();
-   $('#form-dinamico-rechazo').show();
-
-  $('#btnImpresion').hide();
-
-
+  
   function cerrarTareaform(){
     debugger;
 

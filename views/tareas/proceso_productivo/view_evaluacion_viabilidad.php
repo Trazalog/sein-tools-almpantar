@@ -29,16 +29,15 @@ input[type=radio]{
         </center>
     </div>
     <hr>
-
-    <input id="plazo" type="hidden" name="plazo">
-    <input id="uni_tiempo" type="hidden" name="uni_tiempo">
     <br>
- 
+        <input id="plazo" type="hidden" name="plazo">
+        <input id="uni_tiempo" type="hidden" name="uni_tiempo">
 </form>
 <?php
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
 $aux =json_decode($data);
+
 
 $formularios = $aux->formularios;
 
@@ -93,10 +92,23 @@ debugger;
       $('#form-dinamico').show();
       $('#titulo').show();
       $('#form-dinamico-rechazo').hide();
-      $('#comprobante').hide();
-      // oculta btn para imprimir
-      $('#btnImpresion').hide();
+    
+    
+      wo(); 
+      alertify.success("Cargando datos en la vista aguarde...");
+    
+    setTimeout(function() {
+        wc();    
+        tomarDatos()
+     
+ 
+}, 3000);
+tomarDatos()
+
+    
   }
+
+
 
   function ocultarForm(){
 
@@ -121,21 +133,9 @@ debugger;
    // $('#motivo').show();
    $('#form-dinamico-rechazo').show();
 
-  $('#btnImpresion').hide();
 
 
- 
-  $('#view').ready(function() {
-wo();
-    alertify.success("Cargando datos en la vista aguarde...");
-    
-    setTimeout(function() {
-        wc();    
-        tomarDatos();
-}, 9000);
-   
-    
-});
+
 
 
 function tomarDatos(){
@@ -143,7 +143,6 @@ function tomarDatos(){
 
 $('#plazo').val($('#plazo_presupuesto').val());
     
-
 var uni_medida = $('select[name="unidad_medida_tiempo').val();
 
 console.log('uni_medida :' + uni_medida);
@@ -181,7 +180,8 @@ async function cerrarTarea() {
     }
  
     var id = $('#taskId').val();
-    var dataForm = new FormData();
+
+    var dataForm = new FormData($('#generic_form')[0]);
    
     dataForm.append('frm_info_id', resp.info_id);
 
