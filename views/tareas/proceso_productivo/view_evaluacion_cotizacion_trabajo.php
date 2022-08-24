@@ -4,17 +4,17 @@
 }
 </style>
 <hr>
-<?php 
+<?php #kMarchan
     // carga el modal de impresion de QR
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
-<h3>Cotización de trabajo<small></small></h3>
+<h3>Evaluación de Cotización<small></small></h3>
 <form class="form-inline" id="frm-Cotizacion">
                 <fieldset>
            <div class="row">
                 <!-- Codigo proyecto-->
-                    <div class="col-md-3">
+                    <div class="col-md-3 espaciado">
                     <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
                            
@@ -23,7 +23,7 @@
                     </div>
                     <!-- ***************** -->  
                     <!-- Objetivo -->
-                    <div class="col-md-3">
+                    <div class="col-md-4 espaciado">
                     <label class="control-label" for="objetivo">Objetivo<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
                           
@@ -38,14 +38,14 @@
                     </div>
                      <!-- ***************** -->  
                      <!-- plazo de entrega -->
-                    <div class="col-md-3" >
+                    <div class="col-md-4 espaciado">
                     <label class="control-label" for="plazo_entrega">plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
                        
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
+                                <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
                             
-                                <select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false">
+                                <select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false" readonly>
                                     <option value="" disabled selected> -Seleccionar- </option>
                                     <option value="dias" disabled selected>diás</option>
                                 </select>
@@ -54,8 +54,13 @@
                         </div>
                     </div>
                     <!-- ***************** -->           
-                    <!-- Cliente-->
-                    <div class="col-md-3">
+                   
+
+            </div> <!-- end row -->
+            <br>   <br>
+            <div class="row">
+          <!-- Cliente-->
+          <div class="col-md-3 espaciado">
                     <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex;">
                         <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
@@ -63,9 +68,7 @@
                     </div>
                     <!-- ***************** -->
 
-            </div> <!-- end row -->
-            <br>
-            <div class="row">
+
                     <!-- Direccion Entrega -->
                     <div class="col-md-4 espaciado">
                     <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
@@ -76,7 +79,7 @@
                     </div>
                     <!-- ***************** --> 
 					 <!-- email -->
-					 <div class="col-md-3">            
+					 <div class="col-md-4 espaciado">            
            <label class=" control-label" for="email" name="">Email:</label>                                
                         <div class="form-group" style="display:inline-flex;">
                             
@@ -84,121 +87,44 @@
                         </div>
                     </div>
                     <!-- ***************** --> 
-					 <!-- email alternativo -->
-					 <div class="col-md-4">                
-           <label class=" control-label" for="email_alternativo" name="">Email alternativo:</label>                            
+					
+         </div> <!-- end row -->  
+        <br>   <br>
+            <div class="row"> 
+             <!-- email alternativo -->
+					 <div class="col-md-4 espaciado">                
+           <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
                         <div class="form-group" style="display:inline-flex;">
                           
-                            <input type="text" class="form-control habilitar" id="email_alternativo" value="">
+                            <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly>
                         </div>
                     </div>
-                    <!-- ***************** --> 
-            </div> <!-- end row -->  
-        <br>
-            <div class="row">   
+                    <!-- ***************** -->   
+            
                     <!-- forma de pago -->
-                    <div class="col-md-3">
+                    <div class="col-md-4 espaciado">
                     <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
                     <div class="input-group" style="display:inline-flex;">
-                                <input id="objetivo" name="objetivo" type="number" placeholder="" class="form-control input-md" min="1" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
-                            
-                                <select name="unidad_medida_tiempo" id="unidad_medida_tiempo" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled selected> -Seleccionar- </option>
-                                </select>
-                            
+                                <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
                             </div>
                     </div>  
 					  <!-- ***************** --> 
-              <!-- forma de pago -->
-              <div class="col-md-3">
-              <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">
-                        <select name="divisa" id="divisa" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled="" selected=""> -Seleccionar- </option>
-                                </select>
-                        </div>
-                    </div>  
-					  <!-- ***************** --> 
-            <!--Cantidad-->
-            <div class="col-md-3">
-            <label class="control-label" for="cantidad">Cantidad<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">
-                          
-                            <input id="cantidad" name="cantidad"  class="form-control input-md" onchange="calcularTotal(this)" required>
-                        </div>
-                    </div>
-                    <!-- ***************** -->
-                    <!-- precio_unitario -->                                            
-                    <div class="col-md-3">
-                    <label class="control-label" for="precio_unitario">Precio Unitario<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">                                                
-                          
-                            <input id="precio_unitario" name="precio_unitario" type="text" class="form-control input-md" onchange="calcularTotal(this)" required>
-                        </div>
-                    </div>
-            </div> <!-- end row -->  
-           <br>
-            <div class="row">                                                      
-                    <!-- ***************** -->
-					 <div class="col-md-12">
-                        <div class="form-group" style="width: 100%">                                       
-                            <label class="control-label" for="descripcion">Descripción <strong style="color: #dd4b39">*</strong>:</label>
-                            <div class="input-group" style="width:100%">
-                                <textarea class="form-control" id="descripcion" name="descripcion" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ***************** -->
-             </div> <!-- end row -->
-            <br>
-             <div class="row">       
-                    <!-- importe -->                                            
-                <div class="col-md-3">
-                    <label class="control-label" for="importe">Importe<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">                                                
-                          
-                            <input id="importe" name="importe" placeholder="" class="form-control input-md" onchange="calcularTotal(this)" required readonly>
-                        </div>
-                    </div>
-                    <!-- ***************** -->
-                     <!-- iva -->                                            
-                     <div class="col-md-3">
-                    <label class="control-label" for="iva">IVA<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group">                                                
-                          
-                            <input id="iva" name="iva" type="text" placeholder="" class="form-control input-md">
-                        </div>
-                    </div>
-                    <!-- ***************** -->
-                     <!-- total -->                                            
-                     <div class="col-md-3">
-                    <label class="control-label" for="total">Subtotal:</label>
-                        <div class="form-group">                                                
-                          
-                            <input id="total" name="total" type="text" placeholder="" class="form-control input-md" readonly>
-                        </div>
-                    </div>
-                    <!-- ***************** --> 
-                    <div class="col-md-1 espaciado">
-                      <div class="form-group">
-                      <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='editarCotizacion(this)'></i> 
-                       </div>
-                    </div>
-          
-                    <div class="col-md-2">
-                          <!--_________________ Agregar_________________-->
-                <div class="form-group text-right">
-                    <button type="button" class="btn btn-sucess" title="Agregar a la tabla de detalles" onclick="agregarTabla()" >Agregar</button>
-                </div>                
-                <!--__________________________________-->
-                    </div>
-                  
-              </div> <!-- end row -->          
-                    <br>
 
+                <!-- Divisa -->
+                <div class="col-md-3 espaciado">
+                <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
+                    <div class="input-group" style="display:inline-flex;">
+                    <input id="divisa" name="divisa" type="text"  class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
+        
+                            </div>
+                    </div>  
+                     
+                   
+                    <br>
+          </div> <!-- end row -->          
                     <!-- Button -->
 
-         
+                    <br>   <br>
 
             <div class="col-md-12 col-sm-12 col-xs-12 centrar">
                 <h5>Detalles de cotización:</h5>
@@ -219,16 +145,16 @@
                     <!--_______ FIN TABLA PRODUCTOS ______-->
                 </div>
             </div>
-<br><br>
-              <!--_________________ >Guardar-->
-              <div class="col-md-12 col-sm-12 col-xs-12 centrar form-group text-right">
-                    <button type="button" class="btn btn-sucess" title="Guardar Cotización" >Guardar</button>
-                </div>                
-                <!--__________________________________-->
-
+    <br><br>
+          
                 </fieldset>
             </form>                           
-
+   
+    </div>
+    
+    <!-- / Bloque de cotizacion -->
+        </div>
+  </div>
 <br> <br><br>
 <hr>        
 <form id="generic_form">
@@ -250,56 +176,6 @@
     <br>
  
 </form>
-
-
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Datos del Comprobante</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div id="comprobante" class="form-group motivo">
-        <table class="table" id="tbl_comprobante">
-          <thead>
-            <tr>
-              <th scope="col">Numero de cubiertas</th>
-              <th scope="col">Numero de pedido</th>
-              <th scope="col">Cliente</th>
-              <th scope="col">Medida</th>
-              <th scope="col">Marca</th>
-              <th scope="col">N° de Serie</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input id="num_cubiertas" name="num_cubiertas" type="text" value="" class="form-control input-md"></td>
-              <td><input id="num_pedido" name="num_pedido" type="text" value="" class="form-control input-md"></td>
-              <td><input id="medidas_yudica" name="medidas_yudica" type="text" value="" class="form-control input-md"></td>
-              <td><input id="marca_yudica" name="marca_yudica" type="text" value="" class="form-control input-md"></td>
-              <td><input id="num_serie" name="num_serie" type="text" value="" class="form-control input-md"></td>
-              <td><input id="banda_yudica" name="banda_yudica" type="text" value="" class="form-control input-md"></td>
-            </tr>
-        
-          </tbody>
-        </table>
-        <br><br><br>
-        <a type="button" href="<?php // echo base_url();?>" class="btn btn-primary" target="_blank">Imprimir comprobante de Rechazo</a>
-
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <script>
 DataTable($('#tabla_detalle'));
@@ -343,12 +219,16 @@ wo();
 
 
 function tomarDatos(){
+       //tomo los datos del formulario dinamico de cabecera
+    //completo los campos del formulario. los imput pueden o no ser readonly.
     
     $('#cod_proyecto').val($('#codigo_proyecto').val());
     
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
     $('#email_cliente').val($('#email').val());
+    
+    $('#email_alternativo_cliente').val($('#email_alternativo').val());
 
     $('#nomb_cliente').val($('#cliente').val());
 
