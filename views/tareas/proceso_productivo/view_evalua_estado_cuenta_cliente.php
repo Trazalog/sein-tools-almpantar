@@ -27,7 +27,7 @@ input[type=radio] {
 
             <label class="col-md-2 control-label" for="textinput">Cliente:</label>
             <div class="col-md-2">
-                <input id="email_alternativo_cliente" name="textinput" type="text" placeholder="" class="form-control input-md"
+                <input id="nomb_cliente" name="textinput" type="text" placeholder="" class="form-control input-md"
                     readonly>
             </div>
             <label class="col-md-2 control-label" for="textinput">Email:</label>
@@ -200,7 +200,7 @@ $('#codigo_cliente').val($('#codigo_proyecto').val());
     
 $('#email_cliente').val($('#email').val());
 
-$('#email_alternativo_cliente').val($('#email_alternativo').val());
+$('#nomb_cliente').val($('#cliente').val());
 
 
 }
@@ -277,7 +277,7 @@ async function cerrarTarea() {
     }
  
     var id = $('#taskId').val();
-    var dataForm = new FormData();
+    var dataForm = new FormData($('#generic_form')[0]);
    
     dataForm.append('frm_info_id', resp.info_id);
 

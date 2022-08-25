@@ -236,53 +236,6 @@
                 </fieldset>
             </form>
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Datos del Comprobante</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div id="comprobante" class="form-group motivo">
-        <table class="table" id="tbl_comprobante">
-          <thead>
-            <tr>
-              <th scope="col">Numero de cubiertas</th>
-              <th scope="col">Numero de pedido</th>
-              <th scope="col">Cliente</th>
-              <th scope="col">Medida</th>
-              <th scope="col">Marca</th>
-              <th scope="col">N° de Serie</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input id="num_cubiertas" name="num_cubiertas" type="text" value="" class="form-control input-md"></td>
-              <td><input id="num_pedido" name="num_pedido" type="text" value="" class="form-control input-md"></td>
-              <td><input id="medidas_yudica" name="medidas_yudica" type="text" value="" class="form-control input-md"></td>
-              <td><input id="marca_yudica" name="marca_yudica" type="text" value="" class="form-control input-md"></td>
-              <td><input id="num_serie" name="num_serie" type="text" value="" class="form-control input-md"></td>
-              <td><input id="banda_yudica" name="banda_yudica" type="text" value="" class="form-control input-md"></td>
-            </tr>
-
-          </tbody>
-        </table>
-        <br><br><br>
-        <a type="button" href="<?php // echo base_url();?>" class="btn btn-primary" target="_blank">Imprimir comprobante de Rechazo</a>
-
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <script>
 

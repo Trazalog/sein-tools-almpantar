@@ -34,7 +34,13 @@ input[type=radio]{
 </form>   -->
 
     <br><br>  
+<?php 
+// funcion que desplega formulario asociado a la vista
+// los formularios dinamicos se cargar de la tabla pro.procesos_forms
 
+ $aux =json_decode($data);
+
+?>
 <script>
 
 $('#view').ready(function() {
@@ -132,7 +138,7 @@ async function cerrarTarea() {
     }
  
     var id = $('#taskId').val();
-    var dataForm = new FormData();
+    var dataForm = new FormData($('#generic_form')[0]);
    
     dataForm.append('frm_info_id', resp.info_id);
 

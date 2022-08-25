@@ -1,4 +1,8 @@
-<?php if (!defined('BASEPATH')) {
+<?php
+
+use Google\Service\AIPlatformNotebooks\Status;
+
+ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -117,11 +121,11 @@ class Proceso_tareas extends CI_Model
         $ci =& get_instance();
 
 
-        // $case_id = $tarea->caseId;
-        // $aux_pedido = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
-        // $data_generico =json_decode($aux_pedido["data"]);
-        // $data =json_decode($aux_pedido["data"]);
-        // $aux_pedido = $data_generico->pedidoTrabajo;
+        $case_id = $tarea->caseId;
+        $aux_pedido = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
+        $data_generico =json_decode($aux_pedido["data"]);
+        $data =json_decode($aux_pedido["data"]);
+        $aux_pedido = $data_generico->pedidoTrabajo;
 
         $nombre_tarea = $tarea->nombreTarea;
 
@@ -194,14 +198,7 @@ class Proceso_tareas extends CI_Model
        // llamo al servicio para traer los formularios asociados a la vista del proceso
        $data = $ci->rest->callAPI('GET',REST_PRO.$resource."/".$empr_id);
       
-
-     
-
-   // llamo al servicio para traer datos de la cotizacion
-//    $resource2 = "/getCotizacion"; 
-   
-//    $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
-//    log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
+        
 
         switch ($tarea->nombreTarea) {
             
@@ -249,7 +246,6 @@ class Proceso_tareas extends CI_Model
 
               //paso 5 Cotización de trabajo           
                 case 'Cotización de trabajo':
-
     
                     return $this->load->view(SEIN . 'tareas/proceso_productivo/view_cotizacion_trabajo', $data, true);
 
@@ -260,7 +256,11 @@ class Proceso_tareas extends CI_Model
                     
             //paso 6   Evalua cotización         
                 case 'Evalua cotización':
-
+  // llamo al servicio para traer datos de la cotizacion
+  $resource2 = "/getCotizacion"; 
+            
+  $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+  log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
     
                     return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_cotizacion_trabajo', $data, true);
 
@@ -271,7 +271,11 @@ class Proceso_tareas extends CI_Model
 
             //paso 7 Enviar Cotización           
                 case 'Enviar Cotización':
-
+  // llamo al servicio para traer datos de la cotizacion
+  $resource2 = "/getCotizacion"; 
+            
+  $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+  log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
     
                     return $this->load->view(SEIN . 'tareas/proceso_productivo/view_enviar_cotizacion', $data, true);
 
@@ -294,7 +298,11 @@ class Proceso_tareas extends CI_Model
                
            //paso 9      Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado          
                 case 'Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado':
-        
+          // llamo al servicio para traer datos de la cotizacion
+          $resource2 = "/getCotizacion"; 
+            
+          $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+          log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
             
                     return $this->load->view(SEIN . 'tareas/proceso_productivo/view_analisis_vigencia', $data, true);
 

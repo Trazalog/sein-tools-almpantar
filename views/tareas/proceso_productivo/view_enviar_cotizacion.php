@@ -11,6 +11,45 @@ input[type=radio]{
     // carga el modal de impresion de QR
     $this->load->view( COD.'componentes/modalGenerico');
 ?>
+<?php
+// funcion que desplega formulario asociado a la vista
+// los formularios dinamicos se cargar de la tabla pro.procesos_forms
+$aux =json_decode($data);
+
+$cotizacion = $aux->cotizacion;
+
+$plazo_entrega = $cotizacion->plazo_entrega;
+$unidad_medida_tiempo = $cotizacion->unme_id;
+$fopa_id = $cotizacion->fopa_id;
+$divi_id = $cotizacion->divi_id;
+$coti_id = $cotizacion->coti_id;
+
+
+$unme_tiempo = str_replace(empresa()."-unidades_medida", "", $unidad_medida_tiempo);	
+
+$forma_pago = str_replace(empresa()."-forma_pago", "", $fopa_id);	
+
+$divisa = str_replace(empresa()."-divisa", "", $divi_id);	
+
+
+
+
+if($coti_id){
+    $ci =& get_instance();
+  // llamo al servicio para traer los Detalles de la cotizacion
+    $resource3 = "/getDetalleCotizacion"; 
+  
+    $deta = $ci->rest->callAPI('GET',REST_SEIN.$resource3."/".$coti_id);
+    log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
+    
+
+    $aux2 =json_decode($deta['data']);
+
+    $detalles_cotizacion = $aux2->detalles_cotizacion->detalle_cotizacion;
+}
+
+
+?>
  <div class="row">
   <div class="col-md-9 col-sm-9">
   <h3>Envio de Cotización<small></small></h3>
@@ -47,12 +86,12 @@ input[type=radio]{
                         <div class="form-group" style="display:inline-flex">
                        
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
-                            
-                                <select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false" readonly>
+                            <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" value="<?php echo $plazo_entrega; ?>"readonly>
+                                <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md" value="<?php echo $unme_tiempo; ?>"readonly>
+                                <!--<select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false" readonly>
                                     <option value="" disabled selected> -Seleccionar- </option>
                                     <option value="dias" disabled selected>diás</option>
-                                </select>
+                                </select> -->
                             
                             </div>
                         </div>
@@ -97,10 +136,10 @@ input[type=radio]{
             <div class="row"> 
              <!-- email alternativo -->
 					 <div class="col-md-4 espaciado">                
-           <label class=" control-label" for="email_alternativo" name="">Email alternativo:</label>                            
+           <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
                         <div class="form-group" style="display:inline-flex;">
                           
-                            <input type="text" class="form-control habilitar" id="email_alternativo" readonly>
+                            <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->   
@@ -109,7 +148,7 @@ input[type=radio]{
                     <div class="col-md-4 espaciado">
                     <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
                     <div class="input-group" style="display:inline-flex;">
-                                <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
+                    <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" value="<?php echo $forma_pago; ?>" readonly>
                             </div>
                     </div>  
 					  <!-- ***************** --> 
@@ -118,7 +157,7 @@ input[type=radio]{
                 <div class="col-md-3 espaciado">
                 <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
                     <div class="input-group" style="display:inline-flex;">
-                    <input id="divisa" name="divisa" type="text"  class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
+                    <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $divisa; ?>" readonly>
         
                             </div>
                     </div>  
@@ -143,9 +182,46 @@ input[type=radio]{
                             <th>Importe</th>
                         </thead>
                         <tbody >
+                        <?php
+							foreach($detalles_cotizacion as $rsp){
+
+
+								$cantidad = $rsp->cantidad;
+								$descripcion = $rsp->descripcion;
+								$precio_unitario = $rsp->precio_unitario;
+								$importe = $rsp->importe;
+								$coti_id = $rsp->coti_id;
+                                $deco_id = $rsp->deco_id;
+
+								echo "<tr id='$petr_id' case_id='$case_id' data-json='" . json_encode($rsp) . "'>";
+
+								echo "<td class='text-center text-light-blue'>";
+								echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
+								echo '<i class="fa fa-print" style="cursor: pointer; margin: 3px;" title="Imprimir Comprobante" onclick="modalReimpresion(this)"></i>';
+								echo '<i class="fa fa-search"  style="cursor: pointer;margin: 3px;" title="Ver Pedido" onclick="verPedido(this)"></i>';
+								echo "</td>";
+								echo '<td>'.$cantidad.'</td>';
+								echo '<td>'.$descripcion.'</td>';
+                                echo '<td>'.$precio_unitario.'</td>';
+								echo '<td>'.$importe.'</td>';
+			            
+								echo '</tr>';
+						}
+						?>  
                         
+       
                         </tbody>
                     </table>
+                    <div class="row">
+                        <div class="col-sm-7"></div>
+                        <div class="col-sm-4">
+                            <label class="control-label" for="footer_table">Total:<strong style="color: #dd4b39">*</strong>:</label>     
+                            <div class="input-group" style="display:inline-flex;">
+                            <input id="footer_table" name="footer_table" type="text" class="form-control input-md" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div
+                    </div>
                     <!--_______ FIN TABLA PRODUCTOS ______-->
                 </div>
             </div>
@@ -193,7 +269,44 @@ input[type=radio]{
 </form>
 
 <script>
-DataTable($('#tabla_detalle'));
+
+debugger;
+
+
+    $('#tabla_detalle').dataTable( {
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api();
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+            // Total over all pages
+            var total = api
+                .column( 4 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                } );
+ 
+                console.log(total);
+            // Total over this page
+            var pageTotal = api
+                .column( 4, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                } );
+ console.log(pageTotal);
+            // Update footer
+            
+            sub_total = $('#divisa').val() +' ' +'$'+pageTotal;
+        $('#footer_table').val(sub_total);
+        }
+    } );
 
   function getFormData(){
 debugger;
@@ -220,26 +333,29 @@ debugger;
 
 ////////////////////////////////
 
-  $('#view').ready(function() {
-wo();
+$('#view').ready(function() {
+    wbox('#preview');  
     alertify.success("Cargando datos en la vista aguarde...");
-    
+    tomarDatos();
     setTimeout(function() {
-        wc();    
-        tomarDatos();
-}, 9000);
+          wbox();  
+}, 6000);
    
     
 });
 
 
 function tomarDatos(){
+       //tomo los datos del formulario dinamico de cabecera
+    //completo los campos del formulario. los imput pueden o no ser readonly.
     
     $('#cod_proyecto').val($('#codigo_proyecto').val());
     
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
     $('#email_cliente').val($('#email').val());
+    
+    $('#email_alternativo_cliente').val($('#email_alternativo').val());
 
     $('#nomb_cliente').val($('#cliente').val());
 
@@ -247,7 +363,6 @@ function tomarDatos(){
 
     $('#unidad_medida_tiempo').val($('#unidad_medida').val());
 
-    $('#iva').val('0.21');
 
     }
 
