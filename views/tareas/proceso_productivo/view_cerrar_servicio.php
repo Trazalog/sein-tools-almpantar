@@ -17,7 +17,7 @@ input[type=radio]{
 <form id="generic_form">
     <div class="form-group">
         <center>
-            <h3 class="text-danger"> ¿¿Cerrar servicio y archivar legajo?? </h3>
+            <h3 class="text-danger"> ¿Cerrar servicio y archivar legajo?</h3>
             <label class="radio-inline">
                 <input id="aprobar" type="radio" name="result" value="true"
                     onclick="mostrarForm();"> Si
@@ -30,41 +30,11 @@ input[type=radio]{
     </div>
     <hr>
 
-    <!-- <input id="plazo" type="hidden" name="plazo">
-    <input id="uni_tiempo" type="hidden" name="uni_tiempo"> -->
+   
     <br>
  
 </form>
-<?php
-// funcion que desplega formulario asociado a la vista
-// los formularios dinamicos se cargar de la tabla pro.procesos_forms
 
-// $aux =json_decode($data);
-
-// $formularios = $aux->formularios;
-
-// if($aux){
-                                
-
-//   foreach ($formularios as $clave => $valor) {
-
-//     foreach ($valor as $v2) {
-//       if($v2->orden == '1'){
-//         echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//       }
-//       else if($v2->orden == '2'){
-//         echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//       }
-//     else{
-//       echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//     }
-//   }
- 
-//           }
-//                      }
-  
-
-?>
 <div id="form-dinamico" class="frm-new" data-form="65"></div>
 <!-- 
 <button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion" onclick="modalCodigos()">Impresion</button> -->
@@ -206,284 +176,77 @@ $('#uni_tiempo').val(uni_medida);
 }  
 
 
-  function cerrarTareaform(){
-    debugger;
+ 
 
-    if ( $("#rechazo").is(":checked")) {
-	
-    var bandera = true ;
-    
+    //////////////////////////////////
 
-    if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-        Swal.fire(
-					'Oops...',
-					'Debes completar los campos Obligatorios (*)',
-					'error'
-				)
-                bandera = false;
-       return bandera;
-	 		}
+    async function cerrarTareaform(){
+    resp = {};
+    if (!frm_validar('#form-dinamico')) {
+  
+        Swal.fire('Oops...','Debes completar los campos obligatorios (*)','error');
+        resp.confirma = false;
 
-    else{
-     $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
+        return new Promise(reject => {reject(resp)});
+    }else{
+        resp.confirma = true;
+        resp.info_id = await frmGuardarConPromesa($('#form-dinamico').find('form'));
+        console.log('Formulario guardado con éxito. Info ID: '+ resp.info_id);
 
-    frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
-
-        var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-
-        console.log('info_id:' + info_id);
-         console.log('Formulario Guardado con exito -function cerrarTareaform');
-        }
-
-        return bandera; 
-  }
-  else if ( $("#aprobar").is(":checked")) {
-    debugger;
-    var bandera = true ;
-
-      if (!frm_validar('#form-dinamico')) {
-
-        console.log("Error al guardar Formulario");
-          Swal.fire(
-            'Oops...',
-            'Debes completar los campos Obligatorios (*)',
-            'error'
-          )
-      bandera = false;
-        return bandera;
-
-      }
-      else{
-      frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
-          var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-
-          console.log('info_id:' + info_id);
-          console.log('Formulario Guardado con exito -function cerrarTareaform');
-          }
-
-          return bandera; 
-
+        return new Promise(resolve => {resolve(resp)}); 
     }
 }
 
-function cerrarTarea() {
- debugger;
-     
-    
-       if ( $("#rechazo").is(":checked")) {
-       
 
-        if ($('#motivo_rechazo_interno .form-control').val() == null ) {
-       Swal.fire(
-                        'Error!',
-               'Por favor complete el campo Motivo de rechazo interno',
-                 'error'
-            )
-          return;
-      }
+async function cerrarTarea() {
+  wo(); 
+    debugger;
+   var confirma = await cerrarTareaform();
 
-      if ($('#motivo_rechazo_cliente .form-control').val() == null) {
-       Swal.fire(
-                        'Error!',
-               'Por favor complete el campo Motivo de rechazo al cliente',
-                 'error'
-            )
-          return;
-      }
-
-
-
-         const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-    })
-
-    swalWithBootstrapButtons.fire({
-
-        title: 'Estas Seguro que desea rechazar el pedido de trabajo?',
-       
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Si',
-        cancelButtonText: 'No',
-        reverseButtons: true
-    }).then((result) => {
-        debugger;
-        console.log(result);
-        if (result.value) {
-            console.log('El usuario decidio rechazar el pedido de trabajo');
-           var guardado = cerrarTareaform();
-
-    if(!guardado){     
-         return;
-        }
-     console.log('tarea cerrada');
-      var id = $('#taskId').val();
-      console.log(id);
-
-      var frm_info_id_rechazo = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-
-     var dataForm = new FormData($('#generic_form')[0]);
-
-      dataForm.append('taskId', $('#taskId').val());
-
-      dataForm.append('frm_info_id', frm_info_id_rechazo);
-
-      $.ajax({
-          type: 'POST',
-          data: dataForm,
-          cache: false,
-          contentType: false,
-          processData: false,
-          url: '<?php  base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
-          success: function(data) {
-              //wc();
-          //   back();
-          linkTo('<?php echo BPM ?>Proceso/');
-
-          setTimeout(() => {
-              Swal.fire(
-                  
-                      'Perfecto!',
-                      'Se Finalizó la Tarea Correctamente!',
-                      'success'
-                  )
-      }, 6000);
-      
-          },
-          error: function(data) {
-              alert("Error");
-          }
-      });
-
-
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            console.log('El usuario decidio NO rechazar el pedido de trabajo');
-            swalWithBootstrapButtons.fire(
-                'Cancelado',
-                '',
-                'error'
-            )
-        }
-    })
-
-
-
-
-      } else{
-
-        var guardado = cerrarTareaform();
-
-if(!guardado){
- return;
-}
-
-        debugger;
-
-      var frm_info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-     
-      
-      var id = $('#taskId').val();
-      console.log(id);
-
-      var dataForm = new FormData($('#generic_form')[0]);
-
-      dataForm.append('taskId', $('#taskId').val());
-
-      dataForm.append('frm_info_id', frm_info_id);
-
-      $.ajax({
-          type: 'POST',
-          data: dataForm,
-          cache: false,
-          contentType: false,
-          processData: false,
-          url: '<?php // base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
-          success: function(data) {
-              //wc();
-          //   back();
-          linkTo('<?php  echo BPM ?>Proceso/');
-
-          setTimeout(() => {
-              Swal.fire(
-                  
-                      'Perfecto!',
-                      'Se Finalizó la Tarea Correctamente!',
-                      'success'
-                  )
-      }, 6000);
-      
-          },
-          error: function(data) {
-              alert("Error");
-          }
-      });
-
-      }
-
-    
-  }
-
-
-
- 
-</script>
-
-<script>  
-  var band = 0;
-  // Se peden hacer dos cosas: o un ajax buscando datos o directamente
-  // armar con los datos de la pantalla
-  function modalCodigos(){
-
-      // si es rechazado el pedido debe llenar el input motivo
-      var rechazo = $("#motivo_rechazo").val();
-      if (rechazo == undefined) {
-        Swal.fire(
-                'Error!',
-                'Por favor complete el campo Motivo de Rechazo...',
-                'error'
-            )
-      
+    if(!resp.confirma){
+      wc();
         return;
-      }
+    }
+ 
+    var id = $('#taskId').val();
+    var dataForm = new FormData($('#generic_form')[0]);
+   
+     dataForm.append('frm_info_id', resp.info_id);
 
-      if (band == 0) {
-        debugger;
-          // configuracion de codigo QR
-          var config = {};
-              config.titulo = "Revision Inicial";
-              config.pixel = "2";
-              config.level = "S";
-              config.framSize = "2";
-          // info para immprimir  medidas_yudica
-          var arraydatos = {};
-              arraydatos.N_orden = $('#petr_id').val();
-              arraydatos.Cliente = $('#cliente').val();
-              arraydatos.Medida = $('select[name="medidas_yudica"]').select2('data')[0].text;
-              arraydatos.Marca = $('select[name="marca_yudica"]').select2('data')[0].text;
-              arraydatos.Serie = $('#num_serie').val();
-              arraydatos.Num = $('#num_cubiertas').val();
+    $.ajax({
+        type: 'POST',
+        data: dataForm,
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: '<?php base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
+        success: function(data) {
+            wc();
+            const confirm = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
 
-              arraydatos.Zona = $('#zona').val();
-              arraydatos.Trabajo = $('#tipo_proyecto').val();
-              arraydatos.Banda = $('select[name="banda_yudica"]').select2('data')[0].text;
-
-              // si la etiqueta es derechazo
-              arraydatos.Motivo = $('#motivo_rechazo').val();
-          // info para grabar en codigo QR
-          armarInfo(arraydatos);
-      }
-      // llama modal con datos e img de QR ya ingresados
-      verModalImpresion();
-
-      band = 1;
-  }
-
-  function armarInfo(arraydatos){
-
-    $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>/Infocodigo/rechazado", arraydatos);
-  }
+            confirm.fire({
+                title: 'Perfecto!',
+                text: "Se finalizó la tarea correctamente!",
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Hecho'
+            }).then((result) => {
+                
+                linkTo('<?php echo BPM ?>Proceso/');
+                
+            });
+    
+        },
+        error: function(data) {
+            wc();
+            error('',"Se produjo un error al cerrar la tarea");
+        }
+    });
+}
+ 
 </script>

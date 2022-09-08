@@ -10,35 +10,44 @@
 ?>
 
 <?php
+  $ci =& get_instance();
+ 
+  
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
-$aux =json_decode($data);
 
-$cotizacion = $aux->cotizacion;
+ $aux =json_decode($data);
 
-$plazo_entrega = $cotizacion->plazo_entrega;
-$unidad_medida_tiempo = $cotizacion->unme_id;
-$fopa_id = $cotizacion->fopa_id;
-$divi_id = $cotizacion->divi_id;
-$coti_id = $cotizacion->coti_id;
+ $cotizacion = $aux->cotizacion;
+
+ $coti_id = $cotizacion->coti_id;
+
+ $plazo_entrega = $cotizacion->plazo_entrega;
+
+ $unidad_medida_tiempo = $cotizacion->unme_id;
+
+ $fopa_id = $cotizacion->fopa_id;
+
+ $divi_id = $cotizacion->divi_id;
 
 
-$unme_tiempo = str_replace(empresa()."-unidades_medida", "", $unidad_medida_tiempo);	
 
-$forma_pago = str_replace(empresa()."-forma_pago", "", $fopa_id);	
+$unme_tiempo = str_replace(empresa()."-unme_id", "", $unidad_medida_tiempo);	
 
-$divisa = str_replace(empresa()."-divisa", "", $divi_id);	
+$forma_pago = str_replace(empresa()."-fopa_id", "", $fopa_id);	
+
+$divisa = str_replace(empresa()."-divi_id", "", $divi_id);	
 
 
 
 
 if($coti_id){
-    $ci =& get_instance();
+  
   // llamo al servicio para traer los Detalles de la cotizacion
     $resource3 = "/getDetalleCotizacion"; 
   
     $deta = $ci->rest->callAPI('GET',REST_SEIN.$resource3."/".$coti_id);
-    log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
+    log_message('DEBUG', 'SEIN - LLAMADA DE getDetalleCotizacion->' . json_encode($deta));   
     
 
     $aux2 =json_decode($deta['data']);
@@ -162,6 +171,14 @@ if($coti_id){
                      
                    
                     <br>
+                    <div class="col-md-12">
+                        <div class="form-group" style="width: 100%">
+                            <label class="control-label" for="observaciones">Observaciones <strong style="color: #dd4b39">*</strong>:</label>
+                            <div class="input-group" style="width:100%">
+                                <textarea class="form-control" id="observaciones" name="observaciones" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
           </div> <!-- end row -->          
                     <!-- Button -->
 
@@ -194,9 +211,8 @@ if($coti_id){
 								echo "<tr id='$petr_id' case_id='$case_id' data-json='" . json_encode($rsp) . "'>";
 
 								echo "<td class='text-center text-light-blue'>";
-								echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
-								echo '<i class="fa fa-print" style="cursor: pointer; margin: 3px;" title="Imprimir Comprobante" onclick="modalReimpresion(this)"></i>';
-								echo '<i class="fa fa-search"  style="cursor: pointer;margin: 3px;" title="Ver Pedido" onclick="verPedido(this)"></i>';
+								// echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
+								
 								echo "</td>";
 								echo '<td>'.$cantidad.'</td>';
 								echo '<td>'.$descripcion.'</td>';
@@ -261,10 +277,10 @@ if($coti_id){
 
 debugger;
 
-
-    $('#tabla_detalle').dataTable( {
+$('#tabla_detalle').dataTable( {
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api();
+            debugger;
             // Remove the formatting to get integer data for summation
             var intVal = function ( i ) {
                 return typeof i === 'string' ?
@@ -274,14 +290,17 @@ debugger;
             };
  
             // Total over all pages
+            if (end > 0) {    
             var total = api
                 .column( 4 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 } );
- 
                 console.log(total);
+
+
+                if (total > 0) {  
             // Total over this page
             var pageTotal = api
                 .column( 4, { page: 'current'} )
@@ -289,13 +308,21 @@ debugger;
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 } );
+            }
+
  console.log(pageTotal);
             // Update footer
-            
-            sub_total = $('#divisa').val() +' ' +'$'+pageTotal;
+            divisa = $('#divisa').val();
+            sub_total = divisa +' ' +'$'+pageTotal;
         $('#footer_table').val(sub_total);
+
+            }
+ 
+                
+  
         }
     } );
+
 
 
   function getFormData(){
@@ -323,18 +350,28 @@ debugger;
 
 ////////////////////////////////
 
-  $('#view').ready(function() {
-    wbox('#view_cotizacion');  
-    alertify.success("Cargando datos en la vista aguarde...");
-    tomarDatos();
-    setTimeout(function() {
-          wbox();  
-}, 6000);
+//   $('#view').ready(function() {
+//     wbox('#view_cotizacion');  
+//     alertify.success("Cargando datos en la vista aguarde...");
+//     tomarDatos();
+//     setTimeout(function() {
+//           wbox();  
+// }, 6000);
    
     
+// });
+
+$('#view').ready(function() {
+wo();
+    alertify.success("Cargando datos en la vista aguarde...");
+
+    setTimeout(function() {
+        wc();
+        tomarDatos();
+}, 6000);
+
+
 });
-
-
 function tomarDatos(){
        //tomo los datos del formulario dinamico de cabecera
     //completo los campos del formulario. los imput pueden o no ser readonly.
@@ -362,7 +399,7 @@ function tomarDatos(){
 
 async function cerrarTareaform(){
     resp = {};
-    if (!frm_validar('#form-dinamico')) {
+    if (!frm_validar('#form-Cotizacion')) {
   
         Swal.fire('Oops...','Debes completar los campos obligatorios (*)','error');
         resp.confirma = false;
@@ -380,18 +417,12 @@ async function cerrarTareaform(){
 
 async function cerrarTarea() {
   wo(); 
-    debugger;
-   var confirma = await cerrarTareaform();
-
-    if(!resp.confirma){
-      wc();
-        return;
-    }
+  
  
     var id = $('#taskId').val();
     var dataForm = new FormData($('#generic_form')[0]);
    
-    dataForm.append('frm_info_id', resp.info_id);
+    // dataForm.append('frm_info_id', resp.info_id);
 
     $.ajax({
         type: 'POST',

@@ -27,45 +27,14 @@ input[type=radio]{
                 onclick="ocultarForm()"> Si
             </label>
             <label class="radio-inline">
-                <input id="rechazo" type="radio" name="result" value="false" onclick="mostrarForm()"> No
+                <input id="rechazo" type="radio" name="result" value="false"> No
             </label>
         </center>
     </div>
    
     </form>
     <br><br>  
-<?php
 
-
-// funcion que desplega formulario asociado a la vista
-// los formularios dinamicos se cargar de la tabla pro.procesos_forms
-
-// $aux =json_decode($data);
-
-// $formularios = $aux->formularios;
-
-// if($aux){
-                                
-
-//   foreach ($formularios as $clave => $valor) {
-
-//     foreach ($valor as $v2) {
-//       if($v2->orden == '1'){
-//         echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//       }
-//       else if($v2->orden == '2'){
-//         echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//       }
-//     else{
-//       echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//     }
-//   }
- 
-//           }
-//                      }
-  
-
-?>
 <div id="form-dinamico-rechazo" class="frm-new" data-form="59"></div>
 
 
@@ -99,7 +68,8 @@ wo();
 
 
   }
-
+  $('#nomb_cliente').val($('#cliente').val());
+  
   getFormData();
 
 
@@ -109,23 +79,9 @@ wo();
   // $('#form-dinamico').show();
   $('#form-dinamico-rechazo').hide();
 
-  function mostrarForm(){
-
-detectarForm();
-initForm();
-
-$('#form-dinamico').show();
-$('#titulo').show();
-$('#form-dinamico-rechazo').hide();
-$('#comprobante').hide();
-// oculta btn para imprimir
-$('#btnImpresion').hide();
- }
+  
 
 function ocultarForm(){
-
-detectarForm();
-initForm();
 
 
 $('#form-dinamico-rechazo').show();
@@ -139,8 +95,9 @@ $('#hecho').prop('disabled',false);
 
 $('#form-dinamico').show();
 
+ //////////////////////////////////
 
-async function cerrarTareaform(){
+ async function cerrarTareaform(){
     resp = {};
     if (!frm_validar('#form-dinamico')) {
   
@@ -155,37 +112,23 @@ async function cerrarTareaform(){
 
         return new Promise(resolve => {resolve(resp)}); 
     }
-
-
-    if (!frm_validar('#form-dinamico-rechazo')) {
-  
-  Swal.fire('Oops...','Debes completar los campos obligatorios (*)','error');
-  resp.confirma = false;
-
-  return new Promise(reject => {reject(resp)});
-}else{
-  resp.confirma = true;
-  resp.info_id = await frmGuardarConPromesa($('#form-dinamico').find('form'));
-  console.log('Formulario guardado con éxito. Info ID: '+ resp.info_id);
-
-  return new Promise(resolve => {resolve(resp)}); 
 }
-}
-  
+
+
 async function cerrarTarea() {
-    wo();
+  wo(); 
     debugger;
    var confirma = await cerrarTareaform();
 
     if(!resp.confirma){
-        wc();
+      wc();
         return;
     }
  
     var id = $('#taskId').val();
-    var dataForm = new FormData();
+    var dataForm = new FormData($('#generic_form')[0]);
    
-    dataForm.append('frm_info_id', resp.info_id);
+     dataForm.append('frm_info_id', resp.info_id);
 
     $.ajax({
         type: 'POST',
@@ -223,61 +166,6 @@ async function cerrarTarea() {
     });
 }
 
+
  
-</script>
-
-<script>  
-  var band = 0;
-  // Se peden hacer dos cosas: o un ajax buscando datos o directamente
-  // armar con los datos de la pantalla
-  function modalCodigos(){
-
-      // si es rechazado el pedido debe llenar el input motivo
-      var rechazo = $("#motivo_rechazo").val();
-      if (rechazo == undefined) {
-        Swal.fire(
-                'Error!',
-                'Por favor complete el campo Motivo de Rechazo...',
-                'error'
-            )
-      
-        return;
-      }
-
-      if (band == 0) {
-        debugger;
-          // configuracion de codigo QR
-          var config = {};
-              config.titulo = "Revision Inicial";
-              config.pixel = "2";
-              config.level = "S";
-              config.framSize = "2";
-          // info para immprimir  medidas_yudica
-          var arraydatos = {};
-              arraydatos.N_orden = $('#petr_id').val();
-              arraydatos.Cliente = $('#cliente').val();
-              arraydatos.Medida = $('select[name="medidas_yudica"]').select2('data')[0].text;
-              arraydatos.Marca = $('select[name="marca_yudica"]').select2('data')[0].text;
-              arraydatos.Serie = $('#num_serie').val();
-              arraydatos.Num = $('#num_cubiertas').val();
-
-              arraydatos.Zona = $('#zona').val();
-              arraydatos.Trabajo = $('#tipo_proyecto').val();
-              arraydatos.Banda = $('select[name="banda_yudica"]').select2('data')[0].text;
-
-              // si la etiqueta es derechazo
-              arraydatos.Motivo = $('#motivo_rechazo').val();
-          // info para grabar en codigo QR
-          armarInfo(arraydatos);
-      }
-      // llama modal con datos e img de QR ya ingresados
-      verModalImpresion();
-
-      band = 1;
-  }
-
-  function armarInfo(arraydatos){
-
-    $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>/Infocodigo/rechazado", arraydatos);
-  }
 </script>

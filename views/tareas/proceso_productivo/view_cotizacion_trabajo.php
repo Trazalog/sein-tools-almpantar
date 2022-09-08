@@ -45,10 +45,29 @@
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
 
-                                <select name="unidad_medida_plazo" id="unidad_medida_plazo" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled selected> -Seleccionar- </option>
-                                    <option value="dias" selected>diás</option>
-                                </select>
+                                <select id="unme_id" name="unme_id" style="width: 100%;" class="select2 col-md-6" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
+                                <option value="" disabled selected> -Seleccionar- </option>
+                                <!-- <option value="tipos_pedidos_trabajoneumaticos">Reparacion Neumaticos</option> 
+							-->
+							<?php 
+                                if(is_array($unme_id)){
+                                
+                                $array = json_decode(json_encode($unme_id), true);
+
+                                foreach ($array as $i) {
+                                    $tabl_id= $i['tabl_id'];  $valor= $i['valor'];
+
+                                    $valor1= strval ($valor);
+
+                                echo '<option value ="'.$tabl_id.'"> '.$valor1.'</option>';
+                                        }
+                                                                }
+                                ?>
+                            </select>
+                    
+                           
+                           
+					  <!-- ***************** -->
 
                             </div>
                         </div>
@@ -89,7 +108,7 @@
             <label class="control-label" for="email_alternativo">email alternativo:</label>
                         <div class="form-group" style="display:inline-flex;">
 
-                            <input type="text" id="email_alternativo" name="email_alternativo"  class="form-control input-md" >
+                            <input type="text" id="email_alternativo_cliente" name="email_alternativo_cliente"  class="form-control input-md" >
                         </div>
                     </div>
 
@@ -98,31 +117,55 @@
             <div class="row">
                     <!-- forma de pago -->
                     <div class="col-md-3">
-                    <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
+                    <label class="control-label" for="fopa_id">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
                     <div class="input-group" style="display:inline-flex;">
-                  <select id="forma_pago"  name="forma_pago" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled="" selected=""> -Seleccionar- </option>
-                                    <option value="Contado">Contado Efectivo</option>
-                                    <option value="Debito">Debito</option>
-                                    <option value="Credito">Credito</option>
-                                </select>
+                  
+                     <select id="fopa_id" name="fopa_id" style="width: 100%;" class="select2 col-md-6" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
+                                <option value="" disabled selected> -Seleccionar- </option>
+                                <!-- <option value="tipos_pedidos_trabajoneumaticos">Reparacion Neumaticos</option> 
+							-->
+							<?php 
+                                if(is_array($fopa_id)){
+                                
+                                $array = json_decode(json_encode($fopa_id), true);
 
+                                foreach ($array as $i) {
+                                    $tabl_id= $i['tabl_id'];  $valor= $i['valor'];
+
+                                    $valor1= strval ($valor);
+
+                                echo '<option value ="'.$tabl_id.'"> '.$valor1.'</option>';
+                                        }
+                                                                }
+                                ?>
+                            </select>
+                    
                             </div>
-                    </div>
+                            </div>
 					  <!-- ***************** -->
               <!-- forma de pago -->
               <div class="col-md-3">
               <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>
                     <div class="form-group">
-                        <select name="divisa" id="divisa" class="form-control" style="width: auto" data-bv-notempty="false">
-                                    <option value="" disabled selected> -Seleccionar- </option>
-                                    <option value="USD">ARS - your money devalued </option>
-                                    <option value="USD">USD - Dólar estadounidense </option>
-                                    <option value="GBP">GBP - Libra esterlina </option>
-                                    <option value="CAD">CAD - Dólar canadiense </option>
-                                    <option value="USD">USD - Dólar estadounidense </option>
-                                    <option value="USD"> AUD - Dólar australiano </option>
-                        </select>
+                    <select id="divi_id" name="divi_id" style="width: 100%;" class="select2 col-md-6" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required>
+                                <option value="" disabled selected> -Seleccionar- </option>
+                                <!-- <option value="tipos_pedidos_trabajoneumaticos">Reparacion Neumaticos</option> 
+							-->
+							<?php 
+                                if(is_array($divi_id)){
+                                
+                                $array = json_decode(json_encode($divi_id), true);
+
+                                foreach ($array as $i) {
+                                    $tabl_id= $i['tabl_id'];  $valor= $i['valor'];
+
+                                    $valor1= strval ($valor);
+
+                                echo '<option value ="'.$tabl_id.'"> '.$valor1.'</option>';
+                                        }
+                                                                }
+                                ?>
+                            </select>
                     </div>
                     </div>
 					  <!-- ***************** -->
@@ -149,9 +192,9 @@
                     <!-- ***************** -->
 					 <div class="col-md-12">
                         <div class="form-group" style="width: 100%">
-                            <label class="control-label" for="descripcion">Descripción <strong style="color: #dd4b39">*</strong>:</label>
+                            <label class="control-label" for="descripcion_cotizacion">Descripción <strong style="color: #dd4b39">*</strong>:</label>
                             <div class="input-group" style="width:100%">
-                                <textarea class="form-control" id="descripcion" name="descripcion" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required></textarea>
+                                <textarea class="form-control" id="descripcion_cotizacion" name="descripcion_cotizacion" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -186,9 +229,22 @@
                         </div>
                     </div>
                     <!-- ***************** -->
+                    <div class="col-md-12">
+                        <div class="form-group" style="width: 100%">
+                            <label class="control-label" for="observaciones">Observaciones <strong style="color: #dd4b39">*</strong>:</label>
+                            <div class="input-group" style="width:100%">
+                                <textarea class="form-control" id="observaciones" name="observaciones" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <!-- ***************** -->
+					 
+                    <!-- ***************** -->
+             </div> <!-- end row -->
                     <div class="col-md-1 espaciado">
                       <div class="form-group">
-                      <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='habilitarEdicion()'></i>
+                      <!-- <i class='fa fa-fw fa-edit text-light-blue' style='cursor: pointer;' title='Editar' onclick='habilitarEdicion()'></i> -->
                        </div>
                     </div>
 
@@ -223,7 +279,18 @@
 
                         </tbody>
                     </table>
-                    <!--_______ FIN TABLA PRODUCTOS ______-->
+                    <!--_______ FIN TABLA  ______-->
+                    <div class="row">
+                        <div class="col-sm-7"></div>
+                        <div class="col-sm-4">
+                            <label class="control-label" for="footer_table">Total:<strong style="color: #dd4b39">*</strong>:</label>     
+                            <div class="input-group" style="display:inline-flex;">
+                            <input id="footer_table" name="footer_table" type="text" class="form-control input-md" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div
+                    </div>
+            
                 </div>
             </div>
 <br><br>
@@ -238,13 +305,53 @@
 
 
 <script>
+ $('#tabla_detalle').dataTable( {
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api();
+            debugger;
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+            // Total over all pages
+            if (end > 0) {    
+            var total = api
+                .column( 4 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                } );
+                console.log(total);
 
-DataTable($('#tabla_detalle'));
 
- // habilita botones, selects e inputs de modal
- function habilitarEdicion(){
-      $('.habilitar').removeAttr("disabled");
-    }
+                if (total > 0) {  
+            // Total over this page
+            var pageTotal = api
+                .column( 4, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                } );
+            }
+
+ console.log(pageTotal);
+            // Update footer
+            divisa = $('#divi_id').find(':selected').text();
+            sub_total = divisa +' ' +'$'+pageTotal;
+        $('#footer_table').val(sub_total);
+
+            }
+ 
+                
+  
+        }
+    } );
+
+
 
   function getFormData(){
 debugger;
@@ -286,25 +393,15 @@ wo();
 
 function tomarDatos(){
 
-
     $('#cod_proyecto').val($('#codigo_proyecto').val());
-
-
-
 
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
-
-
-
     $('#email_cliente').val($('#email').val());
 
-
+    $('#email_alternativo_cliente').val($('#email_alternativo').val());
 
     $('#nomb_cliente').val($('#cliente').val());
-
-
-
 
     $('#objetivo_proyecto').val($('#objetivo').val());
 
@@ -315,7 +412,6 @@ function tomarDatos(){
     }
 
   function calcularTotal() {
-debugger;
 
 var valor_cantidad = $("#cantidad").val();
 
@@ -354,7 +450,7 @@ if (valor_precio_unitario !=''){
 
 
         wc();
-    }, 3000);
+    }, 1500);
 
 
 setTimeout(function() {
@@ -365,7 +461,7 @@ setTimeout(function() {
         alertify.success("Echo.. subtotal calculado!");
 
         wc();
-    }, 5000);
+    }, 3000);
 
 
       }
@@ -409,6 +505,56 @@ setTimeout(function() {
    $('#form-dinamico-rechazo').show();
 
   $('#btnImpresion').hide();
+
+
+
+
+
+//Eliminar registro tabla intermedia
+//
+$(document).on('click','.btnEliminarCotizacion', function () {
+debugger;
+
+
+const swalWithBootstrapButtons = Swal.mixin({
+										customClass: {
+											confirmButton: 'btn btn-success',
+											cancelButton: 'btn btn-danger'
+										},
+										buttonsStyling: false
+										})
+
+										swalWithBootstrapButtons.fire({
+										title: 'Eliminar!',
+										text: '¿Desea borrar el registro?',
+										type: 'warning',
+										showCancelButton: true,
+										confirmButtonText: 'SI',
+										cancelButtonText: 'No',
+										reverseButtons: true
+										}).then((result) => {
+											debugger;
+										if (result.value) {
+                                            tabla.row( $(this).parents('tr') ).remove().draw(); 
+                                            alertify.success("Registro eliminado correctamente!");
+										} else if (
+											/* Read more about handling dismissals below */
+											result.dismiss === Swal.DismissReason.cancel
+										) {
+											swalWithBootstrapButtons.fire(
+											'Cancelado',
+											'registro contenido',
+											'info'
+											)
+
+											
+										}
+										})
+						
+});
+
+
+
 
 
   function cerrarTareaform(){
@@ -475,47 +621,26 @@ setTimeout(function() {
 function agregarTabla(){
    //Informamos el campo vacio
 debugger;
-  //  var reporte = validarCampos();
-
-    // if($('#frm-Cotizacion')[0]){
-        //Pantalla cargando
+ 
         wo();
 
         //Tomo los datos
         form = $('#frm-Cotizacion')[0];
         datos = new FormData(form);
         data = formToObject(datos);
-        //Si la operacion es agregar en la edicion, el service responde con el dedo_id
-        //se lo agrego al json que se asigna al data-json en la tabla
-
-        // dedo_id = "";
-
-        //Armo JSON para la fila
-        // cantidad_tabla = $('#cantidad').find(':selected').text();
-        // medida = $('#medidas').find(':selected').text();
+ 
 
         tabla = $('#tabla_detalle').DataTable();
 
-        //Caso remito no los tengo en cuenta
-        // precio_total = "";
-        // if(!$("#tipo_documento").select2('data')[0].text.toUpperCase().includes('REMITO')){
 
-        //     precio_unitario = data.precio_unitario.split(" ");
-        //     precio_total = precio_unitario[1] * data.cantidad;
-
-        //     //Puede poseer o no descuento
-        //     if(data.descuento){
-        //         aux = data.descuento.split(" ");
-        //         descuento =  parseFloat(precio_total * (aux[0] / 100)).toFixed(2);
-        //         precio_total = parseFloat(precio_total - descuento).toFixed(2);
-        //     }
-        // }else{
-
-        // }
+        var reporte = validarCampos();
+                                
+        if(reporte == false){
+        
         fila = "<tr data-json= '"+ JSON.stringify(data) +"'>" +
-                '<td><button  type="button" title="Editar"  class="btn btn-primary btn-circle btnEditar" data-toggle="modal" data-target="#modaleditar"><span class="fa fa-fw fa-edit text-light-blue" aria-hidden="true"></span></button>&nbsp<button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
+                '<td><button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminarCotizacion"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
                 '<td>' + data.cantidad + '</td>' +
-                '<td>' + data.descripcion + '</td>' +
+                '<td>' + data.descripcion_cotizacion + '</td>' +
                 '<td>' + data.precio_unitario + '</td>' +
                 '<td>' + data.total + '</td>' +
             '</tr>';
@@ -523,168 +648,74 @@ debugger;
             tabla.row.add($(fila)).draw();
 
             wc();
-
-        //Si la accion es editar y posee dedo_id, puedo editar directamente el detalle del documento
-        //Si no posee dedo_id y es accion editar, agrego el detalle del documento
-        //Remuevo los simbolos agregados por el INPUTMASK
-        //DESCUENTO
-        // descuento = data.descuento.split(" ");
-        // descuento = descuento[0] / 100 ;
-
-        //PRECIO UNITARIO
-        // precio_unitario = data.precio_unitario.split(" ");
-        // precio_unitario = precio_unitario[1];
-
-        // data.precio_unitario = precio_unitario;
-        // data.descuento = descuento;
-
-        // if(accion == "editar"){
-
-        //     if(data.dedo_id != ""){
-        //         $.ajax({
-        //             type: 'POST',
-        //             data: {data},
-        //             dataType: "json",
-        //             url: "<?php // echo SICP; ?>inspeccion/editarDetalleDocumento",
-        //             success: function(resp) {
-
-        //                 if(resp.status){
-        //                     //Agrego la fila a la tabla
-        //                     tabla.row.add($(fila)).draw();
-
-        //                     //Limpio los inputs y combos
-        //                     $('#producto').val(null).trigger('change');
-        //                     $('#medidas').val(null).trigger('change');
-        //                     $('#cantidad').val('');
-        //                     $('#unidades').val('');
-        //                     $('#precio_unitario').val('');
-        //                     $('#descuento').val('');
-        //                     alertify.success("Se editó el detalle correctamente");
-        //                 }else{
-        //                     alertify.error("Error al agregar detalle");
-        //                 }
-        //                 //Cierro pantalla carga
-        //                 wc();
-        //             },
-        //             error: function(data) {
-        //                 //Cierro pantalla carga
-        //                 wc();
-        //                 alertify.error("Error al agregar detalle");
-        //             }
-        //         });
-
-        //     }else{
-
-        //         $.ajax({
-        //             type: 'POST',
-        //             data: {data},
-        //             dataType: "json",
-        //             url: "<?php // echo SICP; ?>inspeccion/agregarDetalleDocumento",
-        //             success: function(resp) {
-
-        //                 if(resp.status){
-
-        //                     jsonDataResp = JSON.parse(resp.data);
-        //                     data.dedo_id = jsonDataResp.respuesta.dedo_id;
-
-                            //Agrego la fila a la tabla
-                            // tabla.row.add($(fila)).draw();
-
-                            //Limpio los inputs y combos
-                //             $('#producto').val(null).trigger('change');
-                //             $('#medidas').val(null).trigger('change');
-                //             $('#cantidad').val('');
-                //             $('#unidades').val('');
-                //             $('#precio_unitario').val('');
-                //             $('#descuento').val('');
-
-                //             alertify.success("Se editó el detalle correctamente");
-                //         }else{
-                //             alertify.error("Error al agregar detalle");
-                //         }
-
-                //         //Cierro pantalla carga
-                //         wc();
-                //     },
-                //     error: function(data) {
-                //         //Cierro pantalla carga
-                //         wc();
-                //         alertify.error("Error al agregar detalle");
-                //     }
-                // });
-            // }
-        // }else{
-
-        //     //Agrego la fila a la tabla
-        //     tabla.row.add($(fila)).draw();
-
-        //     //Limpio los inputs y combos
-        //     $('#producto').val(null).trigger('change');
-        //     $('#medidas').val(null).trigger('change');
-        //     $('#cantidad').val('');
-        //     $('#unidades').val('');
-        //     $('#precio_unitario').val('');
-        //     $('#descuento').val('');
-
-        //     //Cierro pantalla carga
-        //     wc();
-        //     alertify.success(`Se agrego ${producto} correctamente!`);
-        // }
+        }else{
+           
+        Swal.fire(
+            'Error..',
+            'Debes completar los campos obligatorios (*)',
+            'error'
+        );
+        wc();
+        return;
 
     }
-//     else{
-//         Swal.fire(
-//             'Error..',
-//             reporte,
-//             'error'
-//         );
-//     }
-// }
 
-
-
-
+}
 
 
 function validarCampos(){
-        var valida = '';
-        //Producto
-		if($("#producto").val() == null){
-			valida = "Seleccione producto!";
-		}
-        //Unidad de Medida
-		if($("#medidas").val() == null){
-			valida = "Seleccione unidad de medida!";
-		}
-        //Tipo Documento
-		if($("#tipo_documento").select2('data')[0].text == null){
-			valida = "Seleccione tipo de documento!";
-		}
-        //Numero documento
-		if($("#numero").val() == ""){
-			valida = "Seleccione número de documento!";
-		}
-        //Cantidad
-		if($("#cantidad").val() == ""){
-			valida = "Complete cantidad!";
-		}
-        //Unidades
-		// if($("#unidades").val() == ""){
-		// 	valida = "Complete unidades!";
-		// }
-        if(! $("#tipo_documento").select2('data')[0].text.toUpperCase().includes('REMITO')){
-            //Precio Unitario
-            if($("#precio_unitario").val() == ""){
-                valida = "Complete precio unitario!";
-            }
-            //Descuento
-            if($("#descuento").val() == ""){
-                valida = "Complete descuento!";
-            }
-        }
-		return valida;
-    }
 
+debugger;
+        var bandera = false;
+        //cantidad
+		if($("#cantidad").val() == ''){
+			valida = "Seleccione cantidad!";
+            console.log(valida);
+            bandera = true;
+		}
+        //precio unitario
+		if($("#precio_unitario").val() == ''){
+			valida = "Seleccione precio unitario!";
+            console.log(valida);
+            bandera = true;
+		}
+        //plazo entrega
+        if($("#plazo_entrega").val() == ''){
+			valida = "Seleccione plazo entrega!";
+            console.log(valida);
+            bandera = true;
+		}
+        //unidad de medida
+        if($("#unme_id").val() == ''){
+			valida = "Seleccione unidad de medida!";
+            console.log(valida);
+            bandera = true;
+		}
+
+        //forma de pago
+        if($("#fopa_id").val() == ''){
+			valida = "Seleccione forma de pago!";
+            console.log(valida);
+            bandera = true;
+		}
+
+        //divisa
+        if($("#divi_id").val() == ''){
+			valida = "Seleccione divisa!";
+            console.log(valida);
+            bandera = true;
+		}
+
+        //descripcion
+        if($("#descripcion_cotizacion").val() == ''){
+			valida = "Seleccione descripcion!";
+            console.log(valida);
+            bandera = true;
+		}
+        
+        
+		return bandera;
+    }
 
 
 
@@ -713,34 +744,17 @@ function validarCampos(){
         );
         return;
     }
-    //Luego de validar, guardo los formularios
-    //Accion discrimina si guarda todo junto o solo edita detalles
-
-    // if(accion == "nuevo"){
-    // if ( ! tabla.data().any() ) {
+   
         agregarDetalle().then((result) => {
             wc();
             alertify.success(result);
-            // cerrarDetalle();
+            
 
         }).catch((err) => {
             wc();
             console.log(err);
         });
-    // }else{
-    //     editarDetalle().then((result) => {
-    //         wc();
-    //         alertify.success(result);
-    //         cerrarDetalle();
-
-    //     }).catch((err) => {
-    //         wc();
-    //         alertify.error(err);
-    //         console.log(err);
-    //     });
-    // }
-    //Luego de guardar cierro el detalle del documento
-    //Vuelvo a la pantalla principal de la tarea
+   
 
 }
 //
@@ -752,6 +766,7 @@ async function agregarDetalle() {
 
     tabla = $('#tabla_detalle').DataTable();
 
+    validarCampos();
 debugger;
 
     //tomo el formulario
@@ -799,17 +814,15 @@ console.log(datos_json);
                         var json = JSON.parse($(nodo).attr('data-json'));
                     
         
-
                         json.coti_id = coti_id;
 
                         json.cantidad = datos[1];
 
-                        json.descripcion = datos[2];
+                        json.descripcion_cotizacion = datos[2];
 
                         json.precio_unitario = datos[3];
 
                         json.importe = datos[4];
-
 
                         detalles[rowIdx] = json;
                     });
@@ -850,72 +863,8 @@ console.log(datos_json);
 }
 
 
-
-
-//Eliminar registro tabla intermedia
-//
-$(document).on('click','.btnEliminar', function () {
-
-if (confirm('¿Desea borrar el registro?')) {
-
-    tabla = $('#tabla_detalle').DataTable();
-
-    if(accion == "editar"){
-
-        datos = JSON.parse($(this).parents('tr').attr('data-json'));
-        filaEliminar = this;
-        dedo_id = {"dedo_id" : datos.dedo_id};
-
-        $.ajax({
-                type: 'POST',
-                data: {dedo_id},
-                dataType: "json",
-                url: "<?php echo SICP; ?>inspeccion/eliminarDetalleDocumento",
-                success: function(resp) {
-
-                    if(resp.status){
-
-                        tabla.row( $(filaEliminar).parents('tr') ).remove().draw();
-                        alertify.success("Registro eliminado correctamente!");
-
-                    }else{
-                        alertify.error("Error al eliminar detalle");
-                    }
-
-                },
-                error: function(data) {
-                    alertify.error("Error al eliminar detalle");
-                }
-            });
-    }else{
-
-        tabla.row( $(this).parents('tr') ).remove().draw();
-        alertify.success("Registro eliminado correctamente!");
-    }
-}
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   function cerrarTarea() {
  debugger;
-
-
-
-
 
 
  var id = $('#taskId').val();
@@ -949,7 +898,6 @@ if (confirm('¿Desea borrar el registro?')) {
       });
 
 
-
 //  ------------------------------
 
       if ($('#rechazo').prop('checked') && $('#motivo_rechazo_interno .form-control').val() == '' && $('#motivo_rechazo_cliente .form-control').val() == '') {
@@ -981,92 +929,9 @@ if (confirm('¿Desea borrar el registro?')) {
 
       dataForm.append('frm_info_id', frm_info_id_rechazo);
 
-//       $.ajax({
-//           type: 'POST',
-//           data: dataForm,
-//           cache: false,
-//           contentType: false,
-//           processData: false,
-//           url: '<?php // base_url() ?>index.php/<?php //echo BPM ?>Proceso/cerrarTarea/' + id,
-//           success: function(data) {
-//               //wc();
-//           //   back();
-//           linkTo('<?php //echo BPM ?>Proceso/');
-
-//           setTimeout(() => {
-//               Swal.fire(
-
-//                       'Perfecto!',
-//                       'Se Finalizó la Tarea Correctamente!',
-//                       'success'
-//                   )
-//       }, 6000);
-
-//           },
-//           error: function(data) {
-//               alert("Error");
-//           }
-//       });
-
-
-//       } else{
-
-//         var guardado = cerrarTareaform();
-
-// if(!guardado){
-//  return;
-// }
-
-//         debugger;
-
-//       var frm_info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-
-
-//       var id = $('#taskId').val();
-//       console.log(id);
-
-//       var dataForm = new FormData($('#generic_form')[0]);
-
-//       dataForm.append('taskId', $('#taskId').val());
-
-//       dataForm.append('frm_info_id', frm_info_id);
-
-//       $.ajax({
-//           type: 'POST',
-//           data: dataForm,
-//           cache: false,
-//           contentType: false,
-//           processData: false,
-//           url: '<?php // base_url() ?>index.php/<?php // echo BPM ?>Proceso/cerrarTarea/' + id,
-//           success: function(data) {
-//               //wc();
-//           //   back();
-//           linkTo('<?php // echo BPM ?>Proceso/');
-
-//           setTimeout(() => {
-//               Swal.fire(
-
-//                       'Perfecto!',
-//                       'Se Finalizó la Tarea Correctamente!',
-//                       'success'
-//                   )
-//       }, 6000);
-
-//           },
-//           error: function(data) {
-//               alert("Error");
-//           }
-//       });
-
-//       }
-
-
   }
 
 }
-
-
-
 
 
 

@@ -141,6 +141,7 @@ function tomarDatos(){
     debugger;
 
     $('#cliente').val($('#cliente').val());
+    $('#tipo_trabajo').val('soldaduras');
 
     
     $('#form-dinamico').find(':input').each(function() {
