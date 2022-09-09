@@ -178,19 +178,59 @@ async function cerrarTarea() {
 
 
 <button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion"
-    onclick="modalCodigos()">Impresion</button>
+    onclick="crearUrlQr()">Impresion</button>
 
     
 <script>  
+
+ function crearUrlQr() {
+debugger;
+var datos = {};
+
+datos.id = "666";
+ datos.funcionsita = "showholis";
+
+
+    $.ajax({
+        type: 'POST',
+        data: datos,
+        url: '<?php echo COD ?>Url/generarLink',
+        success: function(data) {
+            url = JSON.parse(data)
+            console.log("la url es:"+ url.url);
+            // wc();
+            // const confirm = Swal.mixin({
+            //     customClass: {
+            //         confirmButton: 'btn btn-primary'
+            //     },
+            //     buttonsStyling: false
+            // });
+
+            // confirm.fire({
+            //     title: 'Perfecto!',
+            //     text: "Se finalizó la tarea correctamente!",
+            //     type: 'success',
+            //     showCancelButton: false,
+            //     confirmButtonText: 'Hecho'
+            // }).then((result) => {
+                
+            //     linkTo('<?php echo BPM ?>Proceso/');
+                
+            // });
+    
+        },
+        error: function(data) {
+            wc();
+            error('',"Se produjo un error al cerrar la tarea");
+        }
+    });
+}
+
+
+
   var band = 0;
   // Se peden hacer dos cosas: o un ajax buscando datos o directamente
-  // armar con los datos de la pantalla
-
- 
-
-    
-
-    
+  // armar con los datos de la pantalla  
 
   function modalCodigos(){
 
