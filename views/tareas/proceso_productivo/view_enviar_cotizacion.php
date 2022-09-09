@@ -289,7 +289,7 @@ $('#tabla_detalle').dataTable( {
             // Total over all pages
             if (end > 0) {    
             var total = api
-                .column( 4 )
+                .column( 3 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -300,7 +300,7 @@ $('#tabla_detalle').dataTable( {
                 if (total > 0) {  
             // Total over this page
             var pageTotal = api
-                .column( 4, { page: 'current'} )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
