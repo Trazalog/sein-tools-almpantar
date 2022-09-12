@@ -9,8 +9,7 @@ input[type=radio]{
 <hr>
 <?php 
 
-  // carga el modal de cotizacion
- $this->load->view(SEIN.'cotizacion/modales.php');
+
  
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
@@ -48,8 +47,32 @@ if($coti_id){
     $detalles_cotizacion = $aux2->detalles_cotizacion->detalle_cotizacion;
 }
 
+$detalles_coti = $detalles_cotizacion;
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  <div class="row">
   <div class="col-md-9 col-sm-9">
   <h3>Envio de Cotización<small></small></h3>
@@ -193,7 +216,7 @@ if($coti_id){
 								$coti_id = $rsp->coti_id;
                                 $deco_id = $rsp->deco_id;
 
-								echo "<tr id='$petr_id' case_id='$case_id' data-json='" . json_encode($rsp) . "'>";
+								echo "<tr id='$coti_id' data-json='" . json_encode($rsp) . "'>";
 
 								// echo "<td class='text-center text-light-blue'>";
 								// echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';

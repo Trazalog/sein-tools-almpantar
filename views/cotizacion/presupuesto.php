@@ -246,6 +246,10 @@
 					<div class="stl_01" style="left:1.1667em;top:50.1751em;"><span class="stl_24 stl_23 stl_09" style="word-spacing:0em;">dólar BNA vendedor del día anterior al pago (+/- 1 %). &nbsp;</span></div>
 					<div class="stl_01" style="left:2.1192em;top:52.2589em;"><span class="stl_28 stl_23 stl_26">OBSERVACIONES &nbsp;</span></div>
 				</div> -->
+
+
+
+				
 			</div>
 		</div>
 	</body>
