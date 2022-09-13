@@ -41,55 +41,42 @@ input[type=radio] {
             <br>
             <hr>
             
-      <!-- Formulario dinamico de la vista       -->
-<?php
-// ver
-// flata funcion que desplega formulario asociado a la vista
-// los formularios dinamicos se cargar de la tabla pro.procesos_forms
+        <!-- Formulario dinamico de la vista       -->
+        <?php
+        // ver
+        // flata funcion que desplega formulario asociado a la vista
+        // los formularios dinamicos se cargar de la tabla pro.procesos_forms
+        $aux =json_decode($data);
+        $formularios = $aux->formularios;
 
- $aux =json_decode($data);
-
-
-$formularios = $aux->formularios;
-
-if($aux){
-                                
-
-  foreach ($formularios as $clave => $valor) {
-
-    foreach ($valor as $v2) {
-      if($v2->orden == '1'){
-        echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-      }
-      else if($v2->orden == '2'){
-        echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-      }
-    else{
-      echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-    }
-  }
- 
-          }
-                     }
-  
-
-?>
-
-
+        if($aux){
+            foreach ($formularios as $clave => $valor) {
+                foreach ($valor as $v2) {
+                    if($v2->orden == '1'){
+                        echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+                    }
+                    else if($v2->orden == '2'){
+                        echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+                    }
+                    else{
+                    echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
+                    }
+                }
+            }
+        }
+        ?>
   <form id="generic_form">
-            <div class="form-group">
-                <center>
-                    <h3 class="text-danger"> ¿Cumple con los criterios de aceptación? </h3>
-                    <label class="radio-inline">
-                        <input id="aprobar" type="radio" name="result" value="true"> si
-                    </label>
-                    <label class="radio-inline">
-                        <input id="rechazo" type="radio" name="result" value="false"> no
-                    </label>
-                </center>
-            </div>
-
-
+    <div class="form-group">
+        <center>
+            <h3 class="text-danger"> ¿Cumple con los criterios de aceptación? </h3>
+            <label class="radio-inline">
+                <input id="aprobar" type="radio" name="result" value="true"> si
+            </label>
+            <label class="radio-inline">
+                <input id="rechazo" type="radio" name="result" value="false"> no
+            </label>
+        </center>
+    </div>
 </form>
 
 
