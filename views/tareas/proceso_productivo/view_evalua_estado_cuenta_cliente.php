@@ -1,5 +1,5 @@
 <style>
-.frm-save {
+.frm-save, .ocultar {
     display: none;
 }
 
@@ -112,26 +112,17 @@ input[type=radio] {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input id="num_cubiertas" name="num_cubiertas" type="text" value=""
-                                        class="form-control input-md"></td>
-                                <td><input id="num_pedido" name="num_pedido" type="text" value=""
-                                        class="form-control input-md"></td>
-                                <td><input id="medidas_yudica" name="medidas_yudica" type="text" value=""
-                                        class="form-control input-md"></td>
-                                <td><input id="marca_yudica" name="marca_yudica" type="text" value=""
-                                        class="form-control input-md"></td>
-                                <td><input id="num_serie" name="num_serie" type="text" value=""
-                                        class="form-control input-md"></td>
-                                <td><input id="banda_yudica" name="banda_yudica" type="text" value=""
-                                        class="form-control input-md"></td>
+                                <td><input id="num_cubiertas" name="num_cubiertas" type="text" value="" class="form-control input-md"></td>
+                                <td><input id="num_pedido" name="num_pedido" type="text" value="" class="form-control input-md"></td>
+                                <td><input id="medidas_yudica" name="medidas_yudica" type="text" value="" class="form-control input-md"></td>
+                                <td><input id="marca_yudica" name="marca_yudica" type="text" value="" class="form-control input-md"></td>
+                                <td><input id="num_serie" name="num_serie" type="text" value="" class="form-control input-md"></td>
+                                <td><input id="banda_yudica" name="banda_yudica" type="text" value="" class="form-control input-md"></td>
                             </tr>
-
                         </tbody>
                     </table>
                     <br><br><br>
-                    <a type="button" href="<?php echo base_url();?>" class="btn btn-primary" target="_blank">Imprimir
-                        comprobante de Rechazo</a>
-
+                    <a type="button" href="<?php echo base_url();?>" class="btn btn-primary" target="_blank">Imprimir comprobante de Rechazo</a>
                 </div>
             </div>
             <div class="modal-footer">
@@ -144,60 +135,37 @@ input[type=radio] {
 
 <script>
 function getFormData() {
-    debugger;
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
         array_form[this.name] = this.value;
-
     });
-
-    $.each(array_form, function(index, value) {
-        console.log(index + ": " + value);
-
-    });
-
-
 }
 
 getFormData();
-
 detectarForm();
-    initForm();
- 
- 
+initForm();
+$('#form-dinamico').show();
+
 $('#view').ready(function() {
-wo();
+    wo();
     alertify.success("Cargando datos en la vista aguarde...");
     
     setTimeout(function() {
         wc();    
         tomarDatos();
-}, 9000);
-   
+    }, 9000);
     
 });
 
-
+//tomo los datos del formulario dinamico de cabecera
+//completo los campos del formulario. los imput pueden o no ser readonly.
 function tomarDatos(){
-    
-    //tomo los datos del formulario dinamico de cabecera
-    //completo los campos del formulario. los imput pueden o no ser readonly.
-    
-$('#codigo_cliente').val($('#codigo_proyecto').val());
-    
-$('#email_cliente').val($('#email').val());
-
-$('#nomb_cliente').val($('#cliente').val());
-
-
+    $('#codigo_cliente').val($('#codigo_proyecto').val()); 
+    $('#email_cliente').val($('#email').val());
+    $('#nomb_cliente').val($('#cliente').val());
 }
- 
-    $('#form-dinamico').show();
-
-
 
 function mostrarForm() {
-
     detectarForm();
     initForm();
 
@@ -213,7 +181,6 @@ function ocultarForm() {
 
     detectarForm();
     initForm();
-
     // $('#motivo').show();
     $('#form-dinamico-rechazo').show();
 
@@ -223,7 +190,6 @@ function ocultarForm() {
     $('#titulo').hide();
     // muestra btn para imprimir
     $('#btnImpresion').show();
-
 }
 // ver esta parte
 // $('#form-dinamico').hide();
@@ -231,10 +197,7 @@ function ocultarForm() {
 $('#comprobante').hide();
 // $('#motivo').show();
 $('#form-dinamico-rechazo').show();
-
 $('#btnImpresion').hide();
-
-
 
 async function cerrarTareaform(){
     resp = {};
@@ -303,10 +266,6 @@ async function cerrarTarea() {
         }
     });
 }
-
-</script>
-
-<script>
 // #HGallardo
 var band = 0;
 // Se peden hacer dos cosas: o un ajax buscando datos o directamente
@@ -358,7 +317,18 @@ function modalCodigos() {
 }
 
 function armarInfo(arraydatos) {
-
     $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>/Infocodigo/rechazado", arraydatos);
 }
+
+//Oculta/Muestra el bloque de deudas hasta que se seleccione opcion "Cliente Registrado"
+$('#form-dinamico').on('click', '.condicion_cliente input[type="radio"]', function () {
+    event.stopPropagation();
+    if(event.target == this){
+        if($(event.target).val().toUpperCase().includes("REGISTRADO")){
+            $(".bloque_posee_deuda").show();
+        }else{
+            $(".bloque_posee_deuda").hide();
+        }
+    }
+});
 </script>
