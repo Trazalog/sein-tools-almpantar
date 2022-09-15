@@ -16,6 +16,15 @@ class Cotizacion extends CI_Controller
 		}
     }
 
+	public function VistaCliente()
+    {
+		
+
+		return $this->load->view(SEIN . 'cliente/vista_cliente');
+    }
+
+
+
 
     /**
 	* Agregar Cotizacion

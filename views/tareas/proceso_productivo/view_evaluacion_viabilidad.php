@@ -170,19 +170,18 @@ async function cerrarTareaform(){
 }
   
 async function cerrarTarea() {
+  var confirmacion = await confirmarRechazo();
+  if(confirmacion == "confirma"){
     wo();
-    debugger;
-   var confirma = await cerrarTareaform();
+    var confirma = await cerrarTareaform();
 
     if(!resp.confirma){
         wc();
         return;
     }
- 
-    var id = $('#taskId').val();
 
+    var id = $('#taskId').val();
     var dataForm = new FormData($('#generic_form')[0]);
-   
     dataForm.append('frm_info_id', resp.info_id);
 
     $.ajax({
@@ -194,33 +193,42 @@ async function cerrarTarea() {
         url: '<?php base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
         success: function(data) {
             wc();
-            const confirm = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false
-            });
-
-            confirm.fire({
-                title: 'Perfecto!',
-                text: "Se finalizó la tarea correctamente!",
-                type: 'success',
-                showCancelButton: false,
-                confirmButtonText: 'Hecho'
-            }).then((result) => {
-                
-                linkTo('<?php echo BPM ?>Proceso/');
-                
-            });
-    
+            fun = () =>{linkTo('<?php echo base_url(BPM) ?>Proceso/')};
+            confRefresh(fun); 
         },
         error: function(data) {
             wc();
             error('',"Se produjo un error al cerrar la tarea");
         }
     });
+  }
 }
- 
+async function confirmarRechazo(){
+  let confirmacion = new Promise((resolve, reject) => {
+    if($('#rechazo').is(':checked')){
+      Swal.fire({
+        title: "¿Está seguro de que desea rechazar la cotización?",
+        text: "",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: 'No',
+        reverseButtons: true
+      }).then((result) => {
+        if(!result.value){
+          return resolve("no confirma");
+        }else{
+          return resolve("confirma");
+        }
+      });
+    }else{
+      return resolve("confirma");
+    }
+  });
+  return await confirmacion;
+}
 </script>
 
 <script>  
