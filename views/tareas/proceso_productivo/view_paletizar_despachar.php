@@ -30,7 +30,7 @@
    
     </form>
     <br><br>  
-
+    <input id="url_link" name="url_link" type="hidden"   class="form-control input-md">
 
 <script>
 
@@ -177,8 +177,8 @@ async function cerrarTarea() {
 </script>
 
 
-<button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion"
-    onclick="crearUrlQr()">Impresion</button>
+<!-- <button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion"
+    onclick="crearUrlQr()">Impresion</button> -->
 
     
 <script>  
@@ -188,7 +188,7 @@ debugger;
 var datos = {};
 
 datos.id = "666";
- datos.funcionsita = "showholis";
+ datos.funcionsita = "cliente";
 
 
     $.ajax({
@@ -198,26 +198,10 @@ datos.id = "666";
         success: function(data) {
             url = JSON.parse(data)
             console.log("la url es:"+ url.url);
-            // wc();
-            // const confirm = Swal.mixin({
-            //     customClass: {
-            //         confirmButton: 'btn btn-primary'
-            //     },
-            //     buttonsStyling: false
-            // });
 
-            // confirm.fire({
-            //     title: 'Perfecto!',
-            //     text: "Se finalizó la tarea correctamente!",
-            //     type: 'success',
-            //     showCancelButton: false,
-            //     confirmButtonText: 'Hecho'
-            // }).then((result) => {
-                
-            //     linkTo('<?php echo BPM ?>Proceso/');
-                
-            // });
-    
+            dato_linck = url.url;
+
+            $('#url_link').val(dato_linck);
         },
         error: function(data) {
             wc();
@@ -226,15 +210,16 @@ datos.id = "666";
     });
 }
 
-
+crearUrlQr();
 
   var band = 0;
   // Se peden hacer dos cosas: o un ajax buscando datos o directamente
   // armar con los datos de la pantalla  
 
   function modalCodigos(){
-
+debugger;
       
+
 
       if (band == 0) {
         debugger;
@@ -251,7 +236,7 @@ datos.id = "666";
               arraydatos.Cliente = $('#cliente').val();
               arraydatos.fec_fabricacion = $('#fec_fabricacion').val();
               arraydatos.fec_entrega = $('#fec_entrega').val();
-              
+              arraydatos.dato_linck =   $('#url_link').val();
           // info para grabar en codigo QR
           armarInfo(arraydatos);
 
