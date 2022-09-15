@@ -1,13 +1,16 @@
 <style>
-.fa-edit{
-  transform:scale(1.6);
+.fa-edit {
+    transform: scale(1.6);
 }
-input[type=radio]{
-  transform:scale(1.6);
+
+input[type=radio] {
+    transform: scale(1.6);
 }
 </style>
 <hr>
 <?php 
+
+
 
 
  
@@ -45,91 +48,82 @@ if($coti_id){
     $aux2 =json_decode($deta['data']);
 
     $detalles_cotizacion = $aux2->detalles_cotizacion->detalle_cotizacion;
+
+    $detalles_coti = $detalles_cotizacion;
 }
 
-$detalles_coti = $detalles_cotizacion;
+
 
 ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <div class="row">
-  <div class="col-md-9 col-sm-9">
-  <h3>Envio de Cotización<small></small></h3>
-<form class="form-inline" id="frm-Cotizacion">
-                <fieldset>
-           <div class="row">
-                <!-- Codigo proyecto-->
+<div class="row">
+    <div class="col-md-9 col-sm-9">
+        <h3>Envio de Cotización<small></small></h3>
+        <form class="form-inline" id="frm-Cotizacion">
+            <fieldset>
+                <div class="row">
+                    <!-- Codigo proyecto-->
                     <div class="col-md-3 espaciado">
-                    <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="cod_proyecto">Código Pedido <strong
+                                style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                           
-                            <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido"  minlength="4" maxlength="10" size="12" class="form-control input-md" readonly>
+
+                            <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido"
+                                minlength="4" maxlength="10" size="12" class="form-control input-md" readonly>
                         </div>
                     </div>
-                    <!-- ***************** -->  
+                    <!-- ***************** -->
                     <!-- Objetivo -->
                     <div class="col-md-3 espaciado">
-                    <label class="control-label" for="objetivo">Objetivo<strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="objetivo">Objetivo<strong
+                                style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                          
+
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="objetivo_proyecto" name="objetivo_proyecto" type="text" class="form-control input-md" data-bv-notempty readonly>
+                                <input id="objetivo_proyecto" name="objetivo_proyecto" type="text"
+                                    class="form-control input-md" data-bv-notempty readonly>
                             </div>
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="unidad_medida_tiempo" name="unidad_medida_tiempo" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
+                                <input id="unidad_medida_tiempo" name="unidad_medida_tiempo"
+                                    class="form-control input-md" data-bv-notempty
+                                    data-bv-notempty-message="Campo Obligatorio *" readonly>
                             </div>
 
                         </div>
                     </div>
-                     <!-- ***************** -->  
-                     <!-- plazo de entrega -->
+                    <!-- ***************** -->
+                    <!-- plazo de entrega -->
                     <div class="col-md-3 espaciado">
-                    <label class="control-label" for="plazo_entrega">plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="plazo_entrega">plazo de entrega<strong
+                                style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                       
+
                             <div class="input-group" style="display:inline-flex;">
-                            <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" value="<?php echo $plazo_entrega; ?>"readonly>
-                                <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md" value="<?php echo $unme_tiempo; ?>"readonly>
+                                <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md"
+                                    value="<?php echo $plazo_entrega; ?>" readonly>
+                                <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md"
+                                    value="<?php echo $unme_tiempo; ?>" readonly>
                                 <!--<select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false" readonly>
                                     <option value="" disabled selected> -Seleccionar- </option>
                                     <option value="dias" disabled selected>diás</option>
                                 </select> -->
-                            
+
                             </div>
                         </div>
                     </div>
-                    <!-- ***************** -->           
-                   
+                    <!-- ***************** -->
 
-            </div> <!-- end row -->
-            <br>   <br>
-            <div class="row">
-          <!-- Cliente-->
-          <div class="col-md-3 espaciado">
-                    <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
+
+                </div> <!-- end row -->
+                <br> <br>
+                <div class="row">
+                    <!-- Cliente-->
+                    <div class="col-md-3 espaciado">
+                        <label class="control-label" for="nomb_cliente">Cliente <strong
+                                style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex;">
-                        <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
+                            <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->
@@ -137,75 +131,80 @@ $detalles_coti = $detalles_cotizacion;
 
                     <!-- Direccion Entrega -->
                     <div class="col-md-4 espaciado">
-                    <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
+                        <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>
                         <div class="form-group">
-                           
-                            <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value="" readonly>
+
+                            <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value=""
+                                readonly>
                         </div>
                     </div>
-                    <!-- ***************** --> 
-					 <!-- email -->
-					 <div class="col-md-3 espaciado">            
-           <label class=" control-label" for="email" name="">Email:</label>                                
+                    <!-- ***************** -->
+                    <!-- email -->
+                    <div class="col-md-3 espaciado">
+                        <label class=" control-label" for="email" name="">Email:</label>
                         <div class="form-group" style="display:inline-flex;">
-                            
+
                             <input type="text" class="form-control habilitar" id="email_cliente" readonly>
                         </div>
                     </div>
-                    <!-- ***************** --> 
-					
-         </div> <!-- end row -->  
-        <br>   <br>
-            <div class="row"> 
-             <!-- email alternativo -->
-					 <div class="col-md-4 espaciado">                
-           <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
+                    <!-- ***************** -->
+
+                </div> <!-- end row -->
+                <br> <br>
+                <div class="row">
+                    <!-- email alternativo -->
+                    <div class="col-md-4 espaciado">
+                        <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>
                         <div class="form-group" style="display:inline-flex;">
-                          
+
                             <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly>
                         </div>
                     </div>
-                    <!-- ***************** -->   
-            
+                    <!-- ***************** -->
+
                     <!-- forma de pago -->
                     <div class="col-md-4 espaciado">
-                    <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
-                    <div class="input-group" style="display:inline-flex;">
-                    <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" value="<?php echo $forma_pago; ?>" readonly>
-                            </div>
-                    </div>  
-					  <!-- ***************** --> 
+                        <label class="control-label" for="forma_pago">Forma de pago<strong
+                                style="color: #dd4b39">*</strong>:</label>
+                        <div class="input-group" style="display:inline-flex;">
+                            <input id="forma_pago" name="forma_pago" type="text" class="form-control input-md"
+                                value="<?php echo $forma_pago; ?>" readonly>
+                        </div>
+                    </div>
+                    <!-- ***************** -->
 
-                <!-- Divisa -->
-                <div class="col-md-3 espaciado">
-                <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
-                    <div class="input-group" style="display:inline-flex;">
-                    <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $divisa; ?>" readonly>
-        
-                            </div>
-                    </div>  
-                     
-                   
+                    <!-- Divisa -->
+                    <div class="col-md-3 espaciado">
+                        <label class="control-label" for="divisa">Divisa<strong
+                                style="color: #dd4b39">*</strong>:</label>
+                        <div class="input-group" style="display:inline-flex;">
+                            <input id="divisa" name="divisa" type="text" class="form-control input-md"
+                                value="<?php echo $divisa; ?>" readonly>
+
+                        </div>
+                    </div>
+
+
                     <br>
-          </div> <!-- end row -->          
-                    <!-- Button -->
+                </div> <!-- end row -->
+                <!-- Button -->
 
-                    <br>   <br>
+                <br> <br>
 
-            <div class="col-md-12 col-sm-12 col-xs-12 centrar">
-                <h5>Detalles de cotización:</h5>
-                <div id="sec_productos">
-                    <!-- ______ TABLA PRODUCTOS ______ -->
-                    <table id="tabla_detalle" class="table table-bordered table-striped">
-                        <thead class="thead-dark" bgcolor="#eeeeee">
-                            <!-- <th style="width: 10% !important">Acciones</th> -->
-                            <th>Cantidad</th>
-                            <th>Descripción</th>
-                            <th>P. Unitario</th>
-                            <th>Importe</th>
-                        </thead>
-                        <tbody >
-                        <?php
+                <div class="col-md-12 col-sm-12 col-xs-12 centrar">
+                    <h5>Detalles de cotización:</h5>
+                    <div id="sec_productos">
+                        <!-- ______ TABLA PRODUCTOS ______ -->
+                        <table id="tabla_detalle" class="table table-bordered table-striped">
+                            <thead class="thead-dark" bgcolor="#eeeeee">
+                                <!-- <th style="width: 10% !important">Acciones</th> -->
+                                <th>Cantidad</th>
+                                <th>Descripción</th>
+                                <th>P. Unitario</th>
+                                <th>Importe</th>
+                            </thead>
+                            <tbody>
+                                <?php
 							foreach($detalles_cotizacion as $rsp){
 
 
@@ -230,50 +229,55 @@ $detalles_coti = $detalles_cotizacion;
 			            
 								echo '</tr>';
 						}
-						?>  
-                        
-       
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-sm-7"></div>
-                        <div class="col-sm-4">
-                            <label class="control-label" for="footer_table">Total:<strong style="color: #dd4b39">*</strong>:</label>     
-                            <div class="input-group" style="display:inline-flex;">
-                            <input id="footer_table" name="footer_table" type="text" class="form-control input-md" readonly>
+						?>
+
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-7"></div>
+                            <div class="col-sm-4">
+                                <label class="control-label" for="footer_table">Total:<strong
+                                        style="color: #dd4b39">*</strong>:</label>
+                                <div class="input-group" style="display:inline-flex;">
+                                    <input id="footer_table" name="footer_table" type="text"
+                                        class="form-control input-md" readonly>
+                                </div>
                             </div>
+                            <div class="col-sm-1"></div </div>
+                            <!--_______ FIN TABLA PRODUCTOS ______-->
                         </div>
-                        <div class="col-sm-1"></div
                     </div>
-                    <!--_______ FIN TABLA PRODUCTOS ______-->
-                </div>
-            </div>
-    <br><br>
-          
-                </fieldset>
-            </form>                           
-   
+                    <br><br>
+
+            </fieldset>
+        </form>
+
     </div>
-    
+
     <!-- / Bloque de cotizacion -->
 
     <!-- Bloque preview cotizacion -->
     <div class="col-md-3 centrar">
-      <br><br><br>
-     <div class='' id='preview'>
-		<img src="<?php echo base_url() ?>imagenes/sein/preview_cotizacion.jpg" alt="sein preview" width="150" height="150" id='imagenSein'>
-    <br><br> <br><br>
-   <div class="">
-   <button type="button" class="btn btn-sucess" title="preview Cotización" ><i class="fa fa-search" aria-hidden="true"></i></button>
-    <button type="button" class="btn btn-sucess" title="descargar_Cotización"data-dismiss="modal" id="descargar_Cotización" onclick="verModalCotizacion()"><i class="fa fa-download" aria-hidden="true"></i></button>
-   </div>
-    <br>
+        <br><br><br>
+        <div class='' id='preview'>
+            <img src="<?php echo base_url() ?>imagenes/sein/preview_cotizacion.jpg" alt="sein preview" width="150"
+                height="150" id='imagenSein'>
+            <br><br> <br><br>
+            <div class="">
+                <button type="button" class="btn btn-sucess" title="preview Cotización"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-sucess" title="descargar_Cotización" data-dismiss="modal"
+                    id="descargar_Cotización" onclick="verModalCotizacion()"><i class="fa fa-download"
+                        aria-hidden="true"></i></button>
+            </div>
+            <br>
 
-  </div>
-  
-      </div>
         </div>
-  </div>
+
+    </div>
+</div>
+</div>
 
 <form id="generic_form">
     <div class="form-group">
@@ -297,74 +301,82 @@ function verModalCotizacion() {
 }
 
 
-$('#tabla_detalle').dataTable( {
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api();
-            debugger;
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
- 
-            // Total over all pages
-            if (end > 0) {    
+$('#tabla_detalle').dataTable({
+    "footerCallback": function(row, data, start, end, display) {
+        var api = this.api();
+        debugger;
+        // Remove the formatting to get integer data for summation
+        var intVal = function(i) {
+            return typeof i === 'string' ?
+                i.replace(/[\$,]/g, '') * 1 :
+                typeof i === 'number' ?
+                i : 0;
+        };
+
+        // Total over all pages
+        if (end > 0) {
             var total = api
-                .column( 3 )
+                .column(3)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function(a, b) {
                     return intVal(a) + intVal(b);
-                } );
-                console.log(total);
+                });
+            console.log(total);
 
 
-                if (total > 0) {  
-            // Total over this page
-            var pageTotal = api
-                .column( 3, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                } );
+            if (total > 0) {
+                // Total over this page
+                var pageTotal = api
+                    .column(3, {
+                        page: 'current'
+                    })
+                    .data()
+                    .reduce(function(a, b) {
+                        return intVal(a) + intVal(b);
+                    });
             }
 
- console.log(pageTotal);
+            console.log(pageTotal);
             // Update footer
             divisa = $('#divisa').val();
-            sub_total = divisa +' ' +'$'+pageTotal;
-        $('#footer_table').val(sub_total);
-
-            }
-             
+            sub_total = divisa + ' ' + '$' + pageTotal;
+            $('#footer_table').val(sub_total);
+            $('#footer_table2').val(sub_total);
         }
-    } );
+
+    }
+});
 
 
 
-  function getFormData(){
+function getFormData() {
 
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
-      array_form[this.name] = this.value;
+        array_form[this.name] = this.value;
 
-      });
-
-    $.each(array_form, function( index, value ) {
-        console.log( index + ": " + value );
- 
     });
-  }
 
-  getFormData();
+    $.each(array_form, function(index, value) {
+        console.log(index + ": " + value);
+
+    });
+}
+
+getFormData();
 
 /// mascaras de input numericos
-  $("#cantidad").inputmask({ regex: "[0-9]*" });
+$("#cantidad").inputmask({
+    regex: "[0-9]*"
+});
 
-  $("#precio_unitario").inputmask({ regex: "[0-9]*" });
+$("#precio_unitario").inputmask({
+    regex: "[0-9]*"
+});
 
-  $("#importe").inputmask({ regex: "[0-9]*" });
+$("#importe").inputmask({
+    regex: "[0-9]*"
+});
 
 ////////////////////////////////
 
@@ -373,23 +385,23 @@ $('#view').ready(function() {
     alertify.success("Cargando datos en la vista aguarde...");
     tomarDatos();
     setTimeout(function() {
-         wc();
-}, 6000);
-   
-    
+        wc();
+    }, 6000);
+
+
 });
 
 
-function tomarDatos(){
-       //tomo los datos del formulario dinamico de cabecera
+function tomarDatos() {
+    //tomo los datos del formulario dinamico de cabecera
     //completo los campos del formulario. los imput pueden o no ser readonly.
-    
+
     $('#cod_proyecto').val($('#codigo_proyecto').val());
-    
+
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
     $('#email_cliente').val($('#email').val());
-    
+
     $('#email_alternativo_cliente').val($('#email_alternativo').val());
 
     $('#nomb_cliente').val($('#cliente').val());
@@ -399,15 +411,15 @@ function tomarDatos(){
     $('#unidad_medida_tiempo').val($('#unidad_medida').val());
 
 
-//     $('#form-dinamico').find(':input').each(function() {
-	
-//     var elemento= this;
-//     console.log("elemento.id="+ elemento.id); 
+    //     $('#form-dinamico').find(':input').each(function() {
 
-//   if (elemento.id == 'cod_proyecto') {
-//       $(elemento).attr('readonly', true); 
-//       $(elemento).attr('disabled',true);
-//     }
+    //     var elemento= this;
+    //     console.log("elemento.id="+ elemento.id); 
+
+    //   if (elemento.id == 'cod_proyecto') {
+    //       $(elemento).attr('readonly', true); 
+    //       $(elemento).attr('disabled',true);
+    //     }
     // objetivo_proyecto
     // unidad_medida_tiempo
     // plazo_entrega
@@ -422,199 +434,458 @@ function tomarDatos(){
     // //   $(elemento).attr('readonly', false); 
     // //   $(elemento).attr('disabled',true);
     // }
-                                
-                                            // });
+
+    // });
 
 }
 
 
-  function calcularTotal() {
-debugger;
+function calcularTotal() {
+    debugger;
 
-var valor_cantidad = $("#cantidad").val();
+    var valor_cantidad = $("#cantidad").val();
 
-var valor_precio_unitario = $("#precio_unitario").val();
+    var valor_precio_unitario = $("#precio_unitario").val();
 
-var valor_iva = $("#iva").val();
+    var valor_iva = $("#iva").val();
 
-var calcular_importe = valor_cantidad * valor_precio_unitario;
+    var calcular_importe = valor_cantidad * valor_precio_unitario;
 
-var calcular_total = calcular_importe * valor_iva;
+    var calcular_total = calcular_importe * valor_iva;
 
-var calcular_total_iva = calcular_total + calcular_importe;
+    var calcular_total_iva = calcular_total + calcular_importe;
 
-if ( valor_cantidad !='' && valor_precio_unitario ==''){
-   
-    alertify.warning("Indique precio unitario!");
-   
-  }
+    if (valor_cantidad != '' && valor_precio_unitario == '') {
 
-if (valor_precio_unitario !=''){
-     
-     wo();
-    alertify.success("Calculando importe!");
-     wc();   
+        alertify.warning("Indique precio unitario!");
 
-   }
+    }
 
-    if ($("#cantidad").val()!='' && $("#precio_unitario").val()!='' ) {
-        
-      setTimeout(function() {
+    if (valor_precio_unitario != '') {
+
         wo();
-        
-        alertify.success("Importe calculado!");  
-        
-        $("#importe").val(calcular_importe);
+        alertify.success("Calculando importe!");
+        wc();
+
+    }
+
+    if ($("#cantidad").val() != '' && $("#precio_unitario").val() != '') {
+
+        setTimeout(function() {
+            wo();
+
+            alertify.success("Importe calculado!");
+
+            $("#importe").val(calcular_importe);
 
 
-        wc(); 
-    }, 3000);
-
-      
-setTimeout(function() {
-        wo();
-
-        $("#total").val(calcular_total_iva);
-
-        alertify.success("Echo.. total calculado!");
-
-        wc(); 
-    }, 5000);
+            wc();
+        }, 3000);
 
 
-      }
+        setTimeout(function() {
+            wo();
 
-  }
+            $("#total").val(calcular_total_iva);
 
-  function mostrarForm(){
+            alertify.success("Echo.. total calculado!");
 
-      detectarForm();
-      initForm();
+            wc();
+        }, 5000);
 
-      $('#form-dinamico').show();
-      $('#titulo').show();
-      $('#form-dinamico-rechazo').hide();
-      $('#comprobante').hide();
-      // oculta btn para imprimir
-      $('#btnImpresion').hide();
-  }
 
-  function ocultarForm(){
+    }
+
+}
+
+function mostrarForm() {
 
     detectarForm();
     initForm();
 
-     // $('#motivo').show();
-      $('#form-dinamico-rechazo').show();
-    
-      $('#comprobante').show();
-      $('#hecho').prop('disabled',false);
-      $('#form-dinamico').hide();
-      $('#titulo').hide();
-      // muestra btn para imprimir
-      $('#btnImpresion').show();
+    $('#form-dinamico').show();
+    $('#titulo').show();
+    $('#form-dinamico-rechazo').hide();
+    $('#comprobante').hide();
+    // oculta btn para imprimir
+    $('#btnImpresion').hide();
+}
 
-  }
+function ocultarForm() {
 
-  $('#form-dinamico').hide();
-  $('#titulo').hide();
-  $('#comprobante').hide();
-   // $('#motivo').show();
-   $('#form-dinamico-rechazo').show();
+    detectarForm();
+    initForm();
 
-  $('#btnImpresion').hide();
+    // $('#motivo').show();
+    $('#form-dinamico-rechazo').show();
+
+    $('#comprobante').show();
+    $('#hecho').prop('disabled', false);
+    $('#form-dinamico').hide();
+    $('#titulo').hide();
+    // muestra btn para imprimir
+    $('#btnImpresion').show();
+
+}
+
+$('#form-dinamico').hide();
+$('#titulo').hide();
+$('#comprobante').hide();
+// $('#motivo').show();
+$('#form-dinamico-rechazo').show();
+
+$('#btnImpresion').hide();
 
 
-  function cerrarTareaform(){
+function cerrarTareaform() {
     debugger;
 
-    if ( $("#rechazo").is(":checked")) {
-	
-    var bandera = true ;
+    if ($("#rechazo").is(":checked")) {
+
+        var bandera = true;
 
 
-    if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
-        Swal.fire(
-					'Oops...',
-					'Debes completar los campos Obligatorios (*)',
-					'error'
-				)
-                bandera = false;
-       return bandera;
-	 		}
-
-    else{
-     $('#form-dinamico-rechazo .frm').attr('id','rechazo-form'); 
-    frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'),false,false);
-        var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
-        console.log('info_id:' + info_id);
-         console.log('Formulario Guardado con exito -function cerrarTareaform');
+        if ($('#rechazo').prop('checked') && $('#motivo_rechazo .form-control').val() == '') {
+            Swal.fire(
+                'Oops...',
+                'Debes completar los campos Obligatorios (*)',
+                'error'
+            )
+            bandera = false;
+            return bandera;
+        } else {
+            $('#form-dinamico-rechazo .frm').attr('id', 'rechazo-form');
+            frmGuardar($('#form-dinamico-rechazo.frm-new').find('form'), false, false);
+            var info_id = $('#form-dinamico-rechazo .frm').attr('data-ninfoid');
+            console.log('info_id:' + info_id);
+            console.log('Formulario Guardado con exito -function cerrarTareaform');
         }
 
-        return bandera; 
-  }
-  else if ( $("#aprobar").is(":checked")) {
-    debugger;
-    var bandera = true ;
-
-      if (!frm_validar('#form-dinamico')) {
-
-        console.log("Error al guardar Formulario");
-          Swal.fire(
-            'Oops...',
-            'Debes completar los campos Obligatorios (*)',
-            'error'
-          )
-      bandera = false;
         return bandera;
+    } else if ($("#aprobar").is(":checked")) {
+        debugger;
+        var bandera = true;
 
-      }
-      else{
-      frmGuardar($('#form-dinamico.frm-new').find('form'),false,false);
-          var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
-          console.log('info_id:' + info_id);
-          console.log('Formulario Guardado con exito -function cerrarTareaform');
-          }
+        if (!frm_validar('#form-dinamico')) {
 
-          return bandera; 
+            console.log("Error al guardar Formulario");
+            Swal.fire(
+                'Oops...',
+                'Debes completar los campos Obligatorios (*)',
+                'error'
+            )
+            bandera = false;
+            return bandera;
+
+        } else {
+            frmGuardar($('#form-dinamico.frm-new').find('form'), false, false);
+            var info_id = $('#form-dinamico .frm').attr('data-ninfoid');
+            console.log('info_id:' + info_id);
+            console.log('Formulario Guardado con exito -function cerrarTareaform');
+        }
+
+        return bandera;
 
     }
 }
 
 
 
-  function cerrarTarea() {
- debugger;
- var id = $('#taskId').val();
- var dataForm = new FormData($('#generic_form')[0]);
+function cerrarTarea() {
+    debugger;
+    var id = $('#taskId').val();
+    var dataForm = new FormData($('#generic_form')[0]);
 
- $.ajax({
-          type: 'POST',
-          data: dataForm,
-          cache: false,
-          contentType: false,
-          processData: false,
-          url: '<?php  base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
-          success: function(data) {
-              //wc();
-          //   back();
-          linkTo('<?php  echo BPM ?>Proceso/');
+    $.ajax({
+        type: 'POST',
+        data: dataForm,
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: '<?php  base_url() ?>index.php/<?php  echo BPM ?>Proceso/cerrarTarea/' + id,
+        success: function(data) {
+            //wc();
+            //   back();
+            linkTo('<?php  echo BPM ?>Proceso/');
 
-          setTimeout(() => {
-              Swal.fire(
-                  
-                      'Perfecto!',
-                      'Se Finalizó la Tarea Correctamente!',
-                      'success'
-                  )
-      }, 6000);
-      
-          },
-          error: function(data) {
-              alert("Error");
-          }
-      });
+            setTimeout(() => {
+                Swal.fire(
 
-    }
+                    'Perfecto!',
+                    'Se Finalizó la Tarea Correctamente!',
+                    'success'
+                )
+            }, 6000);
 
+        },
+        error: function(data) {
+            alert("Error");
+        }
+    });
+
+}
+</script>
+
+
+
+
+<div class='modal fade' id='modalCotizacion' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>
+
+    <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' onclick='cierraModalImpresion()' aria-label='Close'><span
+                        aria-hidden='true'>&times;</span></button>
+                <h4 class='modal-title' id='myModalLabel'>Preview Cotización</h4>
+            </div>
+            <div class='modal-body modalBodyCodigos' id='modalBodyCodigos'>
+
+                <div class="container-fluid">
+                    <img src="<?php echo base_url() ?>imagenes/sein/cabezera_presupuesto.png" width="570" height="300"
+                        id='imagenSein'>
+
+
+                    <table class="col-md-12" class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th class="">1111111111</th>
+                                <th class="">222222222</th>
+                                <th class="">333333333333</th>
+                                <th class="">444444444444</th>
+                                <th class="">55555555555555</th>
+                                <th class="">66666666666</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                            </tr>
+                            <tr>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                            </tr>
+                            <tr>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                            </tr>
+                            <tr>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                            </tr>
+                            <tr>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-------------------------------------------------------->
+
+
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 centrar">
+                        <h5>Detalles de cotización:</h5>
+                        <div id="sec_productos">
+                            <!-- ______ TABLA PRODUCTOS ______ -->
+                            <table id="tabla_detalle" class="table table-bordered table-striped">
+                                <thead class="thead-dark" bgcolor="#eeeeee">
+                                    <!-- <th style="width: 10% !important">Acciones</th> -->
+                                    <th>Cantidad</th>
+                                    <th>Descripción</th>
+                                    <th>P. Unitario</th>
+                                    <th>Importe</th>
+                                </thead>
+                                <tbody>
+                                    <?php
+							foreach($detalles_coti as $rsp2){
+
+
+								$cantidad = $rsp2->cantidad;
+								$descripcion = $rsp2->descripcion;
+								$precio_unitario = $rsp2->precio_unitario;
+								$importe = $rsp2->importe;
+								$coti_id = $rsp2->coti_id;
+                                $deco_id = $rsp2->deco_id;
+
+								echo "<tr id='$coti_id' data-json='" . json_encode($rsp2) . "'>";
+								echo '<td>'.$cantidad.'</td>';
+								echo '<td>'.$descripcion.'</td>';
+                                echo '<td>'.$precio_unitario.'</td>';
+								echo '<td>'.$importe.'</td>';
+			            
+								echo '</tr>';
+						}
+						?>
+
+
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-sm-7"></div>
+                                <div class="col-sm-4">
+                                    <label class="control-label" for="footer_table">Total:<strong
+                                            style="color: #dd4b39">*</strong>:</label>
+                                    <div class="input-group" style="display:inline-flex;">
+                                        <input id="footer_table2" name="footer_table2" type="text"
+                                            class="form-control input-md" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1"></div </div>
+                                <!--_______ FIN TABLA PRODUCTOS ______-->
+                            </div>
+                        </div>
+                        <br><br>
+
+                        </fieldset>
+                        </form>
+
+                    </div>
+
+                    <!-- / Bloque de cotizacion -->
+
+                </div>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-default' onclick='cierraModalImpresion()'>Cancelar</button>
+                <button type='button' class='btn btn-primary' onclick='imprimirInfoQR()'>Imprimir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// levanta el modal
+function verModalImpresion(titulo) {
+    // levanto modal con img de Codigo
+    $("#modalCodigos").modal('show');
+}
+
+// trae codigo QR con los datos recibidos y agrega en modal
+function getQR(config, data, direccion) {
+    // debugger;
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            config,
+            data,
+            direccion
+        },
+        url: 'index.php/<?php echo COD ?>Codigo/generarQR',
+        success: function(result) {
+
+            if (result != null) {
+                var qr = '<img  id="codigoImage" src="' + result.filename + '" alt="codigo qr" >';
+
+                // agrego codigo Qr al modal
+                $('#contenedorCodigo').append(qr);
+            }
+        },
+        error: function(result) {
+
+        },
+        complete: function() {
+
+        }
+    });
+}
+// impresion de etiqueta
+function imprimirInfoQR() {
+    var base = "<?php echo base_url()?>";
+    $('.modalBodyCodigos').printThis({
+        debug: false,
+        importCSS: false,
+        importStyle: true,
+        pageTitle: "TRAZALOG TOOLS",
+        printContainer: true,
+        //header: "<h1 style='text-align: center;'>Reporte Articulos Vencidos</h1>",
+        loadCSS: "",
+        copyTagClasses: true,
+        afterPrint: function() {
+            cierraModalImpresion();
+        },
+        base: base
+    });
+}
+// cerrar modal
+function cierraModalImpresion() {
+    // levanto modal con img de Codigo
+    $("#modalCodigos").modal('hide');
+}
+</script>
+
+<script>
+// trae codigo QR con los datos recibidos y agrega en modal
+function getQR(config, data, direccion) {
+    // debugger;
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            config,
+            data,
+            direccion
+        },
+        url: 'index.php/<?php echo COD ?>Codigo/generarQR',
+        success: function(result) {
+
+            if (result != null) {
+                var qr = '<img  id="codigoImage" src="' + result.filename + '" alt="codigo qr" >';
+
+                // agrego codigo Qr al modal
+                $('#contenedorCodigo').append(qr);
+            }
+        },
+        error: function(result) {
+
+        },
+        complete: function() {
+
+        }
+    });
+}
+// impresion 
+function imprimirInfo() {
+    var base = "<?php echo base_url()?>";
+    $('.modalBodyCodigos').printThis({
+        debug: false,
+        importCSS: false,
+        importStyle: true,
+        pageTitle: "TRAZALOG TOOLS",
+        printContainer: true,
+        //header: "<h1 style='text-align: center;'>Reporte Articulos Vencidos</h1>",
+        loadCSS: "",
+        copyTagClasses: true,
+        afterPrint: function() {
+            cierraModalImpresion();
+        },
+        base: base
+    });
+}
+// cerrar modal
+function cierraModalImpresion() {
+    // levanto modal con img de Codigo
+    $("#modalCotizacion").modal('hide');
+}
 </script>
