@@ -52,9 +52,9 @@
 							<?php 
                                 if(is_array($unme_id)){
                                 
-                                $array = json_decode(json_encode($unme_id), true);
+                                $arrayA = json_decode(json_encode($unme_id), true);
 
-                                foreach ($array as $i) {
+                                foreach ($arrayA as $i) {
                                     $tabl_id= $i['tabl_id'];  $valor= $i['valor'];
 
                                     $valor1= strval ($valor);
@@ -127,9 +127,9 @@
 							<?php 
                                 if(is_array($fopa_id)){
                                 
-                                $array = json_decode(json_encode($fopa_id), true);
+                                $arrayB = json_decode(json_encode($fopa_id), true);
 
-                                foreach ($array as $i) {
+                                foreach ($arrayB as $i) {
                                     $tabl_id= $i['tabl_id'];  $valor= $i['valor'];
 
                                     $valor1= strval ($valor);
@@ -154,9 +154,9 @@
 							<?php 
                                 if(is_array($divi_id)){
                                 
-                                $array = json_decode(json_encode($divi_id), true);
+                                $arrayC = json_decode(json_encode($divi_id), true);
 
-                                foreach ($array as $i) {
+                                foreach ($arrayC as $i) {
                                     $tabl_id= $i['tabl_id'];  $valor= $i['valor'];
 
                                     $valor1= strval ($valor);
