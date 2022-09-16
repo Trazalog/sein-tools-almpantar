@@ -649,12 +649,12 @@ function cerrarTarea() {
 
                         <thead>
                             <tr>
-                                <th class="">1111111111</th>
-                                <th class="">222222222</th>
-                                <th class="">333333333333</th>
-                                <th class="">444444444444</th>
-                                <th class="">55555555555555</th>
-                                <th class="">66666666666</th>
+                                <th class=""></th>
+                                <th class=""></th>
+                                <th class=""></th>
+                                <th class=""></th>
+                                <th class=""></th>
+                                <th class=""></th>
                             </tr>
                         </thead>
                         <tbody>

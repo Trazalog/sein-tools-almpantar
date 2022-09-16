@@ -105,7 +105,34 @@
     </style>
 
 
-    <?php $this->load->view('layout/general_scripts')?>
+    <?php $this->load->view('layout/general_scripts');
+    
+    
+    $url_info= $_SERVER["REQUEST_URI"];
+
+    $components = parse_url($url_info);
+
+    parse_str($components['query'], $results);
+
+    $case_id =$results['id'];
+   
+
+    $ci =& get_instance();
+    $ci->load->model(SEIN . 'Proceso_tareas');
+				
+
+
+    $aux = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
+    $data_generico =json_decode($aux["data"]);
+    $aux = $data_generico->pedidoTrabajo;
+   $petr_id = $aux->petr_id;
+   $case_id = $aux->case_id;
+
+
+
+    ?>
+ 
+
 
 </head>
 <body class="hold-transition skin-red sidebar-mini">
@@ -114,21 +141,12 @@
             <h4 class="box-title">Informe del Proceso</h4>
         </div>
         <div class="box-body" id="mdl-vista">
-        
-        <?php
-                                    echo "<td class='text-center text-light-blue'>";
-                                    echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
-                                    echo '<i class="fa fa-print" style="cursor: pointer; margin: 3px;" title="Imprimir Comprobante" onclick="modalReimpresion(this)"></i>';
-                                    echo '<i class="fa fa-search"  style="cursor: pointer;margin: 3px;" title="Ver Pedido" onclick="verPedido(this)"></i>';
-                                    echo "</td>";
-                                
-                
-                            ?>
+
             <div id="cabecera"></div>
     <input id="tarea" data-info="" class="hidden">
-    <input type="text" class="form-control hidden" id="asignado" value="">
-    <input type="text" class="form-control hidden" id="taskId" value="">
-    <input type="text" class="form-control hidden" id="caseId" value="">
+    <input type="text" class="form-control hidden" id="processId" value="<?php echo $proccessname; ?>">
+    <input type="text" class="form-control hidden" id="petr_id" value="<?php echo $petr_id; ?>">
+    <input type="text" class="form-control hidden" id="caseId" value="<?php echo $case_id; ?>">
 
     <div class="nav-tabs-custom ">
         <ul class="nav nav-tabs">
@@ -221,18 +239,26 @@
     //funcion ver pedido
     // parametro petr_id y case_id
     //
-    function verPedido(e) {
-        wo();
-        petr_id = $(e).closest('tr').attr('id');
-        case_id = $(e).closest('tr').attr('case_id');
-        console.log('trae pedido N°: ' + petr_id)
-        console.log('trae case_id N°: ' + case_id)
+    function verPedido() {
+debugger;
 
+        wo();
+
+    petr_id =   $('#petr_id').val();
+	case_id =   $('#caseId').val();
+
+    processId =   $('#processId').val();
+
+	console.log('trae pedido N°: ' + petr_id);
+	console.log('trae case_id N°: ' + case_id);
+    console.log('trae processId : ' + processId);
+
+     header = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_cabecera?case_id=" + case_id;
         var url = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_comentario?petr_id=" + petr_id + "&case_id=" + case_id;
         var url1 = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_formulario?petr_id=" + petr_id + "&case_id=" + case_id;
-        var url2 = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_linetiempo?case_id=" + case_id;
+        var url2 = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_linetiempo?case_id=" + case_id+ "&processId=" + processId;
         var url3 = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_info_actual?case_id=" + case_id;
-        header = "<?php echo base_url(BPM); ?>Pedidotrabajo/cargar_detalle_cabecera?case_id=" + case_id;
+      
 
         $("#cabecera").empty();
         $("#cabecera").load(header);
@@ -244,13 +270,14 @@
         });
 
         $("#cargar_form").empty();
+        debugger;
         $("#cargar_form").load(url1, () => {
             // $('#mdl-vista').modal('show');
             wc();
         });
 
         $("#cargar_trazabilidad").empty();
-        $("#cargar_trazabilidad").load(url2, () => {
+        $("#cargar_trazabilidad").load(url2,() => {
             // $('#mdl-vista').modal('show');
             wc();
         });
@@ -301,47 +328,22 @@
         });
 
     }
-    //  carga el modal con cuerpo y codigo QR
-    function cargarInfoReimp(datMapeado, estado, config, direccion) {
-        // debugger;
-        switch (estado) {
-            case 'estados_yudicaEN_CURSO':
-                //Comprobante 1
-                //agrega cuerpo de la etiqueta
-                $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>Infocodigo/pedidoTrabajo", datMapeado);
-                // agrega codigo QR al modal impresion
-                getQR(config, datMapeado, direccion);
-                break;
 
-            case 'estados_yudicaREPROCESO':
-                //Comprobante 1
-                $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>Infocodigo/pedidoTrabajo", datMapeado);
-                // agrega codigo QR al modal impresion
-                getQR(config, datMapeado, direccion);
-                break;
+////////////////////////////////
 
-            case 'estados_yudicaRECHAZADO':
-                //Comprobante 2
-                $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>Infocodigo/rechazado", datMapeado);
-                // agrega codigo QR al modal impresion
-                // getQR(config, datMapeado, direccion);
-                break;
+$('#view').ready(function() {
+wo();
+    alertify.success("Cargando datos en la vista aguarde...");
+    
+    setTimeout(function() {
+        wc();    
+        verPedido();
+}, 9000);
+   
+    
+});
 
-            case 'estados_yudicaENTREGADO':
-                // Comprobante 3
-                $("#infoEtiqueta").load("<?php echo base_url(YUDIPROC); ?>Infocodigo/pedidoTrabajo", datMapeado);
-                // agrega codigo QR al modal impresion
-                getQR(config, datMapeado, direccion);
-                $("#infoFooter").load("<?php echo base_url(YUDIPROC); ?>Infocodigo/pedidoTrabajoFooter");
-                break;
-
-            default:
-                // code...
-                break;
-        }
-
-        return;
-    }
+  
     </script>
 </body>
 </html>

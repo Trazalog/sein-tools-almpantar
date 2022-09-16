@@ -30,7 +30,7 @@
    
     </form>
     <br><br>  
-    <input id="url_link" name="url_link" type="hidden"   class="form-control input-md">
+    <input id="url_link" name="url_link" type="text"   class="form-control input-md">
 
 <script>
 
@@ -184,11 +184,15 @@ async function cerrarTarea() {
 <script>  
 
  function crearUrlQr() {
-debugger;
-var datos = {};
+    debugger;
+    var datos = {};
 
-datos.id = "666";
- datos.funcionsita = "cliente";
+//    petr_id = $('#petr_id').val();
+    case_id = $('#caseId').val();
+
+
+    datos.id = case_id;
+    datos.funcion= 'PRO.verEstadoPedidoTrabajo';
 
 
     $.ajax({
