@@ -1,0 +1,77 @@
+<data enableBatchRequests="true" enableBoxcarring="true" name="SeinDataService" transports="http https local">
+   <config enableOData="false" id="SEINDataSource">
+      <property name="carbon_datasource_name">ToolsDataSource</property>
+   </config>
+   <query id="setCotizacion" useConfig="SEINDataSource">
+      <sql>INSERT INTO sein.cotizacion_trabajo&#xd;(plazo_entrega, email_alternativo, eliminado, fec_alta, usuario, usuario_app, petr_id, unme_id, fopa_id, divi_id)&#xd;VALUES(cast(:plazo_entrega as integer), :email_alternativo, false, now(), CURRENT_USER, :usuario_app, cast(:petr_id as integer), :unme_id, :fopa_id, :divi_id)&#xd;returning coti_id;</sql>
+      <result outputType="json">{"respuesta":{"coti_id":"$coti_id"}}</result>
+      <param name="plazo_entrega" sqlType="STRING"/>
+      <param name="email_alternativo" sqlType="STRING"/>
+      <param name="usuario_app" sqlType="STRING"/>
+      <param name="petr_id" sqlType="STRING"/>
+      <param name="unme_id" sqlType="STRING"/>
+      <param name="fopa_id" sqlType="STRING"/>
+      <param name="divi_id" sqlType="STRING"/>
+   </query>
+   <query id="getCotizacion" useConfig="SEINDataSource">
+      <sql>SELECT coti_id,plazo_entrega, email_alternativo, petr_id, unme_id, fopa_id, divi_id&#xd;FROM sein.cotizacion_trabajo where petr_id = cast(:petr_id  as integer)&#xd;and eliminado != true</sql>
+      <result outputType="json">{&#xd;   "cotizacion":{&#xd;            "coti_id":"$coti_id",&#xd;            "plazo_entrega":"$plazo_entrega",&#xd;            "email_alternativo":"$email_alternativo",&#xd;            "petr_id":"$petr_id",&#xd;            "unme_id":"$unme_id",&#xd;            "fopa_id":"$fopa_id",&#xd;            "divi_id":"$divi_id"&#xd;   }&#xd;}</result>
+      <param name="petr_id" sqlType="STRING"/>
+   </query>
+   <query id="getDetalleCotizacion" useConfig="SEINDataSource">
+      <sql>SELECT deco_id, cantidad, descripcion, precio_unitario, importe, coti_id&#xd;FROM sein.detalle_cotizacion where coti_id = cast (:coti_id as integer)&#xd;and eliminado !=true order by deco_id</sql>
+      <result outputType="json">{&#xd;   "detalles_cotizacion":{&#xd;      "detalle_cotizacion":[&#xd;         {&#xd;            "deco_id":"$deco_id",&#xd;            "cantidad":"$cantidad",&#xd;            "descripcion":"$descripcion",&#xd;            "precio_unitario":"$precio_unitario",&#xd;            "importe":"$importe",&#xd;            "coti_id":"$coti_id"&#xd;&#xd;         }&#xd;      ]&#xd;   }&#xd;}</result>
+      <param name="coti_id" sqlType="STRING"/>
+   </query>
+   <query id="setDetalleCotizacionBatchReq" useConfig="SEINDataSource">
+      <sql>INSERT INTO sein.detalle_cotizacion&#xd;(cantidad, descripcion, precio_unitario, importe, eliminado, fec_alta, usuario, usuario_app, coti_id)&#xd;VALUES(cast (:cantidad as integer), :descripcion, cast (:precio_unitario as float), cast (:importe  as float), false, now(), CURRENT_USER, :usuario_app, cast (:coti_id as integer));</sql>
+      <param name="cantidad" sqlType="STRING"/>
+      <param name="descripcion" sqlType="STRING"/>
+      <param name="precio_unitario" sqlType="STRING"/>
+      <param name="importe" sqlType="STRING"/>
+      <param name="usuario_app" sqlType="STRING"/>
+      <param name="coti_id" sqlType="STRING"/>
+   </query>
+   <query id="getCotizacionCompleto" useConfig="SEINDataSource">
+      <sql>select pt.cod_proyecto cod_proyecto&#xd;,pt.descripcion desc_proyecto&#xd;,to_char(pt.fec_inicio,'dd/mm/yyyy') fec_inicio&#xd;,if3.valor email_cliente&#xd;,mr.valor motivo_rechazo &#xd;,'/traz-comp-codigos/Url?token=' || case when t."token" is null then '' else t."token" end url &#xd;from pro.pedidos_trabajo pt&#xd;left join qru.tokens t on t.id = cast (pt.petr_id as text)&#xd;	and funcionalidad = 'PRO.verEstadoPedidoTrabajo'&#xd;left join&#xd;	(select if2.valor,ptf.petr_id &#xd;	 from pro.pedidos_trabajo_forms ptf &#xd;	 ,frm.instancias_formularios if2&#xd;	 where if2.form_id = 55&#xd;	 and if2.name='motivo_rechazo_cliente'&#xd;	 and if2.info_id = ptf.info_id) mr on pt.petr_id = mr.petr_id&#xd;,frm.instancias_formularios if3 &#xd;where  if3.info_id = pt.info_id &#xd;and if3.form_id = 52&#xd;and if3.name='email'&#xd;and pt.petr_id =cast(:petr_id as integer)</sql>
+      <result outputType="json">{&#xd;   "cotizacion":{&#xd;      "cod_proyecto":"$cod_proyecto",&#xd;      "desc_proyecto":"$desc_proyecto",&#xd;      "fec_inicio":"$fec_inicio",&#xd;      "email_cliente":"$email_cliente",&#xd;      "motivo_rechazo":"$motivo_rechazo",&#xd;      "url":"$url"&#xd;   }&#xd;}</result>
+      <param name="petr_id" sqlType="STRING"/>
+   </query>
+   <resource method="POST" path="/cotizacion">
+      <call-query href="setCotizacion">
+         <with-param name="plazo_entrega" query-param="plazo_entrega"/>
+         <with-param name="email_alternativo" query-param="email_alternativo"/>
+         <with-param name="usuario_app" query-param="usuario_app"/>
+         <with-param name="petr_id" query-param="petr_id"/>
+         <with-param name="unme_id" query-param="unme_id"/>
+         <with-param name="fopa_id" query-param="fopa_id"/>
+         <with-param name="divi_id" query-param="divi_id"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="/getCotizacion/{petr_id}">
+      <call-query href="getCotizacion">
+         <with-param name="petr_id" query-param="petr_id"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="/getDetalleCotizacion/{coti_id}">
+      <call-query href="getDetalleCotizacion">
+         <with-param name="coti_id" query-param="coti_id"/>
+      </call-query>
+   </resource>
+   <resource method="POST" path="/cotdetlist">
+      <call-query href="setDetalleCotizacionBatchReq">
+         <with-param name="cantidad" query-param="cantidad"/>
+         <with-param name="descripcion" query-param="descripcion"/>
+         <with-param name="precio_unitario" query-param="precio_unitario"/>
+         <with-param name="importe" query-param="importe"/>
+         <with-param name="usuario_app" query-param="usuario_app"/>
+         <with-param name="coti_id" query-param="coti_id"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="/cotizacion/completa/{petr_id}">
+      <call-query href="getCotizacionCompleto">
+         <with-param name="petr_id" query-param="petr_id"/>
+      </call-query>
+   </resource>
+</data>
+
