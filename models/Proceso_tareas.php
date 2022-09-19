@@ -263,6 +263,7 @@ class Proceso_tareas extends CI_Model
   $resource2 = "/getCotizacion"; 
             
   $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+  
   log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
     
                     return $this->load->view(SEIN . 'tareas/proceso_productivo/view_evaluacion_cotizacion_trabajo',$data, true);

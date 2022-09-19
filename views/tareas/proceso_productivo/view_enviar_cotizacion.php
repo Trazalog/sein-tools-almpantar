@@ -9,11 +9,21 @@ input[type=radio] {
 </style>
 <hr>
 <?php 
+$ci =& get_instance();
+log_message('INFO','#TRAZA|INFOPROCESO_HELPER|SEIN ALM PAN TAR/".$case_id : $case_id >> '.json_encode($case_id));
+// $ci->load->model(SEIN . 'Proceso_tareas');
 
+$aux_pedido = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
+         $data_generico =json_decode($aux_pedido["data"]);
+         $aux_pedidoTrabajo = $data_generico->pedidoTrabajo;
 
+         $petr_id= $aux_pedidoTrabajo->petr_id;
+         $clie_id = $aux_pedidoTrabajo->clie_id;
 
+$aux_clie = $ci->rest->callAPI("GET",REST_CORE."/cliente/".$clie_id);
+$aux_clie =json_decode($aux_clie["data"]);
 
- 
+$dato_cliente = $aux_clie->cliente;
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
 $aux =json_decode($data);
@@ -411,32 +421,6 @@ function tomarDatos() {
     $('#unidad_medida_tiempo').val($('#unidad_medida').val());
 
 
-    //     $('#form-dinamico').find(':input').each(function() {
-
-    //     var elemento= this;
-    //     console.log("elemento.id="+ elemento.id); 
-
-    //   if (elemento.id == 'cod_proyecto') {
-    //       $(elemento).attr('readonly', true); 
-    //       $(elemento).attr('disabled',true);
-    //     }
-    // objetivo_proyecto
-    // unidad_medida_tiempo
-    // plazo_entrega
-    // unme_tiempo
-    // nomb_cliente
-    // if (elemento.id == 'descripcion_cotizacion') {
-    // //   $(elemento).attr('readonly', false); 
-    // //   $(elemento).attr('disabled',true);
-    // }
-
-    // if (elemento.id == 'dir_entrega_cliente') {
-    // //   $(elemento).attr('readonly', false); 
-    // //   $(elemento).attr('disabled',true);
-    // }
-
-    // });
-
 }
 
 
@@ -641,15 +625,26 @@ function cerrarTarea() {
             <div class='modal-body modalBodyCodigos' id='modalBodyCodigos'>
 
                 <div class="container-fluid">
-                    <img src="<?php echo base_url() ?>imagenes/sein/cabezera_presupuesto.png" width="570" height="300"
+                    <div class="col-md-6">
+                    <img src="<?php echo base_url() ?>imagenes/sein/cabezera_presupuest.png" width="300" height="200"
                         id='imagenSein'>
+                    </div>
 
-
+                    <div class="col-md-6 center-block">
+                   <h4>PRESUPUESTO</h4>
+                   <br>
+                 <strong><?php echo 'N° '.$petr_id .'-'. $coti_id;  ?></strong>
+                   <p>Documento no valido como factura</p>
+                   <br>
+                   <p>FECHA</p>
+                   <br><br>
+                   <p>C.U.I.T. N° 30-71038566-8 Ing.Brutos 918-651825-7</p>
+                    </div>
                     <table class="col-md-12" class="table table-bordered table-striped">
 
                         <thead>
                             <tr>
-                                <th class=""></th>
+                                <th class=""><?php echo $dato_cliente->nombre; ?></th>
                                 <th class=""></th>
                                 <th class=""></th>
                                 <th class=""></th>
@@ -659,15 +654,7 @@ function cerrarTarea() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class=""></td>
+                                <td class=""><?php echo $dato_cliente->dir_entrega; ?></td>
                                 <td class=""></td>
                                 <td class=""></td>
                                 <td class=""></td>
@@ -691,12 +678,20 @@ function cerrarTarea() {
                                 <td class=""></td>
                             </tr>
                             <tr>
+                                <td class=""><strong>PLAZO DE ENTREGA</strong></td>
                                 <td class=""></td>
                                 <td class=""></td>
                                 <td class=""></td>
                                 <td class=""></td>
                                 <td class=""></td>
+                            </tr>
+                            <tr>
                                 <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""><strong>FORMA DE PAGO</strong></td>
+                                <td class=""><?php echo $forma_pago; ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -706,6 +701,7 @@ function cerrarTarea() {
 
 
                     <div class="col-md-12 col-sm-12 col-xs-12 centrar">
+                        <h5>VALIDEZ DEL PRESUPUESTO A PARTIR DE LA FECHA:</h5>
                         <h5>Detalles de cotización:</h5>
                         <div id="sec_productos">
                             <!-- ______ TABLA PRODUCTOS ______ -->
@@ -743,7 +739,7 @@ function cerrarTarea() {
                                 </tbody>
                             </table>
                             <div class="row">
-                                <div class="col-sm-7"></div>
+                                <div class="col-sm-7"><strong>A LOS PRECIOS COTIZACIOS SE LES DEBE AGREGAR EL I.V.A CORRESPONDIENTE</strong></div>
                                 <div class="col-sm-4">
                                     <label class="control-label" for="footer_table">Total:<strong
                                             style="color: #dd4b39">*</strong>:</label>
@@ -757,10 +753,14 @@ function cerrarTarea() {
                             </div>
                         </div>
                         <br><br>
-
-                        </fieldset>
+                     <strong>Esta mercadería será facturada en Pesos según cotización dólar BNA Vendedor del día anterior a la factura y ajustada con NC/ND según
+CANTIDAD DESCRIPCION PRECIO UNIT.
+PLAZO DE ENTREGA
+VALIDEZ DEL PRESUPUESTO A PARTIR DE LA FECHA:
+dólar BNA vendedor del día anterior al pago (+/- 1 %).</strong>
+                    </fieldset>
                         </form>
-
+<p>OBSERVACIONES</p>
                     </div>
 
                     <!-- / Bloque de cotizacion -->
