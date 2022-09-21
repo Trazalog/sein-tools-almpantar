@@ -114,18 +114,23 @@
 
     parse_str($components['query'], $results);
 
-    $case_id =$results['id'];
+    $petr_id =$results['id'];
    
 
     $ci =& get_instance();
     $ci->load->model(SEIN . 'Proceso_tareas');
-				
 
-
-    $aux = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
+    
+    $aux = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/petr_id/".$petr_id);
     $data_generico =json_decode($aux["data"]);
-    $aux = $data_generico->pedidoTrabajo;
-   $petr_id = $aux->petr_id;
+    $aux = $data_generico->pedidos_info->pedido_info[0];
+
+
+
+    // $aux = $ci->rest->callAPI("GET",REST_PRO."/pedidoTrabajo/xcaseid/".$case_id);
+    // $data_generico =json_decode($aux["data"]);
+    // $aux = $data_generico->pedidoTrabajo;
+//    $petr_id = $aux->petr_id;
    $case_id = $aux->case_id;
 
 
@@ -246,6 +251,7 @@ debugger;
 
     petr_id =   $('#petr_id').val();
 	case_id =   $('#caseId').val();
+   
 
     processId =   $('#processId').val();
 
