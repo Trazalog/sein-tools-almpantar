@@ -187,11 +187,11 @@ async function cerrarTarea() {
     debugger;
     var datos = {};
 
-//    petr_id = $('#petr_id').val();
-    case_id = $('#caseId').val();
+    petr_id = $('#petr_id').val();
+    // case_id = $('#caseId').val();
 
 
-    datos.id = case_id;
+    datos.id = petr_id;
     datos.funcion= 'PRO.verEstadoPedidoTrabajo';
 
 
