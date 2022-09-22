@@ -665,7 +665,6 @@ debugger;
 
 function validarCampos(){
 
-debugger;
         var bandera = false;
         //cantidad
 		if($("#cantidad").val() == ''){
@@ -710,7 +709,7 @@ debugger;
         if($("#descripcion_cotizacion").val() == ''){
 			valida = "Seleccione descripcion!";
             console.log(valida);
-            bandera = true;
+            var bandera = false;
 		}
         
         
@@ -721,6 +720,7 @@ debugger;
 
     function guardarDetalle(){
     wo();
+    debugger;
     //VALIDACIONES
     //valido el formulario
     if(!frm_validar('#frm-Cotizacion')){
@@ -734,16 +734,7 @@ debugger;
     }
 
     //valído tabla no vacia
-    tabla = $('#tabla_detalle').DataTable();
-    if ( ! tabla.data().any() ) {
-        wc();
-        Swal.fire(
-            'Error..',
-            'No se cargaron datos en la tabla!',
-            'error'
-        );
-        return;
-    }
+    validarTabla();
    
         agregarDetalle().then((result) => {
             wc();
@@ -759,6 +750,22 @@ debugger;
 }
 //
 
+
+function validarTabla() {
+    var bandera = false;
+     //valído tabla no vacia
+     tabla = $('#tabla_detalle').DataTable();
+    if ( ! tabla.data().any() ) {
+        wc();
+        Swal.fire(
+            'Error..',
+            'No se cargaron datos en la tabla!',
+            'error'
+        );
+        var bandera = false;
+    }
+    return bandera;
+}
 
 // Guardo la cotizacion cargada y su respectivo detalle
 async function agregarDetalle() {
@@ -865,7 +872,7 @@ console.log(datos_json);
 
   function cerrarTarea() {
  debugger;
-
+validarTabla();
 
  var id = $('#taskId').val();
  var dataForm = new FormData($('#generic_form')[0]);

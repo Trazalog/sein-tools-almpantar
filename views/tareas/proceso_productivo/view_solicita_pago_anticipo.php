@@ -81,7 +81,7 @@ wo();
 
     $('#nom_cliente').val($('#cliente').val());
 
-    $('#total').val('ARS $3630.00');
+    $('#total').val();
 
     $('#form-dinamico').find(':input').each(function() {
 										var elemento= this;
