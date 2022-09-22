@@ -61,115 +61,96 @@ if($coti_id){
 
 <h3>Evaluación de Cotización<small></small></h3>
 <div class="box" id="view_cotizacion">
-            <div class="box-body">
-<form class="form-inline" id="frm-Cotizacion">
-                <fieldset>
-           <div class="row">
-                <!-- Codigo proyecto-->
+    <div class="box-body">
+        <form id="frm-Cotizacion">
+            <fieldset>
+                <div class="row">
+                    <!-- Codigo proyecto-->
                     <div class="col-md-3 espaciado">
-                    <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                           
                             <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido"  minlength="4" maxlength="10" size="12" class="form-control input-md" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->  
                     <!-- Objetivo -->
                     <div class="col-md-4 espaciado">
-                    <label class="control-label" for="objetivo">Objetivo<strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="objetivo">Objetivo<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                          
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="objetivo_proyecto" name="objetivo_proyecto" type="text" class="form-control input-md" data-bv-notempty readonly>
                             </div>
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="unidad_medida_tiempo" name="unidad_medida_tiempo" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
                             </div>
-
                         </div>
                     </div>
-                     <!-- ***************** -->  
-                     <!-- plazo de entrega -->
+                    <!-- ***************** -->  
+                    <!-- plazo de entrega -->
                     <div class="col-md-4 espaciado">
-                    <label class="control-label" for="plazo_entrega">plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="plazo_entrega">Plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                       
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" value="<?php echo $plazo_entrega; ?>"readonly>
                                 <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md" value="<?php echo $unme_tiempo; ?>"readonly>
-                                <!-- <select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false" readonly>
-                                    <option value="" disabled selected> -Seleccionar- </option>
-                                    <option value="dias" disabled selected>diás</option>
-                                </select> -->
                             </div>
                         </div>
                     </div>
                     <!-- ***************** -->           
-                   
-
-            </div> <!-- end row -->
-            <br>   <br>
-            <div class="row">
-          <!-- Cliente-->
-          <div class="col-md-3 espaciado">
-                    <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group" style="display:inline-flex;">
-                        <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
+                </div> <!-- end row -->
+                <br>
+                <br>
+                <div class="row">
+                    <!-- Cliente-->
+                    <div class="col-md-3 espaciado">
+                        <div class="form-group">
+                            <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
+                            <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->
-
-
                     <!-- Direccion Entrega -->
                     <div class="col-md-4 espaciado">
-                    <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
                         <div class="form-group">
-                           
+                            <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
                             <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value="" readonly>
                         </div>
                     </div>
                     <!-- ***************** --> 
-					 <!-- email -->
-					 <div class="col-md-4 espaciado">            
-           <label class=" control-label" for="email" name="">Email:</label>                                
-                        <div class="form-group" style="display:inline-flex;">
-                            
+                    <!-- email -->
+                    <div class="col-md-4 espaciado">            
+                        <div class="form-group">
+                            <label class="control-label" for="email" name="">Email:</label>                                
                             <input type="text" class="form-control habilitar" id="email_cliente" readonly>
                         </div>
                     </div>
                     <!-- ***************** --> 
-					
-         </div> <!-- end row -->  
-        <br>   <br>
-            <div class="row"> 
-             <!-- email alternativo -->
-					 <div class="col-md-4 espaciado">                
-           <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
-                        <div class="form-group" style="display:inline-flex;">
-                          
+                </div> <!-- end row -->  
+                <br><br>
+                <div class="row"> 
+                    <!-- email alternativo -->
+                    <div class="col-md-4 espaciado">                
+                        <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
+                        <div class="form-group">
                             <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->   
-            
                     <!-- forma de pago -->
                     <div class="col-md-4 espaciado">
-                    <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="input-group" style="display:inline-flex;">
-                                <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" value="<?php echo $forma_pago; ?>" readonly>
+                        <div class="form-group">
+                            <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
+                            <input id="forma_pago" name="forma_pago" type="text"  class="form-control" value="<?php echo $forma_pago; ?>" readonly>
+                        </div>
+                    </div>
+                    <!-- ***************** --> 
+                    <!-- Divisa -->
+                    <div class="col-md-3 espaciado">
+                        <div class="form-group">
+                        <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
+                        <input id="divisa" name="divisa" type="text"  class="form-control" value="<?php echo $divisa; ?>" readonly>
                         </div>
                     </div>  
-					  <!-- ***************** --> 
-
-                <!-- Divisa -->
-                <div class="col-md-3 espaciado">
-                <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
-                    <div class="input-group" style="display:inline-flex;">
-                    <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $divisa; ?>" readonly>
-                     </div>
-                </div>  
-                     
-                   
                     <br>
                     <div class="col-md-12">
                         <div class="form-group" style="width: 100%">
@@ -179,100 +160,87 @@ if($coti_id){
                             </div>
                         </div>
                     </div>
-          </div> <!-- end row -->          
-                    <!-- Button -->
-
-                    <br>   <br>
-
-            <div class="col-md-12 col-sm-12 col-xs-12 centrar">
-                <h5>Detalles de cotización:</h5>
-                <div id="sec_productos">
-                    <!-- ______ TABLA PRODUCTOS ______ -->
-                    <table id="tabla_detalle" class="table table-bordered table-striped">
-                        <thead class="thead-dark" bgcolor="#eeeeee">
-                            <th style="width: 10% !important">Acciones</th>
-                            <th>Cantidad</th>
-                            <th>Descripción</th>
-                            <th>P. Unitario</th>
-                            <th>Importe</th>
-                        </thead>
-                        <tbody >
-                        <?php
-							foreach($detalles_cotizacion as $rsp){
+                </div> <!-- end row -->          
+                <br>
+                <br>
+                <div class="col-md-12 col-sm-12 col-xs-12 centrar">
+                    <h5>Detalles de cotización:</h5>
+                    <div id="sec_productos">
+                        <!-- ______ TABLA PRODUCTOS ______ -->
+                        <table id="tabla_detalle" class="table table-bordered table-striped">
+                            <thead class="thead-dark" bgcolor="#eeeeee">
+                                <th style="width: 10% !important">Acciones</th>
+                                <th>Cantidad</th>
+                                <th>Descripción</th>
+                                <th>P. Unitario</th>
+                                <th>Importe</th>
+                            </thead>
+                            <tbody >
+                            <?php
+                                foreach($detalles_cotizacion as $rsp){
 
 
-								$cantidad = $rsp->cantidad;
-								$descripcion = $rsp->descripcion;
-								$precio_unitario = $rsp->precio_unitario;
-								$importe = $rsp->importe;
-								$coti_id = $rsp->coti_id;
-                                $deco_id = $rsp->deco_id;
+                                    $cantidad = $rsp->cantidad;
+                                    $descripcion = $rsp->descripcion;
+                                    $precio_unitario = $rsp->precio_unitario;
+                                    $importe = $rsp->importe;
+                                    $coti_id = $rsp->coti_id;
+                                    $deco_id = $rsp->deco_id;
 
-								echo "<tr id='$petr_id' case_id='$case_id' data-json='" . json_encode($rsp) . "'>";
+                                    echo "<tr id='$petr_id' case_id='$case_id' data-json='" . json_encode($rsp) . "'>";
 
-								echo "<td class='text-center text-light-blue'>";
-								// echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
-								
-								echo "</td>";
-								echo '<td>'.$cantidad.'</td>';
-								echo '<td>'.$descripcion.'</td>';
-                                echo '<td>'.$precio_unitario.'</td>';
-								echo '<td>'.$importe.'</td>';
-			            
-								echo '</tr>';
-						}
-						?>  
-                        
-       
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-sm-7"></div>
-                        <div class="col-sm-4">
-                            <label class="control-label" for="footer_table">Total:<strong style="color: #dd4b39">*</strong>:</label>     
-                            <div class="input-group" style="display:inline-flex;">
-                            <input id="footer_table" name="footer_table" type="text" class="form-control input-md" readonly>
+                                    echo "<td class='text-center text-light-blue'>";
+                                    // echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
+                                    
+                                    echo "</td>";
+                                    echo '<td>'.$cantidad.'</td>';
+                                    echo '<td>'.$descripcion.'</td>';
+                                    echo '<td>'.$precio_unitario.'</td>';
+                                    echo '<td>'.$importe.'</td>';
+                            
+                                    echo '</tr>';
+                            }
+                            ?>  
+                            
+        
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-7"></div>
+                            <div class="col-sm-4">
+                                <label class="control-label" for="footer_table">Total:<strong style="color: #dd4b39">*</strong>:</label>     
+                                <div class="input-group" style="display:inline-flex;">
+                                <input id="footer_table" name="footer_table" type="text" class="form-control input-md" readonly>
+                                </div>
                             </div>
+                            <div class="col-sm-1"></div
                         </div>
-                        <div class="col-sm-1"></div
+                        
+                        <!--_______ FIN TABLA PRODUCTOS ______-->
                     </div>
-                     
-                    <!--_______ FIN TABLA PRODUCTOS ______-->
                 </div>
-            </div>
-    <br><br>
-          
-                </fieldset>
-            </form>                           
-   
+                <br><br>
+            </fieldset>
+        </form>
     </div>
-    
-    <!-- / Bloque de cotizacion -->
+    <br> <br><br>
+    <hr>   
+    <form id="generic_form">
+        <div class="form-group">
+            <center>
+                <h3 class="text-danger"> ¿Aprobar cotización? </h3>
+                <label class="radio-inline">
+                    <input id="aprobar" type="radio" name="result" value="true"> Si
+                </label>
+                <label class="radio-inline">
+                    <input id="rechazo" type="radio" name="result" value="false"> No
+                </label>
+            </center>
         </div>
-  </div>
-<br> <br><br>
-<hr>   
-
-<form id="generic_form">
-    <div class="form-group">
-        <center>
-            <h3 class="text-danger"> ¿Aprobar cotización? </h3>
-            <label class="radio-inline">
-                <input id="aprobar" type="radio" name="result" value="true"> Si
-            </label>
-            <label class="radio-inline">
-                <input id="rechazo" type="radio" name="result" value="false"> No
-            </label>
-        </center>
-    </div>
-
-
-    <br>
- 
-</form>
-
-          </div>
-    </div> 
+        <br>
+    </form>
+    <!-- / Bloque de cotizacion -->
+</div>
 <script>
 
 debugger;

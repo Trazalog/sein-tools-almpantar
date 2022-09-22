@@ -30,12 +30,10 @@
    
     </form>
     <br><br>  
-    <input id="url_link" name="url_link" type="text"   class="form-control input-md">
+    <input id="url_link" name="url_link" type="hidden" class="form-control input-md">
 
 <script>
-
-  function getFormData(){
-debugger;
+function getFormData(){
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
       array_form[this.name] = this.value;
@@ -46,68 +44,50 @@ debugger;
         console.log( index + ": " + value );
  
     });
-  }
+}
 
-  getFormData();
-  detectarForm();
-      initForm();
-
+getFormData();
+detectarForm();
+initForm();
 ////////////////////////////////
-
-  $('#view').ready(function() {
-wo();
+$('#view').ready(function() {
+    wo();
     alertify.success("Cargando datos en la vista aguarde...");
-    
     setTimeout(function() {
         wc();    
         tomarDatos();
-}, 9000);
-   
-    
+    }, 9000);
 });
 
-
 function tomarDatos(){
-   
 
     $('#codigo_pedido').val($('#codigo_proyecto').val());
-
     $('#descripcion_cotizacion').val($('#descripcion').val());
-    
-    
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
 
     $('#form-dinamico').find(':input').each(function() {
-	
         var elemento= this;
-		console.log("elemento.id="+ elemento.id); 
-   
-      if (elemento.id == 'codigo_pedido') {
+        console.log("elemento.id="+ elemento.id); 
+    
+        if (elemento.id == 'codigo_pedido') {
         //   $(elemento).attr('readonly', false); 
         //   $(elemento).attr('disabled',true);
         }
-
         if (elemento.id == 'descripcion_cotizacion') {
         //   $(elemento).attr('readonly', false); 
         //   $(elemento).attr('disabled',true);
         }
-
         if (elemento.id == 'dir_entrega_cliente') {
         //   $(elemento).attr('readonly', false); 
         //   $(elemento).attr('disabled',true);
-        }
-									
-												});
+        }           
+    });
+}
+//////////////////////////////////
 
-    }
-
-
-    //////////////////////////////////
-
-    async function cerrarTareaform(){
+async function cerrarTareaform(){
     resp = {};
     if (!frm_validar('#form-dinamico')) {
-  
         Swal.fire('Oops...','Debes completar los campos obligatorios (*)','error');
         resp.confirma = false;
 
@@ -123,9 +103,8 @@ function tomarDatos(){
 
 
 async function cerrarTarea() {
-  wo(); 
-    debugger;
-   var confirma = await cerrarTareaform();
+    wo(); 
+    var confirma = await cerrarTareaform();
 
     if(!resp.confirma){
       wc();
@@ -134,8 +113,7 @@ async function cerrarTarea() {
  
     var id = $('#taskId').val();
     var dataForm = new FormData($('#generic_form')[0]);
-   
-     dataForm.append('frm_info_id', resp.info_id);
+    dataForm.append('frm_info_id', resp.info_id);
 
     $.ajax({
         type: 'POST',
@@ -146,25 +124,8 @@ async function cerrarTarea() {
         url: '<?php base_url() ?>index.php/<?php echo BPM ?>Proceso/cerrarTarea/' + id,
         success: function(data) {
             wc();
-            const confirm = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false
-            });
-
-            confirm.fire({
-                title: 'Perfecto!',
-                text: "Se finalizó la tarea correctamente!",
-                type: 'success',
-                showCancelButton: false,
-                confirmButtonText: 'Hecho'
-            }).then((result) => {
-                
-                linkTo('<?php echo BPM ?>Proceso/');
-                
-            });
-    
+            var fun = () => {linkTo('<?php echo BPM ?>Proceso/');}
+            confRefresh(fun);
         },
         error: function(data) {
             wc();
@@ -172,28 +133,12 @@ async function cerrarTarea() {
         }
     });
 }
-
-
-</script>
-
-
-<!-- <button type="" class="btn btn-primary habilitar" data-dismiss="modal" id="btnImpresion"
-    onclick="crearUrlQr()">Impresion</button> -->
-
-    
-<script>  
-
- function crearUrlQr() {
-    debugger;
+function crearUrlQr() {
     var datos = {};
-
     petr_id = $('#petr_id').val();
     // case_id = $('#caseId').val();
-
-
     datos.id = petr_id;
     datos.funcion= 'PRO.verEstadoPedidoTrabajo';
-
 
     $.ajax({
         type: 'POST',
@@ -202,7 +147,6 @@ async function cerrarTarea() {
         success: function(data) {
             url = JSON.parse(data)
             console.log("la url es:"+ url.url);
-
             dato_linck = url.url;
 
             $('#url_link').val(dato_linck);
@@ -215,46 +159,36 @@ async function cerrarTarea() {
 }
 
 crearUrlQr();
+var band = 0;
+// Se peden hacer dos cosas: o un ajax buscando datos o directamente
+// armar con los datos de la pantalla  
 
-  var band = 0;
-  // Se peden hacer dos cosas: o un ajax buscando datos o directamente
-  // armar con los datos de la pantalla  
+function modalCodigos(){      
+    if (band == 0) {
+        // configuracion de codigo QR
+        var config = {};
+            config.titulo = "Servicios Industriales";
+            config.pixel = "3";
+            config.level = "S";
+            config.framSize = "2";
+        // info para immprimir  
+        var arraydatos = {};
+            arraydatos.N_orden = $('#petr_id').val();
+            arraydatos.Fabricado = 'Servicios Industriales';
+            arraydatos.Cliente = $('#cliente').val();
+            arraydatos.fec_fabricacion = $('#fec_fabricacion').val();
+            arraydatos.fec_entrega = $('#fec_entrega').val();
+            arraydatos.dato_linck =   $('#url_link').val();
+        // info para grabar en codigo QR
+        armarInfo(arraydatos);
+        getQR(config, arraydatos, 'codigosQR/Sein-almpantar');
+    }
+    // llama modal con datos e img de QR ya ingresados
+    verModalImpresion();
+    band = 1;
+}
 
-  function modalCodigos(){
-debugger;
-      
-
-
-      if (band == 0) {
-        debugger;
-          // configuracion de codigo QR
-          var config = {};
-              config.titulo = "Servicios Industriales";
-              config.pixel = "3";
-              config.level = "S";
-              config.framSize = "2";
-          // info para immprimir  
-          var arraydatos = {};
-              arraydatos.N_orden = $('#petr_id').val();
-              arraydatos.Fabricado = 'Servicios Industriales';
-              arraydatos.Cliente = $('#cliente').val();
-              arraydatos.fec_fabricacion = $('#fec_fabricacion').val();
-              arraydatos.fec_entrega = $('#fec_entrega').val();
-              arraydatos.dato_linck =   $('#url_link').val();
-          // info para grabar en codigo QR
-          armarInfo(arraydatos);
-
-          getQR(config, arraydatos, 'codigosQR/Sein-almpantar');
-
-      }
-      // llama modal con datos e img de QR ya ingresados
-      verModalImpresion();
-
-      band = 1;
-  }
-
-  function armarInfo(arraydatos){
-
+function armarInfo(arraydatos){
     $("#infoEtiqueta").load("<?php echo base_url(SEIN); ?>/Infocodigo/pedidoTrabajoFinal", arraydatos);
-  }
+}
 </script>
