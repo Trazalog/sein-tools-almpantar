@@ -30,48 +30,13 @@ input[type=radio]{
         </center>
     </div>
 </form>  
-
-    <br><br>  
-<?php
-
-
-// funcion que desplega formulario asociado a la vista
-// los formularios dinamicos se cargar de la tabla pro.procesos_forms
-
-// $aux =json_decode($data);
-
-// $formularios = $aux->formularios;
-
-// if($aux){
-                                
-
-//   foreach ($formularios as $clave => $valor) {
-
-//     foreach ($valor as $v2) {
-//       if($v2->orden == '1'){
-//         echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//       }
-//       else if($v2->orden == '2'){
-//         echo '<div id="form-dinamico-rechazo" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//       }
-//     else{
-//       echo '<div id="form-dinamico" class="frm-new" data-form="'.$v2->form_id.'"></div>';
-//     }
-//   }
- 
-//           }
-//                      }
-  
-
-?>
+<br><br>  
 <div id="form-dinamico" class="frm-new" data-form="57"></div>
 <br> <br>
 
 
 <script>
-
   function getFormData(){
-debugger;
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
       array_form[this.name] = this.value;
@@ -146,9 +111,8 @@ async function cerrarTareaform(){
 }
   
 async function cerrarTarea() {
-  wo(); 
-    debugger;
-   var confirma = await cerrarTareaform();
+    wo(); 
+    var confirma = await cerrarTareaform();
 
     if(!resp.confirma){
       wc();

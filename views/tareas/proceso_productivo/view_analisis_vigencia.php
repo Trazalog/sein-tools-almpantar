@@ -54,13 +54,13 @@ if($coti_id){
 
 <h3>Análisis de Vigencia, Condiciones y Cantidades<small></small></h3>
 <div class="box" id="view_cotizacion">
-            <div class="box-body">
-<form class="form-inline" id="frm-Cotizacion">
-                <fieldset>
-           <div class="row">
-                <!-- Codigo proyecto-->
+    <div class="box-body">
+        <form class="form-inline" id="frm-Cotizacion">
+            <fieldset>
+                <div class="row">
+                    <!-- Codigo proyecto-->
                     <div class="col-md-3 espaciado">
-                    <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
                            
                             <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido"  minlength="4" maxlength="10" size="12" class="form-control input-md" readonly>
@@ -84,67 +84,56 @@ if($coti_id){
                      <!-- ***************** -->  
                      <!-- plazo de entrega -->
                     <div class="col-md-4 espaciado">
-                    <label class="control-label" for="plazo_entrega">plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
+                        <label class="control-label" for="plazo_entrega">Plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
-                       
                             <div class="input-group" style="display:inline-flex;">
                                 <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" value="<?php echo $plazo_entrega; ?>"readonly>
                                 <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md" value="<?php echo $unme_tiempo; ?>"readonly>
-                                <!-- <select name="unidad_medida_tiempo2" id="unidad_medida_tiempo2" class="form-control" style="width: auto" data-bv-notempty="false" readonly>
-                                    <option value="" disabled selected> -Seleccionar- </option>
-                                    <option value="dias" disabled selected>diás</option>
-                                </select> -->
                             </div>
                         </div>
                     </div>
                     <!-- ***************** -->           
-                   
-
-            </div> <!-- end row -->
-            <br>   <br>
-            <div class="row">
-          <!-- Cliente-->
-          <div class="col-md-3 espaciado">
-                    <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
+                </div> <!-- end row -->
+                <br>
+                <br>
+                <div class="row">
+                    <!-- Cliente-->
+                    <div class="col-md-3 espaciado">
+                        <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex;">
-                        <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
+                            <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->
-
-
                     <!-- Direccion Entrega -->
                     <div class="col-md-4 espaciado">
-                    <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
+                        <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
                         <div class="form-group">
-                           
                             <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value="" readonly>
                         </div>
                     </div>
                     <!-- ***************** --> 
 					 <!-- email -->
-					 <div class="col-md-4 espaciado">            
-           <label class=" control-label" for="email" name="">Email:</label>                                
-                        <div class="form-group" style="display:inline-flex;">
-                            
+                    <div class="col-md-4 espaciado">            
+                        <label class=" control-label" for="email" name="">Email:</label>                                
+                        <div class="form-group" style="display:inline-flex;">  
                             <input type="text" class="form-control habilitar" id="email_cliente" readonly>
                         </div>
                     </div>
                     <!-- ***************** --> 
-					
-         </div> <!-- end row -->  
-        <br>   <br>
-            <div class="row"> 
-             <!-- email alternativo -->
-					 <div class="col-md-4 espaciado">                
-           <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
+                </div> <!-- end row -->  
+                <br>
+                <br>
+                <div class="row"> 
+                    <!-- email alternativo -->
+                    <div class="col-md-4 espaciado">                
+                        <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
                         <div class="form-group" style="display:inline-flex;">
                           
                             <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly>
                         </div>
                     </div>
-                    <!-- ***************** -->   
-            
+                    <!-- ***************** -->
                     <!-- forma de pago -->
                     <div class="col-md-4 espaciado">
                     <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
@@ -152,26 +141,21 @@ if($coti_id){
                                 <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" value="<?php echo $forma_pago; ?>" readonly>
                         </div>
                     </div>  
-					  <!-- ***************** --> 
-
-                <!-- Divisa -->
-                <div class="col-md-3 espaciado">
-                <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
-                    <div class="input-group" style="display:inline-flex;">
-                    <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $divisa; ?>" readonly>
-                     </div>
-                </div>  
-                     
-                   
+                    <!-- ***************** --> 
+                    <!-- Divisa -->
+                    <div class="col-md-3 espaciado">
+                        <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
+                        <div class="input-group" style="display:inline-flex;">
+                            <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $divisa; ?>" readonly>
+                        </div>
+                    </div>  
                     <br>
-          </div> <!-- end row -->          
-                    <!-- Button -->
-
-                    <br>   <br>
-
-            <div class="col-md-12 col-sm-12 col-xs-12 centrar">
-                <h5>Detalles de cotización:</h5>
-                <div id="sec_productos">
+                </div> <!-- end row -->          
+                <br>
+                <br>
+                <div class="col-md-12 col-sm-12 col-xs-12 centrar">
+                    <h5>Detalles de cotización:</h5>
+                    <div id="sec_productos">
                     <!-- ______ TABLA PRODUCTOS ______ -->
                     <table id="tabla_detalle" class="table table-bordered table-striped">
                         <thead class="thead-dark" bgcolor="#eeeeee">
@@ -220,25 +204,17 @@ if($coti_id){
                             <input id="footer_table" name="footer_table" type="text" class="form-control input-md" readonly>
                             </div>
                         </div>
-                        <div class="col-sm-1"></div
+                        <div class="col-sm-1"></div>
                     </div>
-                     
                     <!--_______ FIN TABLA PRODUCTOS ______-->
                 </div>
-            </div>
-    <br><br>
-          
-                </fieldset>
-            </form>                           
-   
+            </fieldset>
+        </form>                           
     </div>
-    
     <!-- / Bloque de cotizacion -->
-        </div>
-  </div>
-<br> <br><br>
+</div>
+<br><br><br>
 <hr>   
-
 <form id="generic_form">
     <div class="form-group">
         <center>
@@ -251,19 +227,9 @@ if($coti_id){
             </label>
         </center>
     </div>
-
-
     <br>
- 
 </form>
-
-          </div>
-    </div> 
 <script>
-
-debugger;
-
-
     $('#tabla_detalle').dataTable( {
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api();
