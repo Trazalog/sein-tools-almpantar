@@ -103,7 +103,11 @@
         }   
 
     </style>
-
+<style>
+.frm-save {
+    display: none;
+}
+</style>
 
     <?php $this->load->view('layout/general_scripts');
     
@@ -116,6 +120,7 @@
 
     $petr_id =$results['id'];
    
+    $proccessname =$results['proccessname'];
 
     $ci =& get_instance();
     $ci->load->model(SEIN . 'Proceso_tareas');
