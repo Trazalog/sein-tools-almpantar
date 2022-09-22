@@ -40,16 +40,19 @@ class Cotizaciones extends CI_Model
 	*/
     public function guardarDetallesCotizacion($data){
         
-        $url = REST_SEIN."/setDetalleCotizacion";
-        // $batch_req = [];
+        $url = REST_SEIN."/_post_cotdetlist_batch_req";
+         $batch_req = [];
 
-    
-
+         
+        
         foreach ($data as $key) {
+            // $aux['cantidad'] = intval($key['cantidad']);
             $aux['cantidad'] = $key['cantidad'];
-            $aux['descripcion'] =  $key['descripcion'];
-            $aux['precio_unitario'] =  $key['precio_unitario'];
-            $aux['importe'] =  $key['importe'];
+            $aux['descripcion'] =  $key['descripcion_cotizacion'];
+            // $aux['precio_unitario'] = floatval( $key['precio_unitario']);
+            $aux['precio_unitario'] = $key['precio_unitario'];
+            // $aux['importe'] = floatval($key['importe']);
+            $aux['importe'] = $key['importe'];
             $aux['usuario_app'] = userNick();
             $aux['coti_id'] = $key['coti_id'];
         
@@ -67,5 +70,17 @@ class Cotizaciones extends CI_Model
     }
 
 
+ /**
+	* Obtiene los datos cargados en core.tablas por empr_id
+	* @param string columna tabla a buscar
+	* @return array listado de coincidencias
+	*/
+    public function obtenerTablaEmpr_id($tabla)
+    {
+        $url = REST_CORE."/tabla/$tabla/empresa/".empresa();
+        return wso2($url);
+    }
+   
+ 
 
 }

@@ -16,6 +16,15 @@ class Cotizacion extends CI_Controller
 		}
     }
 
+	public function VistaCliente()
+    {
+		
+
+		return $this->load->view(SEIN . 'cliente/vista_cliente');
+    }
+
+
+
 
     /**
 	* Agregar Cotizacion
@@ -27,13 +36,13 @@ class Cotizacion extends CI_Controller
 
 		$data['plazo_entrega'] = $this->input->post('plazo_entrega');
 		$data['email_alternativo'] = $this->input->post('email_alternativo');
-		$data['unme_id'] = "1-unidades_medidadia";
+		$data['unme_id'] = $this->input->post('unme_id');
 		$data['usuario_app'] = userNick();
 		$data['petr_id'] = $this->input->post('petr_id');
-		$data['fopa_id'] = "1-forma_pagocontado";
-		$data['divi_id'] = "1-divisaARS";
+		$data['fopa_id'] = $this->input->post('fopa_id');
+		$data['divi_id'] = $this->input->post('divi_id');
 		
-
+		
 		$resp = $this->Cotizaciones->agregarCotizacion($data);
         
 		if ($resp['status']) {
@@ -51,7 +60,7 @@ class Cotizacion extends CI_Controller
 	*/
     public function guardarDetalleCotizacion(){
 		log_message('DEBUG', "#TRAZA | #SEIN | Cotizacion | guardarDetallesCotizacion()");
-		$detalle = $this->input->post('data');
+		$detalle = $this->input->post('detalles');
 
 		$resp = $this->Cotizaciones->guardarDetallesCotizacion($detalle);
 

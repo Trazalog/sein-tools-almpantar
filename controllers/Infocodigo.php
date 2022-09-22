@@ -11,7 +11,7 @@ class Infocodigo extends CI_Controller {
 		function __construct()
 		{
 				parent::__construct();
-				$this->load->model(YUDIPROC.'Infocodigos');
+				$this->load->model('Infocodigos');
 		}
 
 		/**
@@ -25,17 +25,6 @@ class Infocodigo extends CI_Controller {
 			$this->load->view('codigos/qr_pedido_trabajo', $data);
 		}
 
-		/**
-		* Devuelve vista para impresion de codigo QR de la tarea revision inicial
-		* @param array con datos de la view
-		* @return view 
-		*/
-		function rechazado()
-		{
-				$data = $this->input->post();
-				$this->load->view('codigos/qr_rechazado', $data);
-		}
-
 			/**
 		*  Devuelve vista para impresion de codigo QR de la tarea Pedido de Trabajo
 		* @param array con datos para modal
@@ -44,7 +33,7 @@ class Infocodigo extends CI_Controller {
 		function pedidoTrabajoFinal()
 		{
 			$data = $this->input->post();
-			$this->load->view('codigos/qr_pintado_final', $data);
+			$this->load->view('codigos/qr_pedido_trabajo', $data);
 		}
 
 		/**
@@ -64,48 +53,23 @@ class Infocodigo extends CI_Controller {
 		*/
 		function mapeoDatos($infoid)
 		{
-			$data= $this->Infocodigos->getDataYudica($infoid);
+			$data= $this->Infocodigos->getDataQR($infoid);
 
 			foreach ($data as $value) {
 				switch ($value->name) {
 
-					case 'zona':
-						$datos['Zona'] = $value->valor;
+					case 'email':
+						$datos['email'] = $value->valor;
 						break;
 
-					case 'marca_yudica':
-							$valor= $value->valor;
-							$resultado_str = str_replace(empresa()."-marca_yudica", "", $valor);	
-
-							$datos['Marca'] = $resultado_str;
-								break;
-
-					case 'medidas_yudica':
-						$valor= $value->valor;
-						$resultado_str = str_replace(empresa()."-medidas_yudica", "", $valor);	
-					
-						$datos['Medida'] = $resultado_str;
-								break;
-
-					case 'banda_yudica':
-						
-						$valor= $value->valor;
-						$resultado_str = str_replace(empresa()."-banda_yudica", "", $valor);	
-						
-						$datos['Banda'] = $resultado_str;
+					case 'email_alternativo':
+						$datos['email_alternativo'] = $value->valor;
 						break;
-							
 
-					case 'num_serie':
-								$datos['Serie'] = $value->valor;
-								break;
-					case 'num_cubiertas':
-								$datos['Num'] = $value->valor;
-								break;
+					case 'ofi_tecnica':
+						$datos['ofi_tecnica'] = $value->valor;
+						break;
 
-					case 'tipt_id':
-									$datos['Trabajo'] = $value->valor;
-									break;
 
 						default:
 
