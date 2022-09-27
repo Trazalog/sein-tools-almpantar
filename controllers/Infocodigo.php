@@ -33,7 +33,7 @@ class Infocodigo extends CI_Controller {
 		function pedidoTrabajoFinal()
 		{
 			$data = $this->input->post();
-			$this->load->view('codigos/qr_pedido_trabajo', $data);
+			$this->load->view('codigos/qr_pedido_trabajo_sein', $data);
 		}
 
 		/**
