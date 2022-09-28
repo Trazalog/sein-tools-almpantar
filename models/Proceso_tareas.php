@@ -694,71 +694,42 @@ public function guardarForms($data)
  
    //paso 10     Recepción de OC y archivo        
    case 'Recepción de OC y archivo':
+        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
 
-    log_message('DEBUG', 'Recepción de OC y archivo->' . $tarea->nombreTarea);
-    
-       
+        $data['_post_pedidotrabajo_tarea_form'] = array(
+            "nom_tarea" => "$nom_tarea",
+            "task_id" => $task_id,
+            "usuario_app" => $user_app,
+            "case_id" => $case_id,
+            "info_id" => $form['frm_info_id']
+        );
+        $rsp = $this->Proceso_tareas->guardarForms($data);
 
-    $data['_post_pedidotrabajo_tarea_form'] = array(
-    
-        "nom_tarea" => "$nom_tarea",
-        "task_id" => $task_id,
-        "usuario_app" => $user_app,
-        "case_id" => $case_id,
-        "info_id" => $form['frm_info_id']
-       
+        if (!$rsp) {
+            log_message('ERROR', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Recepción de OC y archivo');
+        } else {
+            log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> GUARDADO OK FORM - Recepción de OC y archivo');
+        }
 
-    );
-
-
-    $rsp = $this->Proceso_tareas->guardarForms($data);
-
-    if (!$rsp) {
-
-        log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Recepción de OC y archivo');
-
-    } else {
-        log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Recepción de OC y archivo');
-
-    }
-    
-
-    if ($form['result'] == true) {
-
-    log_message('DEBUG', 'Recepción de OC y archivo- form justificacion>' . $tarea->nombreTarea);
-    
-       
-
-                $data['_post_pedidotrabajo_tarea_form'] = array(
-                
-                    "nom_tarea" => "$nom_tarea". " justificacion",
-                    "task_id" => $task_id,
-                    "usuario_app" => $user_app,
-                    "case_id" => $case_id,
-                    "info_id" => $form['frm_info_id']
-                
-
-                );
-
-
-                $rsp = $this->Proceso_tareas->guardarForms($data);
-
-                if (!$rsp) {
-
-                    log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Recepción de OC y archivo');
-
-                } else {
-                    log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Recepción de OC y archivo');
-
-                }
-
-    }
-
+        if ($form['result'] == "true" && !empty($form['frm_info_id_justificacion'])) {
+            log_message('DEBUG', 'Recepción de OC y archivo- form justificacion>' . $tarea->nombreTarea);
+            $data['_post_pedidotrabajo_tarea_form'] = array(
+                "nom_tarea" => "$nom_tarea". " justificacion",
+                "task_id" => $task_id,
+                "usuario_app" => $user_app,
+                "case_id" => $case_id,
+                "info_id" => $form['frm_info_id_justificacion']
+            );
+            $rsp = $this->Proceso_tareas->guardarForms($data);
+            if (!$rsp) {
+                log_message('ERROR', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Recepción de OC y archivo');
+            } else {
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> GUARDADO OK FORM - Recepción de OC y archivo');
+            }
+        }
         $contrato["precisaAnticipo"]  = $form['result'];
-    
-        log_message('DEBUG', 'SEIN -Recepción de OC y archivo - valor del contrato  precisaAnticipo ->' , json_encode($contrato) );      
-    return $contrato;
-
+        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | valor del contrato precisaAnticipo ->' , json_encode($contrato) );      
+        return $contrato;
     break;     
     
     ////////////////////////////////////////
