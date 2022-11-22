@@ -10,29 +10,20 @@
 ?>
 
 <?php
-
-
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
 $aux =json_decode($data);
 
 $cotizacion = $aux->cotizacion;
-
 $plazo_entrega = $cotizacion->plazo_entrega;
 $unidad_medida_tiempo = $cotizacion->unme_id;
 $fopa_id = $cotizacion->fopa_id;
 $divi_id = $cotizacion->divi_id;
 $coti_id = $cotizacion->coti_id;
 
-
 $unme_tiempo = str_replace(empresa()."-unidades_medida", "", $unidad_medida_tiempo);	
-
 $forma_pago = str_replace(empresa()."-forma_pago", "", $fopa_id);	
-
 $divisa = str_replace(empresa()."-divisa", "", $divi_id);	
-
-
-
 
 if($coti_id){
     $ci =& get_instance();
@@ -47,11 +38,7 @@ if($coti_id){
 
     $detalles_cotizacion = $aux2->detalles_cotizacion->detalle_cotizacion;
 }
-
-
 ?>
-
-
 <h3>Análisis de Vigencia, Condiciones y Cantidades<small></small></h3>
 <div class="box" id="view_cotizacion">
     <div class="box-body">
@@ -159,7 +146,6 @@ if($coti_id){
                     <!-- ______ TABLA PRODUCTOS ______ -->
                     <table id="tabla_detalle" class="table table-bordered table-striped">
                         <thead class="thead-dark" bgcolor="#eeeeee">
-                            <th style="width: 10% !important">Acciones</th>
                             <th>Cantidad</th>
                             <th>Descripción</th>
                             <th>P. Unitario</th>
@@ -169,7 +155,6 @@ if($coti_id){
                         <?php
 							foreach($detalles_cotizacion as $rsp){
 
-
 								$cantidad = $rsp->cantidad;
 								$descripcion = $rsp->descripcion;
 								$precio_unitario = $rsp->precio_unitario;
@@ -178,12 +163,6 @@ if($coti_id){
                                 $deco_id = $rsp->deco_id;
 
 								echo "<tr id='$petr_id' case_id='$case_id' data-json='" . json_encode($rsp) . "'>";
-
-								echo "<td class='text-center text-light-blue'>";
-								echo '<i class="fa fa-trash-o" style="cursor: pointer;margin: 3px;" title="Eliminar" onclick="Eliminar(this)"></i>';
-								echo '<i class="fa fa-print" style="cursor: pointer; margin: 3px;" title="Imprimir Comprobante" onclick="modalReimpresion(this)"></i>';
-								echo '<i class="fa fa-search"  style="cursor: pointer;margin: 3px;" title="Ver Pedido" onclick="verPedido(this)"></i>';
-								echo "</td>";
 								echo '<td>'.$cantidad.'</td>';
 								echo '<td>'.$descripcion.'</td>';
                                 echo '<td>'.$precio_unitario.'</td>';
