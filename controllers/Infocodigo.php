@@ -33,7 +33,7 @@ class Infocodigo extends CI_Controller {
 		function pedidoTrabajoFinal()
 		{
 			$data = $this->input->post();
-			$this->load->view('codigos/qr_pedido_trabajo', $data);
+			$this->load->view('codigos/qr_pedido_trabajo_sein', $data);
 		}
 
 		/**
@@ -58,43 +58,18 @@ class Infocodigo extends CI_Controller {
 			foreach ($data as $value) {
 				switch ($value->name) {
 
-					case 'zona':
-						$datos['Zona'] = $value->valor;
+					case 'email':
+						$datos['email'] = $value->valor;
 						break;
 
-					case 'marca_yudica':
-							$valor= $value->valor;
-							$resultado_str = str_replace(empresa()."-marca_yudica", "", $valor);	
-
-							$datos['Marca'] = $resultado_str;
-								break;
-
-					case 'medidas_yudica':
-						$valor= $value->valor;
-						$resultado_str = str_replace(empresa()."-medidas_yudica", "", $valor);	
-					
-						$datos['Medida'] = $resultado_str;
-								break;
-
-					case 'banda_yudica':
-						
-						$valor= $value->valor;
-						$resultado_str = str_replace(empresa()."-banda_yudica", "", $valor);	
-						
-						$datos['Banda'] = $resultado_str;
+					case 'email_alternativo':
+						$datos['email_alternativo'] = $value->valor;
 						break;
-							
 
-					case 'num_serie':
-								$datos['Serie'] = $value->valor;
-								break;
-					case 'num_cubiertas':
-								$datos['Num'] = $value->valor;
-								break;
+					case 'ofi_tecnica':
+						$datos['ofi_tecnica'] = $value->valor;
+						break;
 
-					case 'tipt_id':
-									$datos['Trabajo'] = $value->valor;
-									break;
 
 						default:
 

@@ -10,7 +10,7 @@ input[type=radio]{
 
 <?php #kMarchan
     // carga el modal de impresion de QR
-    $this->load->view( COD.'componentes/modalGenerico');
+ //   $this->load->view( COD.'componentes/modalGenerico');
 ?>
 
 <h3>Evaluacion de viabilidad <small></small></h3>
