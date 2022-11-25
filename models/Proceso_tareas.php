@@ -245,7 +245,30 @@ class Proceso_tareas extends CI_Model
             case 'Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado':
                 // llamo al servicio para traer datos de la cotizacion
                 $resource2 = "/getCotizacion"; 
-                $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+                $aux = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+                $data['cotizacion'] = json_decode($aux['data'])->cotizacion;
+                $data['pedido_trabajo'] = $aux_pedido;
+                $rsp = $this->getDataFormulario($aux_pedido->info_id);
+
+                foreach ($rsp as $value) {
+                    switch ($value->name) {
+                        case 'email':
+                            $data['email'] = $value->valor;
+                            break;
+        
+                        case 'email_alternativo':
+                            $data['email_alternativo'] = $value->valor;
+                            break;
+        
+                        case 'ofi_tecnica':
+                            $data['ofi_tecnica'] = str_replace(empresa()."-oficina_tecnica", "", $value->valor);
+                            break;
+        
+                        default:
+        
+                        break;
+                    }
+                }
                 log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | ' . $tarea->nombreTarea);
                 log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
                 return $this->load->view(SEIN . 'tareas/proceso_productivo/view_analisis_vigencia', $data, true);
@@ -628,5 +651,16 @@ public function guardarForms($data){
                 log_message('ERROR', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | se fue por el default');
             break;
         }
-    }  
+    }
+    /**
+	* Obtengo los campos de la instancia formulario recibida
+	* @param integer info_id
+	* @return array data instancia formulario
+	*/
+    function getDataFormulario($infoid){
+        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | $infoid: ' . json_encode($infoid));
+        $aux = $this->rest->callAPI("GET",REST_FRM."/formulario/".$infoid);
+        $aux = json_decode($aux["data"]);
+        return $aux->formulario->items->item;
+    }
 }
