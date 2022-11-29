@@ -245,7 +245,30 @@ class Proceso_tareas extends CI_Model
             case 'Analiza Vigencia. Condiciones y Cantidades del presupuesto aprobado':
                 // llamo al servicio para traer datos de la cotizacion
                 $resource2 = "/getCotizacion"; 
-                $data = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+                $aux = $ci->rest->callAPI('GET',REST_SEIN.$resource2."/".$aux_pedido->petr_id);
+                $data['cotizacion'] = json_decode($aux['data'])->cotizacion;
+                $data['pedido_trabajo'] = $aux_pedido;
+                $rsp = $this->getDataFormulario($aux_pedido->info_id);
+
+                foreach ($rsp as $value) {
+                    switch ($value->name) {
+                        case 'email':
+                            $data['email'] = $value->valor;
+                            break;
+        
+                        case 'email_alternativo':
+                            $data['email_alternativo'] = $value->valor;
+                            break;
+        
+                        case 'ofi_tecnica':
+                            $data['ofi_tecnica'] = str_replace(empresa()."-oficina_tecnica", "", $value->valor);
+                            break;
+        
+                        default:
+        
+                        break;
+                    }
+                }
                 log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | ' . $tarea->nombreTarea);
                 log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
                 return $this->load->view(SEIN . 'tareas/proceso_productivo/view_analisis_vigencia', $data, true);
@@ -276,8 +299,24 @@ class Proceso_tareas extends CI_Model
                 return $this->load->view(SEIN . 'tareas/proceso_productivo/view_realiza_control_final', $data, true);
             break;
             //paso 15 Revision de la No Confirmidad    
-            case 'Revision de la No Confirmidad':           
+            case 'Revision de la No Confirmidad':
                 log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas |' . $tarea->nombreTarea);
+                $formularios = $this->getFormularios($aux_pedido->petr_id)['data'][0]->forms->form;
+                foreach ($formularios as $key => $value) {
+                    if(strcmp($value->nom_tarea,"Realiza Control final del Trabajo") == 0){
+                        $aux['formCompleto'] = $this->getDataFormulario($value->info_id);
+                    }
+                    if(strcmp($value->nom_tarea,"Realiza Control final del Trabajo justificacion") == 0){
+                        $aux['justificacion'] = $this->getDataFormulario($value->info_id);
+                    }
+                }
+                foreach ($aux['formCompleto'] as $key => $value) {
+                    $data[$value->name] = $value->valor;
+                }
+                foreach ($aux['justificacion'] as $key => $value) {
+                    $data[$value->name] = $value->valor;
+                }
+                // $escaneoInfoId = $formulario['data'][0]->forms->form[0]->info_id;
                 return $this->load->view(SEIN . 'tareas/proceso_productivo/view_revision_no_conformidad', $data, true);
             break;
             //paso 16 Generar remito
@@ -513,7 +552,7 @@ public function guardarForms($data){
             break;
             //paso 12 Recibe pago anticipo       
             case 'Recibe pago anticipo':   
-                log_message('DEBUG', 'Recibe pago anticipo->' . $tarea->nombreTarea);
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
                 $data['_post_pedidotrabajo_tarea_form'] = array(
                     "nom_tarea" => "$nom_tarea",
                     "task_id" => $task_id,
@@ -530,7 +569,7 @@ public function guardarForms($data){
             break;          
             //paso 13 Ejecuta el Trabajo - Tools Tareas      
             case 'Ejecuta el Trabajo - Tools Tareas':               
-                log_message('DEBUG', 'Ejecuta el Trabajo - Tools Tareas ->' . $tarea->nombreTarea);
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
                 $data['_post_pedidotrabajo_tarea_form'] = array(
                     "nom_tarea" => "$nom_tarea",
                     "task_id" => $task_id,
@@ -548,7 +587,7 @@ public function guardarForms($data){
             //paso 14 Realiza Control final del Trabajo     
             case 'Realiza Control final del Trabajo':
                             
-                log_message('DEBUG', 'SEIN view -> Realiza Control final del Trabajo' . $tarea->nombreTarea);
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
                 $data['_post_pedidotrabajo_tarea_form'] = array(
                     "nom_tarea" => "$nom_tarea",
                     "task_id" => $task_id,
@@ -558,10 +597,26 @@ public function guardarForms($data){
                 );
                 $rsp = $this->Proceso_tareas->guardarForms($data);
 
-                if (!$rsp) {
+                if (!$rsp['status']) {
                     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Realiza Control final del Trabajo');
                 } else {
                     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Realiza Control final del Trabajo');
+                }
+                if ($form['result'] == "false" && !empty($form['frm_info_id_justificacion'])) {
+                    log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | frm_info_id_justificacion');
+                    $data['_post_pedidotrabajo_tarea_form'] = array(
+                        "nom_tarea" => "$nom_tarea". " justificacion",
+                        "task_id" => $task_id,
+                        "usuario_app" => $user_app,
+                        "case_id" => $case_id,
+                        "info_id" => $form['frm_info_id_justificacion']
+                    );
+                    $rsp = $this->Proceso_tareas->guardarForms($data);
+                    if (!$rsp['status']) {
+                        log_message('ERROR', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Realiza Control final del Trabajo');
+                    } else {
+                        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> GUARDADO OK FORM - Realiza Control final del Trabajo');
+                    }
                 }
                 $contrato["apruebaControlFinal"]  = $form['result'];
                 log_message('DEBUG', 'SEIN - Realiza Control final del Trabajo - valor del contrato  apruebaControlFinal ->' . json_encode($contrato) );   
@@ -569,7 +624,7 @@ public function guardarForms($data){
             break;     
             //paso 15 Revision de la No Confirmidad    
             case 'Revision de la No Confirmidad':                
-                log_message('DEBUG', 'SEIN view -> Revision de la No Confirmidad' . $tarea->nombreTarea);
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
                 $data['_post_pedidotrabajo_tarea_form'] = array(
                     "nom_tarea" => "$nom_tarea",
                     "task_id" => $task_id,
@@ -578,10 +633,26 @@ public function guardarForms($data){
                     "info_id" => $form['frm_info_id']
                 );
                 $rsp = $this->Proceso_tareas->guardarForms($data);
-                if (!$rsp) {
+                if (!$rsp['status']) {
                     log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Revision de la No Confirmidad');
                 } else {
                     log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Revision de la No Confirmidad');
+                }
+                if ($form['result'] == "true" && !empty($form['frm_info_id_solucion'])) {
+                    log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | frm_info_id_solucion');
+                    $data['_post_pedidotrabajo_tarea_form'] = array(
+                        "nom_tarea" => "$nom_tarea". " solucion",
+                        "task_id" => $task_id,
+                        "usuario_app" => $user_app,
+                        "case_id" => $case_id,
+                        "info_id" => $form['frm_info_id_solucion']
+                    );
+                    $rsp = $this->Proceso_tareas->guardarForms($data);
+                    if (!$rsp['status']) {
+                        log_message('ERROR', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Revision de la No Confirmidad');
+                    } else {
+                        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | guardarForms asociado a la tarea >> GUARDADO OK FORM - Revision de la No Confirmidad');
+                    }
                 }
                 $contrato["resultadoRevision"]  = $form['result'];
                 log_message('DEBUG', 'SEIN - Revision de la No Confirmidad - valor del contrato  resultadoRevision ->' . json_encode($contrato) );        
@@ -589,7 +660,7 @@ public function guardarForms($data){
             break;     
             //paso 18 Cerrar servicio y archivar legajo
             case 'Cerrar servicio y archivar legajo':
-                log_message('DEBUG', 'Cerrar servicio y archivar legajo ->' . $tarea->nombreTarea);
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
                 $data['_post_pedidotrabajo_tarea_form'] = array(
                     "nom_tarea" => "$nom_tarea",
                     "task_id" => $task_id,
@@ -598,7 +669,7 @@ public function guardarForms($data){
                     "info_id" => $form['frm_info_id']
                 );
             $rsp = $this->Proceso_tareas->guardarForms($data);
-            if (!$rsp) {
+            if (!$rsp['status']) {
                 log_message('ERROR', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> ERROR AL GUARDAR FORM - Cerrar servicio y archivar legajo');
             } else {
                 log_message('DEBUG', '#TRAZA | #BPM >> guardarForms asociado a la tarea >> GUARDADO OK FORM - Cerrar servicio y archivar legajo');
@@ -606,7 +677,7 @@ public function guardarForms($data){
             break;
             //paso 19  Paletizar y Despachar
             case 'Paletizar y Despachar':
-                log_message('DEBUG', 'Paletizar y Despachar ->' . $tarea->nombreTarea);
+                log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | case: ' . $tarea->nombreTarea);
                 $data['_post_pedidotrabajo_tarea_form'] = array(
                     "nom_tarea" => "$nom_tarea",
                     "task_id" => $task_id,
@@ -628,5 +699,27 @@ public function guardarForms($data){
                 log_message('ERROR', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | se fue por el default');
             break;
         }
-    }  
+    }
+    /**
+	* Obtengo los campos de la instancia formulario recibida
+	* @param integer info_id
+	* @return array data instancia formulario
+	*/
+    function getDataFormulario($infoid){
+        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | $infoid: ' . json_encode($infoid));
+        $aux = $this->rest->callAPI("GET",REST_FRM."/formulario/".$infoid);
+        $aux = json_decode($aux["data"]);
+        return $aux->formulario->items->item;
+    }
+    /**
+	* Obtiene los formularios asociados a un pedido de trabajo por petr_id
+	* @param array $data petr_id
+	* @return array data formularios asociados
+	*/
+    public function getFormularios($petr_id){
+        log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas |getFormularios() pedido de trabajo >> petr_id: ->' . json_encode($petr_id));
+        $resource = "/pedidoTrabajo/petr_id/$petr_id";
+        $url = REST_PRO . $resource;
+        return wso2($url);       
+    }
 }

@@ -14,8 +14,8 @@
       <param name="divi_id" sqlType="STRING"/>
    </query>
    <query id="getCotizacion" useConfig="SEINDataSource">
-      <sql>SELECT coti_id,plazo_entrega, email_alternativo, petr_id, unme_id, fopa_id, divi_id&#xd;FROM sein.cotizacion_trabajo where petr_id = cast(:petr_id  as integer)&#xd;and eliminado != true</sql>
-      <result outputType="json">{&#xd;   "cotizacion":{&#xd;            "coti_id":"$coti_id",&#xd;            "plazo_entrega":"$plazo_entrega",&#xd;            "email_alternativo":"$email_alternativo",&#xd;            "petr_id":"$petr_id",&#xd;            "unme_id":"$unme_id",&#xd;            "fopa_id":"$fopa_id",&#xd;            "divi_id":"$divi_id"&#xd;   }&#xd;}</result>
+      <sql>SELECT coti_id,plazo_entrega, email_alternativo, petr_id, unme_id, fopa_id, divi_id,&#xd;t.descripcion as unidad_medida, t2.descripcion as forma_pago, t3.descripcion as divisa&#xd;FROM sein.cotizacion_trabajo ct &#xd;left join core.tablas t on t.tabl_id = ct.unme_id &#xd;left join core.tablas t2 on t2.tabl_id = ct.fopa_id&#xd;left join core.tablas t3 on t3.tabl_id = ct.divi_id &#xd;where ct.petr_id = cast(:petr_id  as integer)&#xd;and ct.eliminado != true</sql>
+      <result outputType="json">{&#xd;    "cotizacion":{&#xd;             "coti_id":"$coti_id",&#xd;             "plazo_entrega":"$plazo_entrega",&#xd;             "email_alternativo":"$email_alternativo",&#xd;             "unidad_medida":"$unidad_medida",&#xd;             "forma_pago":"$forma_pago",&#xd;             "divisa":"$divisa",&#xd;             "petr_id":"$petr_id",&#xd;             "unme_id":"$unme_id",&#xd;             "fopa_id":"$fopa_id",&#xd;             "divi_id":"$divi_id"&#xd;    }&#xd; }</result>
       <param name="petr_id" sqlType="STRING"/>
    </query>
    <query id="getDetalleCotizacion" useConfig="SEINDataSource">
@@ -33,7 +33,7 @@
       <param name="coti_id" sqlType="STRING"/>
    </query>
    <query id="getCotizacionCompleto" useConfig="SEINDataSource">
-      <sql>select pt.cod_proyecto cod_proyecto&#xd;,pt.descripcion desc_proyecto&#xd;,to_char(pt.fec_inicio,'dd/mm/yyyy') fec_inicio&#xd;,if3.valor email_cliente&#xd;,mr.valor motivo_rechazo &#xd;,'/traz-comp-codigos/Url?token=' || case when t."token" is null then '' else t."token" end url &#xd;from pro.pedidos_trabajo pt&#xd;left join qru.tokens t on t.id = cast (pt.petr_id as text)&#xd;	and funcionalidad = 'PRO.verEstadoPedidoTrabajo'&#xd;left join&#xd;	(select if2.valor,ptf.petr_id &#xd;	 from pro.pedidos_trabajo_forms ptf &#xd;	 ,frm.instancias_formularios if2&#xd;	 where if2.form_id = 55&#xd;	 and if2.name='motivo_rechazo_cliente'&#xd;	 and if2.info_id = ptf.info_id) mr on pt.petr_id = mr.petr_id&#xd;,frm.instancias_formularios if3 &#xd;where  if3.info_id = pt.info_id &#xd;and if3.form_id = 52&#xd;and if3.name='email'&#xd;and pt.petr_id =cast(:petr_id as integer)</sql>
+      <sql>select pt.cod_proyecto cod_proyecto&#xd;,pt.descripcion desc_proyecto&#xd;,to_char(pt.fec_inicio,'dd/mm/yyyy') fec_inicio&#xd;,if3.valor email_cliente&#xd;,mr.valor motivo_rechazo &#xd;,'traz-comp-codigos/Url?token=' || case when t."token" is null then '' else t."token" end url &#xd;from pro.pedidos_trabajo pt&#xd;left join qru.tokens t on t.id = cast (pt.petr_id as text)&#xd;	and funcionalidad = 'PRO.verEstadoPedidoTrabajo'&#xd;left join&#xd;	(select if2.valor,ptf.petr_id &#xd;	 from pro.pedidos_trabajo_forms ptf &#xd;	 ,frm.instancias_formularios if2&#xd;	 where if2.form_id = 55&#xd;	 and if2.name='motivo_rechazo_cliente'&#xd;	 and if2.info_id = ptf.info_id) mr on pt.petr_id = mr.petr_id&#xd;,frm.instancias_formularios if3 &#xd;where  if3.info_id = pt.info_id &#xd;and if3.form_id = 52&#xd;and if3.name='email'&#xd;and pt.petr_id =cast(:petr_id as integer)</sql>
       <result outputType="json">{&#xd;   "cotizacion":{&#xd;      "cod_proyecto":"$cod_proyecto",&#xd;      "desc_proyecto":"$desc_proyecto",&#xd;      "fec_inicio":"$fec_inicio",&#xd;      "email_cliente":"$email_cliente",&#xd;      "motivo_rechazo":"$motivo_rechazo",&#xd;      "url":"$url"&#xd;   }&#xd;}</result>
       <param name="petr_id" sqlType="STRING"/>
    </query>
@@ -74,4 +74,3 @@
       </call-query>
    </resource>
 </data>
-
