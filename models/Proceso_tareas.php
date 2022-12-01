@@ -281,6 +281,15 @@ class Proceso_tareas extends CI_Model
             //paso 11 Solicita pago anticipo       
             case 'Solicita pago anticipo':     
                 log_message('DEBUG', '#TRAZA | #SEIN-TOOLS-ALMPANTAR | Proceso_tareas | ' . $tarea->nombreTarea);
+                $dato = $this->getCotizacion($aux_pedido->petr_id);
+                $data['cotizacion']=$dato;
+                $total = 0;
+                $data['detallecotizacion']=$this->getDetalleCotizacion($dato->coti_id);
+                foreach ($data['detallecotizacion'] as $key => $value) {
+                    $total += $value->importe;
+                }
+                $data['totalCotizacion'] = $total;
+                $data['pedido_trabajo'] = $aux_pedido;
                 return $this->load->view(SEIN . 'tareas/proceso_productivo/view_solicita_pago_anticipo', $data, true);
             break;  
             //paso 12 Recibe pago anticipo       
@@ -721,5 +730,39 @@ public function guardarForms($data){
         $resource = "/pedidoTrabajo/petr_id/$petr_id";
         $url = REST_PRO . $resource;
         return wso2($url);       
+    }
+
+     /**
+	* Obtiene los formularios asociados a un pedido de trabajo por petr_id
+	* @param integer petr_id
+	* @return array data formularios asociados
+	*/
+    public function getCotizacion($petr_id){
+        $resource2 = "/getCotizacion"; 
+        $aux = $this->rest->callAPI('GET',REST_SEIN.$resource2."/".$petr_id);
+        $aux = json_decode($aux['data']);
+        return $aux->cotizacion;
+    }
+     /**
+	* Obtiene los formularios asociados al detalle de la cotizacion de un pedido de trabajo
+	* @param integer coti_id
+	* @return array data formularios asociados
+	*/
+    public function getDetalleCotizacion($coti_id){
+        $resource2 = "/getDetalleCotizacion"; 
+        $aux = $this->rest->callAPI('GET',REST_SEIN.$resource2."/".$coti_id);
+        $aux = json_decode($aux['data']);
+        return $aux->detalles_cotizacion->detalle_cotizacion;
+    }
+
+     /**
+	* Obtiene los formularios asociados del cliente que realizo el pedido de trabajo
+	* @param integer clie_id
+	* @return array data formularios asociados
+	*/
+    public function getDatosCliente($clie_id){
+        $aux_clie = $this->rest->callAPI("GET",REST_CORE."/cliente/".$clie_id);
+        $aux_clie =json_decode($aux_clie["data"]);
+        return $aux_clie->cliente;
     }
 }
