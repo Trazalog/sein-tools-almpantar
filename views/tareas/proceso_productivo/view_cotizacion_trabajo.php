@@ -454,7 +454,7 @@ function agregarTabla(){
     data = formToObject(datos);
     tabla = $('#tabla_detalle').DataTable();
     var reporte = validarCampos();
-                                
+                             
     if(reporte == false){
         fila = "<tr data-json= '"+ JSON.stringify(data) +"'>" +
                 '<td><button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminarCotizacion"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
@@ -466,7 +466,7 @@ function agregarTabla(){
 
             tabla.row.add($(fila)).draw();
             wc();
-        }else{
+    }else{
         error('Error..','Debes completar los campos obligatorios (*)');
         wc();
         return;
@@ -515,7 +515,13 @@ function validarCampos(){
     if($("#descripcion_cotizacion").val() == ''){
         valida = "Seleccione descripcion!";
         console.log(valida);
-        var bandera = false;
+        var bandera = true;
+    }
+    //observaciones
+    if($("#observaciones").val() == ''){
+        valida = "Seleccione observaciones!";
+        console.log(valida);
+        var bandera = true;
     }
     return bandera;
 }
@@ -621,7 +627,7 @@ async function agregarDetalle() {
             }
         });
     });
-    return await cotizacion;
+    return await cotizacion;  
 }
 
 
