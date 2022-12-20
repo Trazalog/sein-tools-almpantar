@@ -12,25 +12,21 @@
 <?php
 // funcion que desplega formulario asociado a la vista
 // los formularios dinamicos se cargar de la tabla pro.procesos_forms
-$aux =json_decode($data);
+// $aux = json_decode($data);
 
-$cotizacion = $aux->cotizacion;
-$plazo_entrega = $cotizacion->plazo_entrega;
-$unidad_medida_tiempo = $cotizacion->unme_id;
-$fopa_id = $cotizacion->fopa_id;
-$divi_id = $cotizacion->divi_id;
-$coti_id = $cotizacion->coti_id;
+// $cotizacion = $aux->cotizacion;
+// $plazo_entrega = $cotizacion->plazo_entrega;
+// $unidad_medida_tiempo = $cotizacion->unme_id;
+// $fopa_id = $cotizacion->fopa_id;
+// $divi_id = $cotizacion->divi_id;
+// $coti_id = $cotizacion->coti_id;
 
-$unme_tiempo = str_replace(empresa()."-unidades_medida", "", $unidad_medida_tiempo);	
-$forma_pago = str_replace(empresa()."-forma_pago", "", $fopa_id);	
-$divisa = str_replace(empresa()."-divisa", "", $divi_id);	
-
-if($coti_id){
+if($cotizacion->coti_id){
     $ci =& get_instance();
   // llamo al servicio para traer los Detalles de la cotizacion
     $resource3 = "/getDetalleCotizacion"; 
   
-    $deta = $ci->rest->callAPI('GET',REST_SEIN.$resource3."/".$coti_id);
+    $deta = $ci->rest->callAPI('GET',REST_SEIN.$resource3."/".$cotizacion->coti_id);
     log_message('DEBUG', 'SEIN - LLAMADA DE EJEMPLO A WSO2 ->' . json_encode($data));   
     
 
@@ -48,9 +44,8 @@ if($coti_id){
                     <!-- Codigo proyecto-->
                     <div class="col-md-3 espaciado">
                         <label class="control-label" for="cod_proyecto">Código Pedido <strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group" style="display:inline-flex">
-                           
-                            <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido"  minlength="4" maxlength="10" size="12" class="form-control input-md" readonly>
+                        <div class="form-group">
+                            <input id="cod_proyecto" name="cod_proyecto" type="text" placeholder="Código Pedido" size="12" class="form-control input-md" readonly value="<?php echo $pedido_trabajo->cod_proyecto; ?>">
                         </div>
                     </div>
                     <!-- ***************** -->  
@@ -60,10 +55,10 @@ if($coti_id){
                         <div class="form-group" style="display:inline-flex">
                           
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="objetivo_proyecto" name="objetivo_proyecto" type="text" class="form-control input-md" data-bv-notempty readonly>
+                                <input id="objetivo_proyecto" name="objetivo_proyecto" type="text" class="form-control input-md" data-bv-notempty readonly value="<?php echo $pedido_trabajo->objetivo; ?>">
                             </div>
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="unidad_medida_tiempo" name="unidad_medida_tiempo" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly>
+                                <input id="unidad_medida_tiempo" name="unidad_medida_tiempo" class="form-control input-md" data-bv-notempty data-bv-notempty-message="Campo Obligatorio *" readonly value="<?php echo $pedido_trabajo->unidad_medida; ?>">
                             </div>
 
                         </div>
@@ -74,8 +69,8 @@ if($coti_id){
                         <label class="control-label" for="plazo_entrega">Plazo de entrega<strong style="color: #dd4b39">*</strong>:</label>
                         <div class="form-group" style="display:inline-flex">
                             <div class="input-group" style="display:inline-flex;">
-                                <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" value="<?php echo $plazo_entrega; ?>"readonly>
-                                <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md" value="<?php echo $unme_tiempo; ?>"readonly>
+                                <input id="plazo_entrega" name="plazo_entrega" type="text" class="form-control input-md" value="<?php echo $cotizacion->plazo_entrega; ?>" readonly>
+                                <input id="unme_tiempo" name="unme_tiempo" type="text" class="form-control input-md" value="<?php echo $cotizacion->unidad_medida; ?>" readonly>
                             </div>
                         </div>
                     </div>
@@ -87,8 +82,8 @@ if($coti_id){
                     <!-- Cliente-->
                     <div class="col-md-3 espaciado">
                         <label class="control-label" for="nomb_cliente">Cliente <strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="form-group" style="display:inline-flex;">
-                            <input type="text" class="form-control habilitar" id="nomb_cliente" value="" readonly>
+                        <div class="form-group">
+                            <input type="text" class="form-control habilitar" id="nomb_cliente" value="<?php echo $pedido_trabajo->nombre_cliente; ?>" readonly>
                         </div>
                     </div>
                     <!-- ***************** -->
@@ -96,15 +91,15 @@ if($coti_id){
                     <div class="col-md-4 espaciado">
                         <label class=" control-label" for="dir_entrega_cliente" name="">Dirección de Entrega:</label>                                 
                         <div class="form-group">
-                            <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value="" readonly>
+                            <input type="text" class="form-control habilitar" id="dir_entrega_cliente" value="<?php echo $pedido_trabajo->dir_entrega; ?>" readonly>
                         </div>
                     </div>
                     <!-- ***************** --> 
 					 <!-- email -->
                     <div class="col-md-4 espaciado">            
-                        <label class=" control-label" for="email" name="">Email:</label>                                
-                        <div class="form-group" style="display:inline-flex;">  
-                            <input type="text" class="form-control habilitar" id="email_cliente" readonly>
+                        <div class="form-group">  
+                            <label class=" control-label" for="email" name="">Email:</label>                                
+                            <input type="text" class="form-control habilitar" id="email_cliente" readonly value="<?php echo $email; ?>">
                         </div>
                     </div>
                     <!-- ***************** --> 
@@ -114,26 +109,25 @@ if($coti_id){
                 <div class="row"> 
                     <!-- email alternativo -->
                     <div class="col-md-4 espaciado">                
-                        <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
-                        <div class="form-group" style="display:inline-flex;">
-                          
-                            <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly>
+                        <div class="form-group">
+                            <label class=" control-label" for="email_alternativo_cliente" name="">Email alternativo:</label>                            
+                            <input type="text" class="form-control habilitar" id="email_alternativo_cliente" readonly value="<?php echo $email_alternativo; ?>">
                         </div>
                     </div>
                     <!-- ***************** -->
                     <!-- forma de pago -->
                     <div class="col-md-4 espaciado">
-                    <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
-                        <div class="input-group" style="display:inline-flex;">
-                                <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" value="<?php echo $forma_pago; ?>" readonly>
+                        <div class="input-group">
+                            <label class="control-label" for="forma_pago">Forma de pago<strong style="color: #dd4b39">*</strong>:</label>
+                            <input id="forma_pago" name="forma_pago" type="text"  class="form-control input-md" value="<?php echo $cotizacion->forma_pago; ?>" readonly>
                         </div>
                     </div>  
                     <!-- ***************** --> 
                     <!-- Divisa -->
                     <div class="col-md-3 espaciado">
                         <label class="control-label" for="divisa">Divisa<strong style="color: #dd4b39">*</strong>:</label>     
-                        <div class="input-group" style="display:inline-flex;">
-                            <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $divisa; ?>" readonly>
+                        <div class="input-group">
+                            <input id="divisa" name="divisa" type="text"  class="form-control input-md" value="<?php echo $cotizacion->divisa; ?>" readonly>
                         </div>
                     </div>  
                     <br>

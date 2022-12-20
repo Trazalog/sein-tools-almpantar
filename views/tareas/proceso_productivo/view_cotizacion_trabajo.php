@@ -253,92 +253,66 @@
 
 
 <script>
- $('#tabla_detalle').dataTable( {
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api();
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
- 
-            // Total over all pages
-            if (end > 0) {    
-            var total = api
-                .column( 4 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                } );
-                console.log(total);
-
-
-                if (total > 0) {  
-            // Total over this page
-            var pageTotal = api
-                .column( 4, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                } );
-            }
-
- console.log(pageTotal);
-            // Update footer
-            divisa = $('#divi_id').find(':selected').text();
-            sub_total = divisa +' ' +'$'+pageTotal;
-        $('#footer_table').val(sub_total);
-
-            }
- 
-                
-  
+ $('#tabla_detalle').dataTable({
+    "footerCallback": function ( row, data, start, end, display ) {
+        var api = this.api();
+        // Remove the formatting to get integer data for summation
+        var intVal = function ( i ) {
+            return typeof i === 'string' ?
+                i.replace(/[\$,]/g, '')*1 :
+                typeof i === 'number' ?
+                    i : 0;
+        };
+        // Total over all pages
+        if (end > 0) {    
+        var total = api
+            .column( 4 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            } );
+            console.log(total);
+        if (total > 0) {  
+        // Total over this page
+        var pageTotal = api
+            .column( 4, { page: 'current'} )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            } );
         }
-    } );
-
-
-
-  function getFormData(){
+        console.log(pageTotal);
+        // Update footer
+        divisa = $('#divi_id').find(':selected').text();
+        sub_total = divisa +' ' +'$'+pageTotal;
+        $('#footer_table').val(sub_total);
+        }
+    }
+});
+function getFormData(){
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
       array_form[this.name] = this.value;
-
       });
-
     $.each(array_form, function( index, value ) {
         console.log( index + ": " + value );
-
     });
-  }
-
-  getFormData();
-
+}
+getFormData();
 /// mascaras de input numericos
-  $("#cantidad").inputmask({ regex: "[0-9]*" });
-
-  $("#precio_unitario").inputmask({ regex: "[0-9]*" });
-
-  $("#importe").inputmask({ regex: "[0-9]*" });
-
+$("#cantidad").inputmask({ regex: "[0-9]*" });
+$("#precio_unitario").inputmask({ regex: "[0-9]*" });
+$("#importe").inputmask({ regex: "[0-9]*" });
 ////////////////////////////////
-
-  $('#view').ready(function() {
-wo();
+$('#view').ready(function() {
+    wo();
     alertify.success("Cargando datos en la vista aguarde...");
-
     setTimeout(function() {
         wc();
         tomarDatos();
-}, 9000);
-
-
+    }, 9000);
 });
-
-
 function tomarDatos(){
-
     $('#cod_proyecto').val($('#codigo_proyecto').val());
     $('#dir_entrega_cliente').val($('#dir_entrega').val());
     $('#email_cliente').val($('#email').val());
@@ -349,62 +323,53 @@ function tomarDatos(){
     $('#iva').val('0.21');
 }
 
-  function calcularTotal() {
+function calcularTotal() {
+var valor_cantidad = $("#cantidad").val();
+var valor_precio_unitario = $("#precio_unitario").val();
+var valor_iva = $("#iva").val();
+var calcular_importe = valor_cantidad * valor_precio_unitario;
+var calcular_total = calcular_importe * valor_iva;
+var calcular_total_iva = calcular_total + calcular_importe;
 
-    var valor_cantidad = $("#cantidad").val();
-    var valor_precio_unitario = $("#precio_unitario").val();
-    var valor_iva = $("#iva").val();
-    var calcular_importe = valor_cantidad * valor_precio_unitario;
-    var calcular_total = calcular_importe * valor_iva;
-    var calcular_total_iva = calcular_total + calcular_importe;
-
-    if ( valor_cantidad !='' && valor_precio_unitario ==''){
-        alertify.warning("Indique precio unitario!");
-    }
-    if ($("#cantidad").val() != '' && $("#precio_unitario").val() != '' ) {
-        $("#importe").val(calcular_importe);
-        $("#total").val(calcular_total_iva);
-    }
-  }
-
-  function mostrarForm(){
-
-      detectarForm();
-      initForm();
-
-      $('#form-dinamico').show();
-      $('#titulo').show();
-      $('#form-dinamico-rechazo').hide();
-      $('#comprobante').hide();
-      // oculta btn para imprimir
-      $('#btnImpresion').hide();
-  }
-
-  function ocultarForm(){
-
+if ( valor_cantidad !='' && valor_precio_unitario ==''){
+    alertify.warning("Indique precio unitario!");
+}
+if ($("#cantidad").val() != '' && $("#precio_unitario").val() != '' ) {
+    $("#importe").val(calcular_importe);
+    $("#total").val(calcular_total_iva);
+}
+}
+function mostrarForm(){
     detectarForm();
     initForm();
+    $('#form-dinamico').show();
+    $('#titulo').show();
+    $('#form-dinamico-rechazo').hide();
+    $('#comprobante').hide();
+    // oculta btn para imprimir
+    $('#btnImpresion').hide();
+}
 
-     // $('#motivo').show();
-      $('#form-dinamico-rechazo').show();
+function ocultarForm(){
+    detectarForm();
+    initForm();
+    // $('#motivo').show();
+    $('#form-dinamico-rechazo').show();
 
-      $('#comprobante').show();
-      $('#hecho').prop('disabled',false);
-      $('#form-dinamico').hide();
-      $('#titulo').hide();
-      // muestra btn para imprimir
-      $('#btnImpresion').show();
+    $('#comprobante').show();
+    $('#hecho').prop('disabled',false);
+    $('#form-dinamico').hide();
+    $('#titulo').hide();
+    // muestra btn para imprimir
+    $('#btnImpresion').show();
+}
 
-  }
-
-  $('#form-dinamico').hide();
-  $('#titulo').hide();
-  $('#comprobante').hide();
-   // $('#motivo').show();
-   $('#form-dinamico-rechazo').show();
-
-  $('#btnImpresion').hide();
-
+$('#form-dinamico').hide();
+$('#titulo').hide();
+$('#comprobante').hide();
+// $('#motivo').show();
+$('#form-dinamico-rechazo').show();
+$('#btnImpresion').hide();
 //Eliminar registro tabla intermedia
 //
 $(document).on('click','.btnEliminarCotizacion', function () {
@@ -489,7 +454,7 @@ function agregarTabla(){
     data = formToObject(datos);
     tabla = $('#tabla_detalle').DataTable();
     var reporte = validarCampos();
-                                
+                             
     if(reporte == false){
         fila = "<tr data-json= '"+ JSON.stringify(data) +"'>" +
                 '<td><button type="button" title="Eliminar" class="btn btn-primary btn-circle btnEliminarCotizacion"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></button>&nbsp' +
@@ -500,75 +465,66 @@ function agregarTabla(){
             '</tr>';
 
             tabla.row.add($(fila)).draw();
-
             wc();
-        }else{
-           
-        Swal.fire(
-            'Error..',
-            'Debes completar los campos obligatorios (*)',
-            'error'
-        );
+    }else{
+        error('Error..','Debes completar los campos obligatorios (*)');
         wc();
         return;
     }
 }
 
 function validarCampos(){
-
-        var bandera = false;
-        //cantidad
-		if($("#cantidad").val() == ''){
-			valida = "Seleccione cantidad!";
-            console.log(valida);
-            bandera = true;
-		}
-        //precio unitario
-		if($("#precio_unitario").val() == ''){
-			valida = "Seleccione precio unitario!";
-            console.log(valida);
-            bandera = true;
-		}
-        //plazo entrega
-        if($("#plazo_entrega").val() == ''){
-			valida = "Seleccione plazo entrega!";
-            console.log(valida);
-            bandera = true;
-		}
-        //unidad de medida
-        if($("#unme_id").val() == ''){
-			valida = "Seleccione unidad de medida!";
-            console.log(valida);
-            bandera = true;
-		}
-
-        //forma de pago
-        if($("#fopa_id").val() == ''){
-			valida = "Seleccione forma de pago!";
-            console.log(valida);
-            bandera = true;
-		}
-
-        //divisa
-        if($("#divi_id").val() == ''){
-			valida = "Seleccione divisa!";
-            console.log(valida);
-            bandera = true;
-		}
-
-        //descripcion
-        if($("#descripcion_cotizacion").val() == ''){
-			valida = "Seleccione descripcion!";
-            console.log(valida);
-            var bandera = false;
-		}
-        
-        
-		return bandera;
+    var bandera = false;
+    //cantidad
+    if($("#cantidad").val() == ''){
+        valida = "Seleccione cantidad!";
+        console.log(valida);
+        bandera = true;
     }
-
-
-
+    //precio unitario
+    if($("#precio_unitario").val() == ''){
+        valida = "Seleccione precio unitario!";
+        console.log(valida);
+        bandera = true;
+    }
+    //plazo entrega
+    if($("#plazo_entrega").val() == ''){
+        valida = "Seleccione plazo entrega!";
+        console.log(valida);
+        bandera = true;
+    }
+    //unidad de medida
+    if($("#unme_id").val() == ''){
+        valida = "Seleccione unidad de medida!";
+        console.log(valida);
+        bandera = true;
+    }
+    //forma de pago
+    if($("#fopa_id").val() == ''){
+        valida = "Seleccione forma de pago!";
+        console.log(valida);
+        bandera = true;
+    }
+    //divisa
+    if($("#divi_id").val() == ''){
+        valida = "Seleccione divisa!";
+        console.log(valida);
+        bandera = true;
+    }
+    //descripcion
+    if($("#descripcion_cotizacion").val() == ''){
+        valida = "Seleccione descripcion!";
+        console.log(valida);
+        var bandera = true;
+    }
+    //observaciones
+    if($("#observaciones").val() == ''){
+        valida = "Seleccione observaciones!";
+        console.log(valida);
+        var bandera = true;
+    }
+    return bandera;
+}
 function guardarDetalle(){
     wo();
     //VALIDACIONES
@@ -589,8 +545,6 @@ function guardarDetalle(){
     });
 }
 //
-
-
 function validarTabla() {
     var bandera = false;
      //valído tabla no vacia
@@ -602,7 +556,6 @@ function validarTabla() {
     }
     return bandera;
 }
-
 // Guardo la cotizacion cargada y su respectivo detalle
 async function agregarDetalle() {
     tabla = $('#tabla_detalle').DataTable();
@@ -639,22 +592,13 @@ async function agregarDetalle() {
                         nodo = this.node();
                         
                         var json = JSON.parse($(nodo).attr('data-json'));
-                    
-        
                         json.coti_id = coti_id;
-
                         json.cantidad = datos[1];
-
                         json.descripcion_cotizacion = datos[2];
-
                         json.precio_unitario = datos[3];
-
                         json.importe = datos[4];
-
                         detalles[rowIdx] = json;
                     });
-
-
                     $.ajax({
                         type: 'POST',
                         data: {detalles},
@@ -677,14 +621,13 @@ async function agregarDetalle() {
                     console.log(rsp.message);
                     reject("Error al agregar la cotizacion");
                 }
-
             },
             error: function(data) {
                 reject("Error al agregar la cotizacion");
             }
         });
     });
-    return await cotizacion;
+    return await cotizacion;  
 }
 
 

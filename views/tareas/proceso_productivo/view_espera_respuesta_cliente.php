@@ -36,50 +36,34 @@ input[type=radio]{
 
 
 <script>
-  function getFormData(){
+function getFormData(){
     var array_form = {};
     $('#form-dinamico-cabecera').find(':input').each(function() {
-      array_form[this.name] = this.value;
+    array_form[this.name] = this.value;
 
-      });
-
+    });
     $.each(array_form, function( index, value ) {
         console.log( index + ": " + value );
- 
     });
-
-
-  }
-
-  getFormData();
-
-  function mostrarForm(){
-
-detectarForm();
-initForm();
-
-$('#form-dinamico').show();
-$('#titulo').show();
-$('#form-dinamico-rechazo').hide();
-$('#comprobante').hide();
-
 }
 
+getFormData();
+function mostrarForm(){
+    detectarForm();
+    initForm();
+    $('#form-dinamico').show();
+    $('#titulo').show();
+    $('#form-dinamico-rechazo').hide();
+    $('#comprobante').hide();
+}
 function ocultarForm(){
+    // $('#motivo').show();
+    $('#form-dinamico-rechazo').show();
 
-detectarForm();
-initForm();
-
-// $('#motivo').show();
-$('#form-dinamico-rechazo').show();
-
-$('#comprobante').show();
-$('#hecho').prop('disabled',false);
-$('#form-dinamico').hide();
-$('#titulo').hide();
-
-
-
+    $('#comprobante').show();
+    $('#hecho').prop('disabled',false);
+    $('#form-dinamico').hide();
+    $('#titulo').hide();
 }
 
 $('#form-dinamico').hide();
@@ -87,12 +71,7 @@ $('#titulo').hide();
 $('#comprobante').hide();
 // $('#motivo').show();
 $('#form-dinamico-rechazo').show();
-
-
-
-
 //////////////////////////////////
-
 async function cerrarTareaform(){
     resp = {};
     if (!frm_validar('#form-dinamico')) {
